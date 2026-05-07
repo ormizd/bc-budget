@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#0f1117">
 <title>BC Budget</title>
 <style>
-:root{--bg:#0f1117;--bg2:#181b24;--bg3:#1f2330;--bg4:#252a38;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--text:#f0f2f7;--text2:#8b91a8;--text3:#555c72;--accent:#4f8ef7;--green:#34d17a;--green-bg:rgba(52,209,122,0.1);--amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);--red:#f06070;--red-bg:rgba(240,96,112,0.1);--purple:#a78bfa;--purple-bg:rgba(167,139,250,0.1);--teal:#2dd4bf;--teal-bg:rgba(45,212,191,0.1);--safe-top:env(safe-area-inset-top,44px);--safe-bottom:env(safe-area-inset-bottom,34px)}
+:root{--bg:#0f1117;--bg2:#181b24;--bg3:#1f2330;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--text:#f0f2f7;--text2:#8b91a8;--text3:#555c72;--accent:#4f8ef7;--green:#34d17a;--green-bg:rgba(52,209,122,0.1);--amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);--red:#f06070;--red-bg:rgba(240,96,112,0.1);--safe-top:env(safe-area-inset-top,44px);--safe-bottom:env(safe-area-inset-bottom,34px)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden}
 #app{display:flex;flex-direction:column;height:100%;height:100dvh}
@@ -17,14 +17,14 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 .hrow{display:flex;align-items:center;justify-content:space-between}
 .app-title{font-size:20px;font-weight:700;letter-spacing:-0.5px}
 .app-title span{color:var(--accent)}
-.header-sub{font-size:11px;color:var(--text3);margin-top:1px;font-variant-numeric:tabular-nums}
+.header-sub{font-size:11px;color:var(--text3);margin-top:1px}
 .header-inc{text-align:right}
 .header-inc-lbl{font-size:10px;color:var(--text3)}
-.header-inc-val{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.3px}
+.header-inc-val{font-size:17px;font-weight:600;letter-spacing:-0.3px}
 #content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--safe-bottom) + 68px)}
 #content::-webkit-scrollbar{width:0}
 #nav{position:fixed;bottom:0;left:0;right:0;background:rgba(15,17,23,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;padding-bottom:var(--safe-bottom);z-index:100}
-.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0;background:none;border:none;color:var(--text3);font-size:10px;cursor:pointer;transition:color 0.2s;font-family:inherit}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0;background:none;border:none;color:var(--text3);font-size:10px;cursor:pointer;font-family:inherit}
 .nav-btn.on{color:var(--accent)}
 .nav-icon{font-size:22px;line-height:1}
 .page{display:none;padding:14px 16px 0}
@@ -33,12 +33,12 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
 .met{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:12px 14px}
 .met-l{font-size:11px;color:var(--text3);margin-bottom:3px}
-.met-v{font-size:21px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.5px}
+.met-v{font-size:21px;font-weight:600;letter-spacing:-0.5px}
 .met-v.ok{color:var(--green)}.met-v.warn{color:var(--amber)}.met-v.bad{color:var(--red)}
 .met-s{font-size:11px;color:var(--text3);margin-top:1px}
 .sec-hd{display:flex;justify-content:space-between;align-items:center;margin:14px 0 8px}
 .sec-t{font-size:15px;font-weight:600;letter-spacing:-0.2px}
-.sec-a{font-size:13px;color:var(--text2);font-variant-numeric:tabular-nums}
+.sec-a{font-size:13px;color:var(--text2)}
 .bwrap{background:var(--border);border-radius:4px;height:5px;overflow:hidden;margin-top:6px}
 .bf{height:100%;border-radius:4px;transition:width 0.35s}
 .bf-b{background:var(--accent)}.bf-a{background:var(--amber)}.bf-g{background:var(--green)}
@@ -48,7 +48,7 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 .surplus.zero{background:var(--bg2);border-color:var(--border)}
 .srow{display:flex;justify-content:space-between;align-items:center}
 .slbl{font-size:13px;color:var(--text2)}
-.sval{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-1px}
+.sval{font-size:24px;font-weight:700;letter-spacing:-1px}
 .snote{font-size:12px;color:var(--text2);margin-top:3px}
 .tip{border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.5;margin-bottom:10px}
 .tip-b{background:rgba(79,142,247,0.1);color:#7aabff}
@@ -56,13 +56,20 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 .mtabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
 .mt{font-size:12px;padding:5px 12px;border-radius:99px;border:1px solid var(--border2);background:none;color:var(--text2);cursor:pointer;font-family:inherit;white-space:nowrap}
 .mt.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:500}
-.igrp{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:10px}
+.igrp{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:6px}
 .sub-l{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3);padding:8px 14px 3px;background:var(--bg3)}
 .irow{display:flex;align-items:center;padding:10px 14px;border-top:1px solid var(--border);gap:10px}
 .irow:first-child{border-top:none}
 .irow label{flex:1;font-size:13px;color:var(--text2);line-height:1.2}
-.irow input[type=number]{width:96px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:14px;padding:6px 8px;text-align:right;outline:none;-webkit-appearance:none;font-variant-numeric:tabular-nums}
+.irow input[type=number]{width:96px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:14px;padding:6px 8px;text-align:right;outline:none;-webkit-appearance:none}
 .irow input[type=number]:focus{border-color:var(--accent)}
+.irow input[type=text]{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;padding:6px 9px;outline:none;font-family:inherit;min-width:0}
+.irow input[type=text]:focus{border-color:var(--accent)}
+.irow input[type=text]::placeholder{color:var(--text3)}
+.del-btn{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;padding:0 2px;line-height:1;flex-shrink:0}
+.del-btn:active{color:var(--red)}
+.cat-add-btn{width:100%;background:none;border:none;border-top:1px solid var(--border);padding:11px 14px;color:var(--accent);font-family:inherit;font-size:13px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:6px}
+.cat-add-btn:active{background:var(--bg3)}
 .de{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:13px;margin-bottom:8px}
 .de-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .de-t{font-size:13px;font-weight:600}
@@ -76,8 +83,8 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 .doi:first-child{border-top:none;padding-top:0}
 .dbadge{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
 .db1{background:#EEEDFE;color:#3C3489}.db2{background:#E1F5EE;color:#085041}.db3{background:#FAEEDA;color:#633806}.db4{background:#FAECE7;color:#712B13}.db5{background:#F1EFE8;color:#444441}
-.di{flex:1}.dn{font-size:13px;font-weight:500}.dd{font-size:11px;color:var(--text3);margin-top:1px;font-variant-numeric:tabular-nums}
-.dp{text-align:right}.dp-a{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}.dp-n{font-size:11px;color:var(--text3)}
+.di{flex:1}.dn{font-size:13px;font-weight:500}.dd{font-size:11px;color:var(--text3);margin-top:1px}
+.dp{text-align:right}.dp-a{font-size:13px;font-weight:600}.dp-n{font-size:11px;color:var(--text3)}
 .add-btn{width:100%;background:var(--bg2);border:1px dashed var(--border2);border-radius:12px;padding:12px;color:var(--accent);font-family:inherit;font-size:13px;cursor:pointer;margin-bottom:10px}
 .prow{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--border);align-items:flex-start}
 .prow:first-child{border-top:none;padding-top:0}
@@ -112,17 +119,17 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
       <div id="ov-hwarn"></div>
       <div class="sec-hd"><span class="sec-t">Needs</span><span class="sec-a" id="ov-n"></span></div>
       <div class="card" style="padding:12px 14px">
-        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--text2)">of income</span><span style="font-size:12px;color:var(--text2);font-variant-numeric:tabular-nums" id="ov-npct"></span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--text2)">of income</span><span style="font-size:12px;color:var(--text2)" id="ov-npct"></span></div>
         <div class="bwrap"><div class="bf bf-b" id="ov-bn" style="width:0"></div></div>
       </div>
       <div class="sec-hd"><span class="sec-t">Wants</span><span class="sec-a" id="ov-w"></span></div>
       <div class="card" style="padding:12px 14px">
-        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--text2)">of income</span><span style="font-size:12px;color:var(--text2);font-variant-numeric:tabular-nums" id="ov-wpct"></span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--text2)">of income</span><span style="font-size:12px;color:var(--text2)" id="ov-wpct"></span></div>
         <div class="bwrap"><div class="bf bf-a" id="ov-bw" style="width:0"></div></div>
       </div>
       <div class="sec-hd"><span class="sec-t">Savings & investing</span><span class="sec-a" id="ov-s"></span></div>
       <div class="card" style="padding:12px 14px">
-        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--text2)">of income</span><span style="font-size:12px;color:var(--text2);font-variant-numeric:tabular-nums" id="ov-spct"></span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--text2)">of income</span><span style="font-size:12px;color:var(--text2)" id="ov-spct"></span></div>
         <div class="bwrap"><div class="bf bf-g" id="ov-bs" style="width:0"></div></div>
       </div>
       <div class="saved-note" id="saved-note"></div>
@@ -135,11 +142,13 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
         <button class="mt" onclick="setMethod('zero',this)">Zero-based</button>
       </div>
       <div class="tip tip-b" id="mtip"></div>
+
       <div class="sec-hd" style="margin-top:2px"><span class="sec-t">Income</span></div>
       <div class="igrp">
         <div class="irow"><label>Employment net (after-tax)</label><input type="number" id="income" value="5000" step="100" inputmode="decimal"></div>
         <div class="irow"><label>Other income</label><input type="number" id="extra" value="0" step="50" inputmode="decimal"></div>
       </div>
+
       <div class="sec-hd"><span class="sec-t">Needs</span><span class="sec-a" id="b-n"></span></div>
       <div class="igrp">
         <div class="sub-l">Housing</div>
@@ -156,7 +165,11 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
         <div class="irow"><label>Life insurance</label><input type="number" id="lifeins" value="50" step="5" inputmode="decimal"></div>
         <div class="sub-l">Debt minimums</div>
         <div class="irow"><label>Min. debt payments</label><input type="number" id="mindebt" value="150" step="25" inputmode="decimal"></div>
+        <div class="sub-l">Custom items</div>
+        <div id="custom-needs"></div>
+        <button class="cat-add-btn" onclick="addCustomItem('needs')">＋ Add item</button>
       </div>
+
       <div class="sec-hd"><span class="sec-t">Wants</span><span class="sec-a" id="b-w"></span></div>
       <div class="igrp">
         <div class="sub-l">Food & social</div>
@@ -169,7 +182,11 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
         <div class="irow"><label>Travel & getaways</label><input type="number" id="travel" value="150" step="25" inputmode="decimal"></div>
         <div class="sub-l">Personal growth</div>
         <div class="irow"><label>Education & courses</label><input type="number" id="education" value="100" step="25" inputmode="decimal"></div>
+        <div class="sub-l">Custom items</div>
+        <div id="custom-wants"></div>
+        <button class="cat-add-btn" onclick="addCustomItem('wants')">＋ Add item</button>
       </div>
+
       <div class="sec-hd"><span class="sec-t">Save & invest</span><span class="sec-a" id="b-s"></span></div>
       <div class="igrp">
         <div class="sub-l">Canadian accounts</div>
@@ -181,6 +198,9 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
         <div class="irow"><label>Extra debt payoff</label><input type="number" id="xdebt" value="150" step="25" inputmode="decimal"></div>
         <div class="sub-l">Other</div>
         <div class="irow"><label>Non-registered savings</label><input type="number" id="nonreg" value="0" step="25" inputmode="decimal"></div>
+        <div class="sub-l">Custom items</div>
+        <div id="custom-saves"></div>
+        <button class="cat-add-btn" onclick="addCustomItem('saves')">＋ Add item</button>
       </div>
     </div>
 
@@ -209,15 +229,15 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
       <div class="card" style="padding:12px 14px">
         <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">✓</div><div class="pb"><div class="pt">Pay yourself first</div><div class="ps">Auto-transfer to savings on payday before spending anything.</div></div></div>
         <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">✓</div><div class="pb"><div class="pt">Housing over 40%? Use 60/20/20</div><div class="ps">Metro Van housing often exceeds 40% of income — 60/20/20 gives more realistic room.</div></div></div>
-        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">✓</div><div class="pb"><div class="pt">Term life over whole life</div><div class="ps">20–30yr term is better value for most BC residents. Aim for 10–12× income in coverage.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">✓</div><div class="pb"><div class="pt">Term life over whole life</div><div class="ps">20–30yr term is better value for most BC residents. Aim for 10–12x income in coverage.</div></div></div>
         <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">✓</div><div class="pb"><div class="pt">Guilt-free fun is built in</div><div class="ps">Your Wants category is intentional — budgets with no room for enjoyment fail.</div></div></div>
         <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">✓</div><div class="pb"><div class="pt">Review monthly</div><div class="ps">Life changes. Revisit and adjust every month.</div></div></div>
       </div>
       <div class="sec-hd"><span class="sec-t">Settings</span></div>
       <div class="card" style="padding:12px 14px">
-        <div style="display:flex;justify-content:space-between;padding:6px 0"><span style="font-size:13px;color:var(--text2)">Version</span><span style="font-size:13px;color:var(--text3)">1.0 · BC Budget</span></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0"><span style="font-size:13px;color:var(--text2)">Version</span><span style="font-size:13px;color:var(--text3)">1.1 - BC Budget</span></div>
         <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)"><span style="font-size:13px;color:var(--text2)">Storage</span><span style="font-size:13px;color:var(--text3)">On this device</span></div>
-        <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)"><span style="font-size:13px;color:var(--text2)">Last saved</span><span style="font-size:13px;color:var(--text3)" id="last-saved">—</span></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)"><span style="font-size:13px;color:var(--text2)">Last saved</span><span style="font-size:13px;color:var(--text3)" id="last-saved">--</span></div>
       </div>
       <button class="rst-btn" onclick="resetData()">Reset all data</button>
       <div style="height:16px"></div>
@@ -226,25 +246,19 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
   </div>
 
   <nav id="nav">
-    <button class="nav-btn on" onclick="showPage('overview',this)">
-      <span class="nav-icon">⊙</span><span>Overview</span>
-    </button>
-    <button class="nav-btn" onclick="showPage('budget',this)">
-      <span class="nav-icon">≡</span><span>Budget</span>
-    </button>
-    <button class="nav-btn" onclick="showPage('debt',this)">
-      <span class="nav-icon">↓</span><span>Debt</span>
-    </button>
-    <button class="nav-btn" onclick="showPage('guide',this)">
-      <span class="nav-icon">☆</span><span>Guide</span>
-    </button>
+    <button class="nav-btn on" onclick="showPage('overview',this)"><span class="nav-icon">o</span><span>Overview</span></button>
+    <button class="nav-btn" onclick="showPage('budget',this)"><span class="nav-icon">=</span><span>Budget</span></button>
+    <button class="nav-btn" onclick="showPage('debt',this)"><span class="nav-icon">v</span><span>Debt</span></button>
+    <button class="nav-btn" onclick="showPage('guide',this)"><span class="nav-icon">*</span><span>Guide</span></button>
   </nav>
 </div>
 
 <script>
-const SK='bc_budget_v3';
+const SK='bc_budget_v4';
 let method='60-20-20',dm='avalanche',dc=0,debts=[];
-const mtips={'60-20-20':'Recommended for Metro Vancouver — housing often exceeds 40% of income here.','50-30-20':'Classic framework. Works well if housing is below ~40% of income.','zero':'Every dollar gets a job. Income minus all categories = $0.'};
+let customItems={needs:[],wants:[],saves:[]};
+let cic=0;
+const mtips={'60-20-20':'Recommended for Metro Vancouver -- housing often exceeds 40% of income here.','50-30-20':'Classic framework. Works well if housing is below ~40% of income.','zero':'Every dollar gets a job. Income minus all categories = $0.'};
 const splits={'60-20-20':[0.60,0.20,0.20],'50-30-20':[0.50,0.30,0.20],'zero':[null,null,null]};
 
 function showPage(name,btn){
@@ -272,31 +286,70 @@ function fmt(n){return '$'+Math.round(n).toLocaleString();}
 function pp(n,t){return t?Math.round(n/t*100)+'%':'0%';}
 function sb(id,v,t){const e=document.getElementById(id);if(e)e.style.width=Math.min(100,t?v/t*100:0)+'%';}
 
+function getCustomTotal(cat){
+  return customItems[cat].reduce((sum,item)=>{
+    const e=document.getElementById('ci-amt-'+item.id);
+    return sum+(e?parseFloat(e.value)||0:item.amount);
+  },0);
+}
+
+function addCustomItem(cat,data){
+  cic++;
+  const id=cic;
+  const name=data?data.name:'';
+  const amount=data?data.amount:0;
+  customItems[cat].push({id,name,amount});
+  const container=document.getElementById('custom-'+cat);
+  const row=document.createElement('div');
+  row.className='irow';
+  row.id='ci-row-'+id;
+  row.innerHTML='<input type="text" id="ci-name-'+id+'" placeholder="Item name" value="'+name+'" oninput="updateCustomName('+id+',\''+cat+'\')">'
+    +'<input type="number" id="ci-amt-'+id+'" value="'+amount+'" step="10" inputmode="decimal" style="width:96px">'
+    +'<button class="del-btn" onclick="removeCustomItem('+id+',\''+cat+'\')" aria-label="Remove">x</button>';
+  container.appendChild(row);
+  row.querySelector('input[type=number]').addEventListener('input',recalc);
+  row.querySelector('input[type=text]').addEventListener('input',recalc);
+  if(!data){setTimeout(()=>row.querySelector('input[type=text]').focus(),50);}
+  recalc();
+}
+
+function updateCustomName(id,cat){
+  const item=customItems[cat].find(i=>i.id===id);
+  if(item){const e=document.getElementById('ci-name-'+id);item.name=e?e.value:'';}
+  saveData();
+}
+
+function removeCustomItem(id,cat){
+  const row=document.getElementById('ci-row-'+id);
+  if(row)row.remove();
+  customItems[cat]=customItems[cat].filter(i=>i.id!==id);
+  recalc();
+}
+
 function recalc(){
   const inc=gv('income')+gv('extra');
   document.getElementById('hinc').textContent=fmt(inc);
-  const needs=gv('housing')+gv('homeins')+gv('icbc')+gv('carloan')+gv('transit')+gv('utils')+gv('groceries')+gv('health')+gv('lifeins')+gv('mindebt');
-  const wants=gv('dining')+gv('entertain')+gv('subs')+gv('shopping')+gv('hobbies')+gv('travel')+gv('education');
-  const saves=gv('emerg')+gv('tfsa')+gv('rrsp')+gv('resp')+gv('xdebt')+gv('nonreg');
+  const needsFixed=gv('housing')+gv('homeins')+gv('icbc')+gv('carloan')+gv('transit')+gv('utils')+gv('groceries')+gv('health')+gv('lifeins')+gv('mindebt');
+  const wantsFixed=gv('dining')+gv('entertain')+gv('subs')+gv('shopping')+gv('hobbies')+gv('travel')+gv('education');
+  const savesFixed=gv('emerg')+gv('tfsa')+gv('rrsp')+gv('resp')+gv('xdebt')+gv('nonreg');
+  const needs=needsFixed+getCustomTotal('needs');
+  const wants=wantsFixed+getCustomTotal('wants');
+  const saves=savesFixed+getCustomTotal('saves');
   const surplus=inc-needs-wants-saves;
   const [nt,wt,st]=splits[method];
   const ns=nt?(needs/inc<=nt+0.03?'ok':'bad'):'ok';
   const ss=st?(saves/inc>=st-0.03?'ok':'warn'):'ok';
-
-  document.getElementById('ov-metrics').innerHTML=`
-    <div class="met"><div class="met-l">Income</div><div class="met-v">${fmt(inc)}</div><div class="met-s">monthly net</div></div>
-    <div class="met"><div class="met-l">Surplus</div><div class="met-v ${surplus>=0?'ok':'bad'}">${fmt(surplus)}</div><div class="met-s">${surplus>=0?'on track':'over budget'}</div></div>
-    <div class="met"><div class="met-l">Needs</div><div class="met-v ${ns}">${pp(needs,inc)}</div><div class="met-s">${fmt(needs)}</div></div>
-    <div class="met"><div class="met-l">Saved</div><div class="met-v ${ss}">${pp(saves,inc)}</div><div class="met-s">${fmt(saves)}</div></div>`;
-
+  document.getElementById('ov-metrics').innerHTML=
+    '<div class="met"><div class="met-l">Income</div><div class="met-v">'+fmt(inc)+'</div><div class="met-s">monthly net</div></div>'
+    +'<div class="met"><div class="met-l">Surplus</div><div class="met-v '+(surplus>=0?'ok':'bad')+'">'+fmt(surplus)+'</div><div class="met-s">'+(surplus>=0?'on track':'over budget')+'</div></div>'
+    +'<div class="met"><div class="met-l">Needs</div><div class="met-v '+ns+'">'+pp(needs,inc)+'</div><div class="met-s">'+fmt(needs)+'</div></div>'
+    +'<div class="met"><div class="met-l">Saved</div><div class="met-v '+ss+'">'+pp(saves,inc)+'</div><div class="met-s">'+fmt(saves)+'</div></div>';
   const sc=surplus>0?'ok':surplus<0?'bad':'zero';
   const sv=surplus>=0?'var(--green)':'var(--red)';
-  const sn=surplus>0?'Add surplus to your TFSA or extra debt payments.':surplus<0?'Spending exceeds income — review Wants or Needs.':'Every dollar accounted for.';
-  document.getElementById('ov-surplus').innerHTML=`<div class="surplus ${sc}"><div class="srow"><span class="slbl">Surplus / deficit</span><span class="sval" style="color:${sv}">${fmt(surplus)}</span></div><div class="snote">${sn}</div></div>`;
-
+  const sn=surplus>0?'Add surplus to your TFSA or extra debt payments.':surplus<0?'Spending exceeds income -- review Wants or Needs.':'Every dollar accounted for.';
+  document.getElementById('ov-surplus').innerHTML='<div class="surplus '+sc+'"><div class="srow"><span class="slbl">Surplus / deficit</span><span class="sval" style="color:'+sv+'">'+fmt(surplus)+'</span></div><div class="snote">'+sn+'</div></div>';
   const hw=document.getElementById('ov-hwarn');
-  hw.innerHTML=(gv('housing')+gv('homeins'))/inc>0.40?'<div class="tip tip-a">⚠️ Housing exceeds 40% of income — common in Metro Van. Try the 60/20/20 method.</div>':'';
-
+  hw.innerHTML=(gv('housing')+gv('homeins'))/inc>0.40?'<div class="tip tip-a">Housing exceeds 40% of income -- common in Metro Van. Try the 60/20/20 method.</div>':'';
   document.getElementById('ov-n').textContent=fmt(needs);
   document.getElementById('ov-npct').textContent=pp(needs,inc);
   document.getElementById('ov-w').textContent=fmt(wants);
@@ -304,14 +357,11 @@ function recalc(){
   document.getElementById('ov-s').textContent=fmt(saves);
   document.getElementById('ov-spct').textContent=pp(saves,inc);
   sb('ov-bn',needs,inc);sb('ov-bw',wants,inc);sb('ov-bs',saves,inc);
-
   const bn=document.getElementById('b-n');if(bn)bn.textContent=fmt(needs);
   const bw=document.getElementById('b-w');if(bw)bw.textContent=fmt(wants);
   const bs=document.getElementById('b-s');if(bs)bs.textContent=fmt(saves);
-
   const dt=document.getElementById('debt-tip');
-  if(dt)dt.textContent=`Extra payment of ${fmt(gv('xdebt'))}/mo goes to debt #1 first, then rolls down once it's paid off.`;
-
+  if(dt)dt.textContent='Extra payment of '+fmt(gv('xdebt'))+'/mo goes to debt #1 first, then rolls down once paid off.';
   renderDebtOrder();
   saveData();
 }
@@ -321,13 +371,13 @@ function addDebt(data){
   const c=document.getElementById('debt-inputs');
   const d=document.createElement('div');
   d.className='de';d.id='de-'+id;
-  d.innerHTML=`<div class="de-hd"><span class="de-t">Debt #${id}</span><button class="de-del" onclick="removeDebt(${id})">✕</button></div>
-  <div class="dfs">
-    <div class="df full"><label>Name</label><input type="text" id="dn-${id}" placeholder="e.g. credit card" value="${data?data.name:''}" oninput="gatherDebts()"></div>
-    <div class="df"><label>Balance ($)</label><input type="number" id="db-${id}" value="${data?data.bal:3000}" step="100" inputmode="decimal" oninput="gatherDebts()"></div>
-    <div class="df"><label>Interest (%)</label><input type="number" id="dr-${id}" value="${data?data.rate:19.99}" step="0.01" inputmode="decimal" oninput="gatherDebts()"></div>
-    <div class="df full"><label>Min. payment ($/mo)</label><input type="number" id="dm-${id}" value="${data?data.min:60}" step="5" inputmode="decimal" oninput="gatherDebts()"></div>
-  </div>`;
+  d.innerHTML='<div class="de-hd"><span class="de-t">Debt #'+id+'</span><button class="de-del" onclick="removeDebt('+id+')">x</button></div>'
+    +'<div class="dfs">'
+    +'<div class="df full"><label>Name</label><input type="text" id="dn-'+id+'" placeholder="e.g. credit card" value="'+(data?data.name:'')+'" oninput="gatherDebts()"></div>'
+    +'<div class="df"><label>Balance ($)</label><input type="number" id="db-'+id+'" value="'+(data?data.bal:3000)+'" step="100" inputmode="decimal" oninput="gatherDebts()"></div>'
+    +'<div class="df"><label>Interest (%)</label><input type="number" id="dr-'+id+'" value="'+(data?data.rate:19.99)+'" step="0.01" inputmode="decimal" oninput="gatherDebts()"></div>'
+    +'<div class="df full"><label>Min. payment ($/mo)</label><input type="number" id="dm-'+id+'" value="'+(data?data.min:60)+'" step="5" inputmode="decimal" oninput="gatherDebts()"></div>'
+    +'</div>';
   c.appendChild(d);gatherDebts();
 }
 
@@ -353,21 +403,30 @@ function renderDebtOrder(){
   const sorted=[...debts].sort((a,b)=>dm==='avalanche'?b.rate-a.rate:a.bal-b.bal);
   const xp=gv('xdebt');
   const dbc=['db1','db2','db3','db4','db5'];
-  let h=`<p style="font-size:11px;color:var(--text3);margin-bottom:8px">${dm==='avalanche'?'Highest interest rate first — saves the most money overall.':'Smallest balance first — quick wins to build momentum.'}</p>`;
+  let h='<p style="font-size:11px;color:var(--text3);margin-bottom:8px">'+(dm==='avalanche'?'Highest interest rate first -- saves the most money overall.':'Smallest balance first -- quick wins to build momentum.')+'</p>';
   sorted.forEach((d,i)=>{
     const first=i===0,pay=first?d.min+xp:d.min,mo=pay>0?Math.ceil(d.bal/pay):999;
-    h+=`<div class="doi"><div class="dbadge ${dbc[Math.min(i,4)]}">${i+1}</div><div class="di"><div class="dn">${d.name}</div><div class="dd">${fmt(d.bal)} · ${d.rate}% · ~${mo} mo</div></div><div class="dp"><div class="dp-a">${fmt(pay)}/mo</div><div class="dp-n">${first?'+ extra':'min'}</div></div></div>`;
+    h+='<div class="doi"><div class="dbadge '+dbc[Math.min(i,4)]+'">'+(i+1)+'</div><div class="di"><div class="dn">'+d.name+'</div><div class="dd">'+fmt(d.bal)+' - '+d.rate+'% - ~'+mo+' mo</div></div><div class="dp"><div class="dp-a">'+fmt(pay)+'/mo</div><div class="dp-n">'+(first?'+ extra':'min')+'</div></div></div>';
   });
-  if(xp>0)h+=`<div class="tip tip-b" style="margin-top:8px;font-size:12px">Once debt #1 is paid, roll its full payment into debt #2.</div>`;
+  if(xp>0)h+='<div class="tip tip-b" style="margin-top:8px;font-size:12px">Once debt #1 is paid, roll its full payment into debt #2.</div>';
   el.innerHTML=h;
 }
 
 const IDS=['income','extra','housing','homeins','icbc','carloan','transit','utils','groceries','health','lifeins','mindebt','dining','entertain','subs','shopping','hobbies','travel','education','emerg','tfsa','rrsp','resp','xdebt','nonreg'];
 
 function saveData(){
-  const vals={};IDS.forEach(id=>{const e=document.getElementById(id);if(e)vals[id]=e.value;});
+  const vals={};
+  IDS.forEach(id=>{const e=document.getElementById(id);if(e)vals[id]=e.value;});
+  const savedCustom={};
+  ['needs','wants','saves'].forEach(cat=>{
+    savedCustom[cat]=customItems[cat].map(item=>{
+      const nameEl=document.getElementById('ci-name-'+item.id);
+      const amtEl=document.getElementById('ci-amt-'+item.id);
+      return{id:item.id,name:nameEl?nameEl.value:item.name,amount:amtEl?parseFloat(amtEl.value)||0:item.amount};
+    });
+  });
   const ts=new Date().toLocaleString('en-CA',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
-  try{localStorage.setItem(SK,JSON.stringify({vals,method,dm,debts,dc,ts}));}catch(e){}
+  try{localStorage.setItem(SK,JSON.stringify({vals,method,dm,debts,dc,customItems:savedCustom,cic,ts}));}catch(e){}
   const sn=document.getElementById('saved-note');if(sn)sn.textContent='Saved '+ts;
   const ls=document.getElementById('last-saved');if(ls)ls.textContent=ts;
 }
@@ -380,6 +439,12 @@ function loadData(){
     if(data.method)method=data.method;
     if(data.dm)dm=data.dm;
     if(data.dc)dc=data.dc;
+    if(data.cic)cic=data.cic;
+    if(data.customItems){
+      ['needs','wants','saves'].forEach(cat=>{
+        if(data.customItems[cat]){data.customItems[cat].forEach(item=>addCustomItem(cat,item));}
+      });
+    }
     if(data.debts&&data.debts.length)data.debts.forEach(d=>addDebt(d));
     if(data.ts){const ls=document.getElementById('last-saved');if(ls)ls.textContent=data.ts;}
   }catch(e){}
