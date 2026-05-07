@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BC Budget">
+<meta name="theme-color" content="#0f1117">
+<title>BC Budget</title>
+<style>
+:root{--bg:#0f1117;--bg2:#181b24;--bg3:#1f2330;--bg4:#252a38;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--text:#f0f2f7;--text2:#8b91a8;--text3:#555c72;--accent:#4f8ef7;--green:#34d17a;--green-bg:rgba(52,209,122,0.1);--amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);--red:#f06070;--red-bg:rgba(240,96,112,0.1);--purple:#a78bfa;--purple-bg:rgba(167,139,250,0.1);--teal:#2dd4bf;--teal-bg:rgba(45,212,191,0.1);--safe-top:env(safe-area-inset-top,44px);--safe-bottom:env(safe-area-inset-bottom,34px)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden}
+#app{display:flex;flex-direction:column;height:100%;height:100dvh}
+#header{background:var(--bg);border-bottom:1px solid var(--border);padding:calc(var(--safe-top) + 6px) 18px 12px;flex-shrink:0}
+.hrow{display:flex;align-items:center;justify-content:space-between}
+.app-title{font-size:20px;font-weight:700;letter-spacing:-0.5px}
+.app-title span{color:var(--accent)}
+.header-sub{font-size:11px;color:var(--text3);margin-top:1px;font-variant-numeric:tabular-nums}
+.header-inc{text-align:right}
+.header-inc-lbl{font-size:10px;color:var(--text3)}
+.header-inc-val{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.3px}
+#content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--safe-bottom) + 68px)}
+#content::-webkit-scrollbar{width:0}
+#nav{position:fixed;bottom:0;left:0;right:0;background:rgba(15,17,23,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;padding-bottom:var(--safe-bottom);z-index:100}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0;background:none;border:none;color:var(--text3);font-size:10px;cursor:pointer;transition:color 0.2s;font-family:inherit}
+.nav-btn.on{color:var(--accent)}
+.nav-icon{font-size:22px;line-height:1}
+.page{display:none;padding:14px 16px 0}
+.page.on{display:block}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:14px 16px;margin-bottom:10px}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.met{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:12px 14px}
+.met-l{font-size:11px;color:var(--text3);margin-bottom:3px}
+.met-v{font-size:21px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.5px}
+.met-v.ok{color:var(--green)}.met-v.warn{color:var(--amber)}.met-v.bad{color:var(--red)}
+.met-s{font-size:11px;color:var(--text3);margin-top:1px}
+.sec-hd{display:flex;justify-content:space-between;align-items:center;margin:14px 0 8px}
+.sec-t{font-size:15px;font-weight:600;letter-spacing:-0.2px}
+.sec-a{font-size:13px;color:var(--text2);font-variant-numeric:tabular-nums}
+.bwrap{background:var(--border);border-radius:4px;height:5px;overflow:hidden;margin-top:6px}
+.bf{height:100%;border-radius:4px;transition:width 0.35s}
+.bf-b{background:var(--accent)}.bf-a{background:var(--amber)}.bf-g{background:var(--green)}
+.surplus{border-radius:16px;padding:14px;margin-bottom:10px;border:1px solid}
+.surplus.ok{background:var(--green-bg);border-color:rgba(52,209,122,0.25)}
+.surplus.bad{background:var(--red-bg);border-color:rgba(240,96,112,0.25)}
+.surplus.zero{background:var(--bg2);border-color:var(--border)}
+.srow{display:flex;justify-content:space-between;align-items:center}
+.slbl{font-size:13px;color:var(--text2)}
+.sval{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-1px}
+.snote{font-size:12px;color:var(--text2);margin-top:3px}
+.tip{border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.5;margin-bottom:10px}
+.tip-b{background:rgba(79,142,247,0.1);color:#7aabff}
+.tip-a{background:var(--amber-bg);color:var(--amber)}
+.mtabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.mt{font-size:12px;padding:5px 12px;border-radius:99px;border:1px solid var(--border2);background:none;color:var(--text2);cursor:pointer;font-family:inherit;white-space:nowrap}
+.mt.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:500}
+.igrp{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:10px}
+.sub-l{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3);padding:8px 14px 3px;background:var(--bg3)}
+.irow{display:flex;align-items:center;padding:10px 14px;border-top:1px solid var(--border);gap:10px}
+.irow:first-child{border-top:none}
+.irow label{flex:1;font-size:13px;color:var(--text2);line-height:1.2}
+.irow input[type=number]{width:96px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:14px;padding:6px 8px;text-align:right;outline:none;-webkit-appearance:none;font-variant-numeric:tabular-nums}
+.irow input[type=number]:focus{border-color:var(--accent)}
+.de{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:13px;margin-bottom:8px}
+.de-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.de-t{font-size:13px;font-weight:600}
+.de-del{background:none;border:none;color:var(--red);font-size:18px;cursor:pointer;padding:2px}
+.dfs{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.df label{font-size:11px;color:var(--text3);display:block;margin-bottom:3px}
+.df input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;padding:7px 9px;outline:none;font-family:inherit}
+.df input:focus{border-color:var(--accent)}
+.df.full{grid-column:1/-1}
+.doi{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--border)}
+.doi:first-child{border-top:none;padding-top:0}
+.dbadge{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.db1{background:#EEEDFE;color:#3C3489}.db2{background:#E1F5EE;color:#085041}.db3{background:#FAEEDA;color:#633806}.db4{background:#FAECE7;color:#712B13}.db5{background:#F1EFE8;color:#444441}
+.di{flex:1}.dn{font-size:13px;font-weight:500}.dd{font-size:11px;color:var(--text3);margin-top:1px;font-variant-numeric:tabular-nums}
+.dp{text-align:right}.dp-a{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}.dp-n{font-size:11px;color:var(--text3)}
+.add-btn{width:100%;background:var(--bg2);border:1px dashed var(--border2);border-radius:12px;padding:12px;color:var(--accent);font-family:inherit;font-size:13px;cursor:pointer;margin-bottom:10px}
+.prow{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--border);align-items:flex-start}
+.prow:first-child{border-top:none;padding-top:0}
+.pnum{width:24px;height:24px;border-radius:50%;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.pb{flex:1}.pt{font-size:13px;font-weight:500;line-height:1.3}.ps{font-size:12px;color:var(--text2);margin-top:2px;line-height:1.4}
+.pill{display:inline-block;font-size:10px;padding:1px 6px;border-radius:99px;font-weight:500;margin-left:4px;vertical-align:middle}
+.pill-g{background:var(--green-bg);color:var(--green)}.pill-b{background:rgba(79,142,247,0.15);color:var(--accent)}.pill-a{background:var(--amber-bg);color:var(--amber)}
+.saved-note{font-size:11px;color:var(--text3);text-align:center;padding:6px 0 2px}
+.rst-btn{width:100%;background:var(--red-bg);border:1px solid rgba(240,96,112,0.2);border-radius:12px;padding:13px;color:var(--red);font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;margin-top:6px}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="header">
+    <div class="hrow">
+      <div>
+        <div class="app-title">BC <span>Budget</span></div>
+        <div class="header-sub" id="hdate"></div>
+      </div>
+      <div class="header-inc">
+        <div class="header-inc-lbl">monthly income</div>
+        <div class="header-inc-val" id="hinc">$0</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="content">
+
+    <div class="page on" id="page-overview">
+      <div class="mgrid" id="ov-metrics"></div>
+      <div id="ov-surplus"></div>
+      <div id="ov-hwarn"></div>
+      <div class="sec-hd"><span class="sec-t">Needs</span><span class="sec-a" id="ov-n"></span></div>
+      <div class="card" style="padding:12px 14px">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--text2)">of income</span><span style="font-size:12px;color:var(--text2);font-variant-numeric:tabular-nums" id="ov-npct"></span></div>
+        <div class="bwrap"><div class="bf bf-b" id="ov-bn" style="width:0"></div></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Wants</span><span class="sec-a" id="ov-w"></span></div>
+      <div class="card" style="padding:12px 14px">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--text2)">of income</span><span style="font-size:12px;color:var(--text2);font-variant-numeric:tabular-nums" id="ov-wpct"></span></div>
+        <div class="bwrap"><div class="bf bf-a" id="ov-bw" style="width:0"></div></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Savings & investing</span><span class="sec-a" id="ov-s"></span></div>
+      <div class="card" style="padding:12px 14px">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--text2)">of income</span><span style="font-size:12px;color:var(--text2);font-variant-numeric:tabular-nums" id="ov-spct"></span></div>
+        <div class="bwrap"><div class="bf bf-g" id="ov-bs" style="width:0"></div></div>
+      </div>
+      <div class="saved-note" id="saved-note"></div>
+    </div>
+
+    <div class="page" id="page-budget">
+      <div class="mtabs" id="mtabs">
+        <button class="mt on" onclick="setMethod('60-20-20',this)">60/20/20 — BC</button>
+        <button class="mt" onclick="setMethod('50-30-20',this)">50/30/20</button>
+        <button class="mt" onclick="setMethod('zero',this)">Zero-based</button>
+      </div>
+      <div class="tip tip-b" id="mtip"></div>
+      <div class="sec-hd" style="margin-top:2px"><span class="sec-t">Income</span></div>
+      <div class="igrp">
+        <div class="irow"><label>Employment net (after-tax)</label><input type="number" id="income" value="5000" step="100" inputmode="decimal"></div>
+        <div class="irow"><label>Other income</label><input type="number" id="extra" value="0" step="50" inputmode="decimal"></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Needs</span><span class="sec-a" id="b-n"></span></div>
+      <div class="igrp">
+        <div class="sub-l">Housing</div>
+        <div class="irow"><label>Rent / mortgage</label><input type="number" id="housing" value="2000" step="50" inputmode="decimal"></div>
+        <div class="irow"><label>Home insurance</label><input type="number" id="homeins" value="120" step="10" inputmode="decimal"></div>
+        <div class="sub-l">Transportation</div>
+        <div class="irow"><label>ICBC insurance</label><input type="number" id="icbc" value="180" step="10" inputmode="decimal"></div>
+        <div class="irow"><label>Car loan payment</label><input type="number" id="carloan" value="400" step="25" inputmode="decimal"></div>
+        <div class="irow"><label>Gas / TransLink</label><input type="number" id="transit" value="130" step="10" inputmode="decimal"></div>
+        <div class="sub-l">Living essentials</div>
+        <div class="irow"><label>Utilities & internet</label><input type="number" id="utils" value="180" step="10" inputmode="decimal"></div>
+        <div class="irow"><label>Groceries</label><input type="number" id="groceries" value="450" step="25" inputmode="decimal"></div>
+        <div class="irow"><label>Extended health / dental</label><input type="number" id="health" value="80" step="10" inputmode="decimal"></div>
+        <div class="irow"><label>Life insurance</label><input type="number" id="lifeins" value="50" step="5" inputmode="decimal"></div>
+        <div class="sub-l">Debt minimums</div>
+        <div class="irow"><label>Min. debt payments</label><input type="number" id="mindebt" value="150" step="25" inputmode="decimal"></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Wants</span><span class="sec-a" id="b-w"></span></div>
+      <div class="igrp">
+        <div class="sub-l">Food & social</div>
+        <div class="irow"><label>Dining & restaurants</label><input type="number" id="dining" value="250" step="25" inputmode="decimal"></div>
+        <div class="irow"><label>Entertainment & events</label><input type="number" id="entertain" value="100" step="25" inputmode="decimal"></div>
+        <div class="sub-l">Lifestyle</div>
+        <div class="irow"><label>Streaming & subscriptions</label><input type="number" id="subs" value="60" step="5" inputmode="decimal"></div>
+        <div class="irow"><label>Shopping & clothing</label><input type="number" id="shopping" value="120" step="25" inputmode="decimal"></div>
+        <div class="irow"><label>Hobbies & recreation</label><input type="number" id="hobbies" value="100" step="25" inputmode="decimal"></div>
+        <div class="irow"><label>Travel & getaways</label><input type="number" id="travel" value="150" step="25" inputmode="decimal"></div>
+        <div class="sub-l">Personal growth</div>
+        <div class="irow"><label>Education & courses</label><input type="number" id="education" value="100" step="25" inputmode="decimal"></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Save & invest</span><span class="sec-a" id="b-s"></span></div>
+      <div class="igrp">
+        <div class="sub-l">Canadian accounts</div>
+        <div class="irow"><label>Emergency fund (TFSA)</label><input type="number" id="emerg" value="200" step="25" inputmode="decimal"></div>
+        <div class="irow"><label>TFSA — investments</label><input type="number" id="tfsa" value="250" step="25" inputmode="decimal"></div>
+        <div class="irow"><label>RRSP</label><input type="number" id="rrsp" value="200" step="25" inputmode="decimal"></div>
+        <div class="irow"><label>RESP (if applicable)</label><input type="number" id="resp" value="0" step="25" inputmode="decimal"></div>
+        <div class="sub-l">Debt acceleration</div>
+        <div class="irow"><label>Extra debt payoff</label><input type="number" id="xdebt" value="150" step="25" inputmode="decimal"></div>
+        <div class="sub-l">Other</div>
+        <div class="irow"><label>Non-registered savings</label><input type="number" id="nonreg" value="0" step="25" inputmode="decimal"></div>
+      </div>
+    </div>
+
+    <div class="page" id="page-debt">
+      <div class="tip tip-b" id="debt-tip" style="margin-top:2px"></div>
+      <div id="debt-inputs"></div>
+      <button class="add-btn" onclick="addDebt()">+ Add a debt</button>
+      <div class="mtabs">
+        <button class="mt on" onclick="setDM('avalanche',this)">Avalanche — saves most $</button>
+        <button class="mt" onclick="setDM('snowball',this)">Snowball — quick wins</button>
+      </div>
+      <div class="card" id="debt-order" style="padding:12px 14px"></div>
+    </div>
+
+    <div class="page" id="page-guide">
+      <div class="sec-hd" style="margin-top:2px"><span class="sec-t">Canadian account priority</span></div>
+      <div class="card" style="padding:12px 14px">
+        <div class="prow"><div class="pnum db1">1</div><div class="pb"><div class="pt">Employer match<span class="pill pill-g">free money</span></div><div class="ps">Always contribute enough to get the full employer match first — instant 50–100% return.</div></div></div>
+        <div class="prow"><div class="pnum db2">2</div><div class="pb"><div class="pt">Emergency fund in TFSA<span class="pill pill-b">3–6 mo</span></div><div class="ps">Use a TFSA HISA (EQ Bank, Oaken). Tax-free interest, withdraw anytime.</div></div></div>
+        <div class="prow"><div class="pnum db3">3</div><div class="pb"><div class="pt">High-interest debt<span class="pill pill-a">&gt;7% APR</span></div><div class="ps">Canadian credit cards: 19.99–22.99%. Paying these beats most investments.</div></div></div>
+        <div class="prow"><div class="pnum db4">4</div><div class="pb"><div class="pt">TFSA investing</div><div class="ps">Max $7,000/yr (2025). Lifetime up to $95,000. XEQT or VEQT ETFs are a simple low-cost choice.</div></div></div>
+        <div class="prow"><div class="pnum db5">5</div><div class="pb"><div class="pt">RRSP</div><div class="ps">Best when your tax rate now is higher than in retirement. BC combined rate hits 20.06% at ~$57K income.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:#EEEDFE;color:#3C3489">6</div><div class="pb"><div class="pt">RESP<span class="pill pill-g">20% CESG</span></div><div class="ps">$208/mo per child captures the full $500/yr federal grant. $7,200 lifetime max per child.</div></div></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Key rules</span></div>
+      <div class="card" style="padding:12px 14px">
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">✓</div><div class="pb"><div class="pt">Pay yourself first</div><div class="ps">Auto-transfer to savings on payday before spending anything.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">✓</div><div class="pb"><div class="pt">Housing over 40%? Use 60/20/20</div><div class="ps">Metro Van housing often exceeds 40% of income — 60/20/20 gives more realistic room.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">✓</div><div class="pb"><div class="pt">Term life over whole life</div><div class="ps">20–30yr term is better value for most BC residents. Aim for 10–12× income in coverage.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">✓</div><div class="pb"><div class="pt">Guilt-free fun is built in</div><div class="ps">Your Wants category is intentional — budgets with no room for enjoyment fail.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">✓</div><div class="pb"><div class="pt">Review monthly</div><div class="ps">Life changes. Revisit and adjust every month.</div></div></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Settings</span></div>
+      <div class="card" style="padding:12px 14px">
+        <div style="display:flex;justify-content:space-between;padding:6px 0"><span style="font-size:13px;color:var(--text2)">Version</span><span style="font-size:13px;color:var(--text3)">1.0 · BC Budget</span></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)"><span style="font-size:13px;color:var(--text2)">Storage</span><span style="font-size:13px;color:var(--text3)">On this device</span></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)"><span style="font-size:13px;color:var(--text2)">Last saved</span><span style="font-size:13px;color:var(--text3)" id="last-saved">—</span></div>
+      </div>
+      <button class="rst-btn" onclick="resetData()">Reset all data</button>
+      <div style="height:16px"></div>
+    </div>
+
+  </div>
+
+  <nav id="nav">
+    <button class="nav-btn on" onclick="showPage('overview',this)">
+      <span class="nav-icon">⊙</span><span>Overview</span>
+    </button>
+    <button class="nav-btn" onclick="showPage('budget',this)">
+      <span class="nav-icon">≡</span><span>Budget</span>
+    </button>
+    <button class="nav-btn" onclick="showPage('debt',this)">
+      <span class="nav-icon">↓</span><span>Debt</span>
+    </button>
+    <button class="nav-btn" onclick="showPage('guide',this)">
+      <span class="nav-icon">☆</span><span>Guide</span>
+    </button>
+  </nav>
+</div>
+
+<script>
+const SK='bc_budget_v3';
+let method='60-20-20',dm='avalanche',dc=0,debts=[];
+const mtips={'60-20-20':'Recommended for Metro Vancouver — housing often exceeds 40% of income here.','50-30-20':'Classic framework. Works well if housing is below ~40% of income.','zero':'Every dollar gets a job. Income minus all categories = $0.'};
+const splits={'60-20-20':[0.60,0.20,0.20],'50-30-20':[0.50,0.30,0.20],'zero':[null,null,null]};
+
+function showPage(name,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('page-'+name).classList.add('on');
+  btn.classList.add('on');
+  document.getElementById('content').scrollTop=0;
+}
+function setMethod(m,btn){
+  method=m;
+  btn.closest('.mtabs').querySelectorAll('.mt').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const el=document.getElementById('mtip');if(el)el.textContent=mtips[m];
+  recalc();
+}
+function setDM(m,btn){
+  dm=m;
+  btn.closest('.mtabs').querySelectorAll('.mt').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderDebtOrder();
+}
+function gv(id){const e=document.getElementById(id);return e?parseFloat(e.value)||0:0;}
+function fmt(n){return '$'+Math.round(n).toLocaleString();}
+function pp(n,t){return t?Math.round(n/t*100)+'%':'0%';}
+function sb(id,v,t){const e=document.getElementById(id);if(e)e.style.width=Math.min(100,t?v/t*100:0)+'%';}
+
+function recalc(){
+  const inc=gv('income')+gv('extra');
+  document.getElementById('hinc').textContent=fmt(inc);
+  const needs=gv('housing')+gv('homeins')+gv('icbc')+gv('carloan')+gv('transit')+gv('utils')+gv('groceries')+gv('health')+gv('lifeins')+gv('mindebt');
+  const wants=gv('dining')+gv('entertain')+gv('subs')+gv('shopping')+gv('hobbies')+gv('travel')+gv('education');
+  const saves=gv('emerg')+gv('tfsa')+gv('rrsp')+gv('resp')+gv('xdebt')+gv('nonreg');
+  const surplus=inc-needs-wants-saves;
+  const [nt,wt,st]=splits[method];
+  const ns=nt?(needs/inc<=nt+0.03?'ok':'bad'):'ok';
+  const ss=st?(saves/inc>=st-0.03?'ok':'warn'):'ok';
+
+  document.getElementById('ov-metrics').innerHTML=`
+    <div class="met"><div class="met-l">Income</div><div class="met-v">${fmt(inc)}</div><div class="met-s">monthly net</div></div>
+    <div class="met"><div class="met-l">Surplus</div><div class="met-v ${surplus>=0?'ok':'bad'}">${fmt(surplus)}</div><div class="met-s">${surplus>=0?'on track':'over budget'}</div></div>
+    <div class="met"><div class="met-l">Needs</div><div class="met-v ${ns}">${pp(needs,inc)}</div><div class="met-s">${fmt(needs)}</div></div>
+    <div class="met"><div class="met-l">Saved</div><div class="met-v ${ss}">${pp(saves,inc)}</div><div class="met-s">${fmt(saves)}</div></div>`;
+
+  const sc=surplus>0?'ok':surplus<0?'bad':'zero';
+  const sv=surplus>=0?'var(--green)':'var(--red)';
+  const sn=surplus>0?'Add surplus to your TFSA or extra debt payments.':surplus<0?'Spending exceeds income — review Wants or Needs.':'Every dollar accounted for.';
+  document.getElementById('ov-surplus').innerHTML=`<div class="surplus ${sc}"><div class="srow"><span class="slbl">Surplus / deficit</span><span class="sval" style="color:${sv}">${fmt(surplus)}</span></div><div class="snote">${sn}</div></div>`;
+
+  const hw=document.getElementById('ov-hwarn');
+  hw.innerHTML=(gv('housing')+gv('homeins'))/inc>0.40?'<div class="tip tip-a">⚠️ Housing exceeds 40% of income — common in Metro Van. Try the 60/20/20 method.</div>':'';
+
+  document.getElementById('ov-n').textContent=fmt(needs);
+  document.getElementById('ov-npct').textContent=pp(needs,inc);
+  document.getElementById('ov-w').textContent=fmt(wants);
+  document.getElementById('ov-wpct').textContent=pp(wants,inc);
+  document.getElementById('ov-s').textContent=fmt(saves);
+  document.getElementById('ov-spct').textContent=pp(saves,inc);
+  sb('ov-bn',needs,inc);sb('ov-bw',wants,inc);sb('ov-bs',saves,inc);
+
+  const bn=document.getElementById('b-n');if(bn)bn.textContent=fmt(needs);
+  const bw=document.getElementById('b-w');if(bw)bw.textContent=fmt(wants);
+  const bs=document.getElementById('b-s');if(bs)bs.textContent=fmt(saves);
+
+  const dt=document.getElementById('debt-tip');
+  if(dt)dt.textContent=`Extra payment of ${fmt(gv('xdebt'))}/mo goes to debt #1 first, then rolls down once it's paid off.`;
+
+  renderDebtOrder();
+  saveData();
+}
+
+function addDebt(data){
+  dc++;const id=dc;
+  const c=document.getElementById('debt-inputs');
+  const d=document.createElement('div');
+  d.className='de';d.id='de-'+id;
+  d.innerHTML=`<div class="de-hd"><span class="de-t">Debt #${id}</span><button class="de-del" onclick="removeDebt(${id})">✕</button></div>
+  <div class="dfs">
+    <div class="df full"><label>Name</label><input type="text" id="dn-${id}" placeholder="e.g. credit card" value="${data?data.name:''}" oninput="gatherDebts()"></div>
+    <div class="df"><label>Balance ($)</label><input type="number" id="db-${id}" value="${data?data.bal:3000}" step="100" inputmode="decimal" oninput="gatherDebts()"></div>
+    <div class="df"><label>Interest (%)</label><input type="number" id="dr-${id}" value="${data?data.rate:19.99}" step="0.01" inputmode="decimal" oninput="gatherDebts()"></div>
+    <div class="df full"><label>Min. payment ($/mo)</label><input type="number" id="dm-${id}" value="${data?data.min:60}" step="5" inputmode="decimal" oninput="gatherDebts()"></div>
+  </div>`;
+  c.appendChild(d);gatherDebts();
+}
+
+function removeDebt(id){
+  const e=document.getElementById('de-'+id);if(e)e.remove();
+  debts=debts.filter(d=>d.id!==id);renderDebtOrder();saveData();
+}
+
+function gatherDebts(){
+  debts=[];
+  document.querySelectorAll('[id^="db-"]').forEach(el=>{
+    const id=el.id.split('-')[1];
+    if(document.getElementById('de-'+id)){
+      debts.push({id:parseInt(id),name:(document.getElementById('dn-'+id)||{}).value||'Debt #'+id,bal:parseFloat(el.value)||0,rate:parseFloat((document.getElementById('dr-'+id)||{}).value)||0,min:parseFloat((document.getElementById('dm-'+id)||{}).value)||0});
+    }
+  });
+  renderDebtOrder();saveData();
+}
+
+function renderDebtOrder(){
+  const el=document.getElementById('debt-order');if(!el)return;
+  if(!debts.length){el.innerHTML='<p style="font-size:13px;color:var(--text3)">Add debts above to see your payoff order.</p>';return;}
+  const sorted=[...debts].sort((a,b)=>dm==='avalanche'?b.rate-a.rate:a.bal-b.bal);
+  const xp=gv('xdebt');
+  const dbc=['db1','db2','db3','db4','db5'];
+  let h=`<p style="font-size:11px;color:var(--text3);margin-bottom:8px">${dm==='avalanche'?'Highest interest rate first — saves the most money overall.':'Smallest balance first — quick wins to build momentum.'}</p>`;
+  sorted.forEach((d,i)=>{
+    const first=i===0,pay=first?d.min+xp:d.min,mo=pay>0?Math.ceil(d.bal/pay):999;
+    h+=`<div class="doi"><div class="dbadge ${dbc[Math.min(i,4)]}">${i+1}</div><div class="di"><div class="dn">${d.name}</div><div class="dd">${fmt(d.bal)} · ${d.rate}% · ~${mo} mo</div></div><div class="dp"><div class="dp-a">${fmt(pay)}/mo</div><div class="dp-n">${first?'+ extra':'min'}</div></div></div>`;
+  });
+  if(xp>0)h+=`<div class="tip tip-b" style="margin-top:8px;font-size:12px">Once debt #1 is paid, roll its full payment into debt #2.</div>`;
+  el.innerHTML=h;
+}
+
+const IDS=['income','extra','housing','homeins','icbc','carloan','transit','utils','groceries','health','lifeins','mindebt','dining','entertain','subs','shopping','hobbies','travel','education','emerg','tfsa','rrsp','resp','xdebt','nonreg'];
+
+function saveData(){
+  const vals={};IDS.forEach(id=>{const e=document.getElementById(id);if(e)vals[id]=e.value;});
+  const ts=new Date().toLocaleString('en-CA',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  try{localStorage.setItem(SK,JSON.stringify({vals,method,dm,debts,dc,ts}));}catch(e){}
+  const sn=document.getElementById('saved-note');if(sn)sn.textContent='Saved '+ts;
+  const ls=document.getElementById('last-saved');if(ls)ls.textContent=ts;
+}
+
+function loadData(){
+  try{
+    const raw=localStorage.getItem(SK);if(!raw)return;
+    const data=JSON.parse(raw);
+    if(data.vals)Object.entries(data.vals).forEach(([id,val])=>{const e=document.getElementById(id);if(e)e.value=val;});
+    if(data.method)method=data.method;
+    if(data.dm)dm=data.dm;
+    if(data.dc)dc=data.dc;
+    if(data.debts&&data.debts.length)data.debts.forEach(d=>addDebt(d));
+    if(data.ts){const ls=document.getElementById('last-saved');if(ls)ls.textContent=data.ts;}
+  }catch(e){}
+}
+
+function resetData(){
+  if(!confirm('Reset all budget data? This cannot be undone.'))return;
+  try{localStorage.removeItem(SK);}catch(e){}
+  location.reload();
+}
+
+document.getElementById('hdate').textContent=new Date().toLocaleString('en-CA',{month:'long',year:'numeric'});
+document.getElementById('mtip').textContent=mtips[method];
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',()=>{if(el.type!=='text')recalc();else gatherDebts();}));
+loadData();
+recalc();
+</script>
+</body>
+</html>
