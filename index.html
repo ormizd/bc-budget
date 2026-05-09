@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#0f1117">
 <title>BC Budget</title>
 <style>
-:root{--bg:#0f1117;--bg2:#181b24;--bg3:#1f2330;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--text:#f0f2f7;--text2:#8b91a8;--text3:#555c72;--accent:#4f8ef7;--green:#34d17a;--green-bg:rgba(52,209,122,0.1);--amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);--red:#f06070;--red-bg:rgba(240,96,112,0.1);--safe-top:env(safe-area-inset-top,44px);--safe-bottom:env(safe-area-inset-bottom,34px)}
+:root{--bg:#0f1117;--bg2:#181b24;--bg3:#1f2330;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--text:#f0f2f7;--text2:#8b91a8;--text3:#555c72;--accent:#4f8ef7;--green:#34d17a;--green-bg:rgba(52,209,122,0.1);--amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);--red:#f06070;--red-bg:rgba(240,96,112,0.1);--purple:#a78bfa;--purple-bg:rgba(167,139,250,0.1);--safe-top:env(safe-area-inset-top,44px);--safe-bottom:env(safe-area-inset-bottom,34px)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden}
 #app{display:flex;flex-direction:column;height:100%;height:100dvh}
@@ -94,6 +94,41 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 .pill-g{background:var(--green-bg);color:var(--green)}.pill-b{background:rgba(79,142,247,0.15);color:var(--accent)}.pill-a{background:var(--amber-bg);color:var(--amber)}
 .saved-note{font-size:11px;color:var(--text3);text-align:center;padding:6px 0 2px}
 .rst-btn{width:100%;background:var(--red-bg);border:1px solid rgba(240,96,112,0.2);border-radius:12px;padding:13px;color:var(--red);font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;margin-top:6px}
+
+/* Surplus distributor button */
+.dist-btn{width:100%;background:linear-gradient(135deg,rgba(79,142,247,0.15),rgba(167,139,250,0.15));border:1px solid rgba(79,142,247,0.3);border-radius:14px;padding:14px 16px;color:var(--accent);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:-0.2px}
+.dist-btn:active{opacity:0.8}
+.dist-btn .dist-icon{font-size:18px}
+
+/* Modal overlay */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:flex;flex-direction:column;justify-content:flex-end;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.modal-overlay.hidden{display:none}
+.modal-sheet{background:var(--bg2);border-radius:20px 20px 0 0;padding:20px 16px calc(var(--safe-bottom) + 20px);max-height:85vh;overflow-y:auto}
+.modal-sheet::-webkit-scrollbar{width:0}
+.modal-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 16px}
+.modal-title{font-size:17px;font-weight:700;letter-spacing:-0.3px;margin-bottom:4px}
+.modal-sub{font-size:13px;color:var(--text2);margin-bottom:16px}
+.modal-cancel{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:13px;color:var(--text2);font-family:inherit;font-size:14px;cursor:pointer;margin-top:8px}
+
+/* Option cards */
+.opt-card{background:var(--bg3);border:1.5px solid var(--border2);border-radius:16px;padding:14px;margin-bottom:10px;cursor:pointer;transition:border-color 0.2s}
+.opt-card:active{border-color:var(--accent)}
+.opt-card.selected{border-color:var(--accent);background:rgba(79,142,247,0.08)}
+.opt-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.opt-badge{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.opt-a .opt-badge{background:var(--red-bg);color:var(--red)}
+.opt-b .opt-badge{background:var(--green-bg);color:var(--green)}
+.opt-c .opt-badge{background:var(--purple-bg);color:var(--purple)}
+.opt-name{font-size:14px;font-weight:600;letter-spacing:-0.2px}
+.opt-tag{font-size:10px;color:var(--text3);margin-top:1px}
+.opt-reason{font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:10px;padding:8px 10px;background:rgba(255,255,255,0.04);border-radius:8px}
+.opt-items{display:flex;flex-direction:column;gap:5px}
+.opt-item{display:flex;justify-content:space-between;align-items:center;font-size:13px}
+.opt-item-label{color:var(--text2)}
+.opt-item-val{font-weight:600;color:var(--green)}
+.opt-item-val.neutral{color:var(--text)}
+.apply-btn{width:100%;background:var(--accent);border:none;border-radius:12px;padding:14px;color:#fff;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;letter-spacing:-0.2px}
+.apply-btn:disabled{opacity:0.4;cursor:default}
 </style>
 </head>
 <body>
@@ -113,9 +148,11 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 
   <div id="content">
 
+    <!-- OVERVIEW -->
     <div class="page on" id="page-overview">
       <div class="mgrid" id="ov-metrics"></div>
       <div id="ov-surplus"></div>
+      <div id="ov-dist-btn"></div>
       <div id="ov-hwarn"></div>
       <div class="sec-hd"><span class="sec-t">Needs</span><span class="sec-a" id="ov-n"></span></div>
       <div class="card" style="padding:12px 14px">
@@ -135,6 +172,7 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
       <div class="saved-note" id="saved-note"></div>
     </div>
 
+    <!-- BUDGET -->
     <div class="page" id="page-budget">
       <div class="mtabs" id="mtabs">
         <button class="mt on" onclick="setMethod('60-20-20',this)">60/20/20 — BC</button>
@@ -142,13 +180,11 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
         <button class="mt" onclick="setMethod('zero',this)">Zero-based</button>
       </div>
       <div class="tip tip-b" id="mtip"></div>
-
       <div class="sec-hd" style="margin-top:2px"><span class="sec-t">Income</span></div>
       <div class="igrp">
         <div class="irow"><label>Employment net (after-tax)</label><input type="number" id="income" value="5000" step="100" inputmode="decimal"></div>
         <div class="irow"><label>Other income</label><input type="number" id="extra" value="0" step="50" inputmode="decimal"></div>
       </div>
-
       <div class="sec-hd"><span class="sec-t">Needs</span><span class="sec-a" id="b-n"></span></div>
       <div class="igrp">
         <div class="sub-l">Housing</div>
@@ -167,9 +203,8 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
         <div class="irow"><label>Min. debt payments</label><input type="number" id="mindebt" value="150" step="25" inputmode="decimal"></div>
         <div class="sub-l">Custom items</div>
         <div id="custom-needs"></div>
-        <button class="cat-add-btn" onclick="addCustomItem('needs')">＋ Add item</button>
+        <button class="cat-add-btn" onclick="addCustomItem('needs')">+ Add item</button>
       </div>
-
       <div class="sec-hd"><span class="sec-t">Wants</span><span class="sec-a" id="b-w"></span></div>
       <div class="igrp">
         <div class="sub-l">Food & social</div>
@@ -184,9 +219,8 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
         <div class="irow"><label>Education & courses</label><input type="number" id="education" value="100" step="25" inputmode="decimal"></div>
         <div class="sub-l">Custom items</div>
         <div id="custom-wants"></div>
-        <button class="cat-add-btn" onclick="addCustomItem('wants')">＋ Add item</button>
+        <button class="cat-add-btn" onclick="addCustomItem('wants')">+ Add item</button>
       </div>
-
       <div class="sec-hd"><span class="sec-t">Save & invest</span><span class="sec-a" id="b-s"></span></div>
       <div class="igrp">
         <div class="sub-l">Canadian accounts</div>
@@ -200,10 +234,11 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
         <div class="irow"><label>Non-registered savings</label><input type="number" id="nonreg" value="0" step="25" inputmode="decimal"></div>
         <div class="sub-l">Custom items</div>
         <div id="custom-saves"></div>
-        <button class="cat-add-btn" onclick="addCustomItem('saves')">＋ Add item</button>
+        <button class="cat-add-btn" onclick="addCustomItem('saves')">+ Add item</button>
       </div>
     </div>
 
+    <!-- DEBT -->
     <div class="page" id="page-debt">
       <div class="tip tip-b" id="debt-tip" style="margin-top:2px"></div>
       <div id="debt-inputs"></div>
@@ -215,27 +250,27 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
       <div class="card" id="debt-order" style="padding:12px 14px"></div>
     </div>
 
+    <!-- GUIDE -->
     <div class="page" id="page-guide">
       <div class="sec-hd" style="margin-top:2px"><span class="sec-t">Canadian account priority</span></div>
       <div class="card" style="padding:12px 14px">
-        <div class="prow"><div class="pnum db1">1</div><div class="pb"><div class="pt">Employer match<span class="pill pill-g">free money</span></div><div class="ps">Always contribute enough to get the full employer match first — instant 50–100% return.</div></div></div>
-        <div class="prow"><div class="pnum db2">2</div><div class="pb"><div class="pt">Emergency fund in TFSA<span class="pill pill-b">3–6 mo</span></div><div class="ps">Use a TFSA HISA (EQ Bank, Oaken). Tax-free interest, withdraw anytime.</div></div></div>
-        <div class="prow"><div class="pnum db3">3</div><div class="pb"><div class="pt">High-interest debt<span class="pill pill-a">&gt;7% APR</span></div><div class="ps">Canadian credit cards: 19.99–22.99%. Paying these beats most investments.</div></div></div>
+        <div class="prow"><div class="pnum db1">1</div><div class="pb"><div class="pt">Employer match<span class="pill pill-g">free money</span></div><div class="ps">Always contribute enough to get the full employer match first.</div></div></div>
+        <div class="prow"><div class="pnum db2">2</div><div class="pb"><div class="pt">Emergency fund in TFSA<span class="pill pill-b">3-6 mo</span></div><div class="ps">Use a TFSA HISA (EQ Bank, Oaken). Tax-free interest, withdraw anytime.</div></div></div>
+        <div class="prow"><div class="pnum db3">3</div><div class="pb"><div class="pt">High-interest debt<span class="pill pill-a">>7% APR</span></div><div class="ps">Canadian credit cards: 19.99-22.99%. Paying these beats most investments.</div></div></div>
         <div class="prow"><div class="pnum db4">4</div><div class="pb"><div class="pt">TFSA investing</div><div class="ps">Max $7,000/yr (2025). Lifetime up to $95,000. XEQT or VEQT ETFs are a simple low-cost choice.</div></div></div>
         <div class="prow"><div class="pnum db5">5</div><div class="pb"><div class="pt">RRSP</div><div class="ps">Best when your tax rate now is higher than in retirement. BC combined rate hits 20.06% at ~$57K income.</div></div></div>
-        <div class="prow"><div class="pnum" style="background:#EEEDFE;color:#3C3489">6</div><div class="pb"><div class="pt">RESP<span class="pill pill-g">20% CESG</span></div><div class="ps">$208/mo per child captures the full $500/yr federal grant. $7,200 lifetime max per child.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:#EEEDFE;color:#3C3489">6</div><div class="pb"><div class="pt">RESP<span class="pill pill-g">20% CESG</span></div><div class="ps">$208/mo per child captures the full $500/yr federal grant.</div></div></div>
       </div>
       <div class="sec-hd"><span class="sec-t">Key rules</span></div>
       <div class="card" style="padding:12px 14px">
-        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">✓</div><div class="pb"><div class="pt">Pay yourself first</div><div class="ps">Auto-transfer to savings on payday before spending anything.</div></div></div>
-        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">✓</div><div class="pb"><div class="pt">Housing over 40%? Use 60/20/20</div><div class="ps">Metro Van housing often exceeds 40% of income — 60/20/20 gives more realistic room.</div></div></div>
-        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">✓</div><div class="pb"><div class="pt">Term life over whole life</div><div class="ps">20–30yr term is better value for most BC residents. Aim for 10–12x income in coverage.</div></div></div>
-        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">✓</div><div class="pb"><div class="pt">Guilt-free fun is built in</div><div class="ps">Your Wants category is intentional — budgets with no room for enjoyment fail.</div></div></div>
-        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">✓</div><div class="pb"><div class="pt">Review monthly</div><div class="ps">Life changes. Revisit and adjust every month.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Pay yourself first</div><div class="ps">Auto-transfer to savings on payday before spending anything.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Housing over 40%? Use 60/20/20</div><div class="ps">Metro Van housing often exceeds 40% of income.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Term life over whole life</div><div class="ps">20-30yr term is better value. Aim for 10-12x income in coverage.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Review monthly</div><div class="ps">Life changes. Revisit and adjust every month.</div></div></div>
       </div>
       <div class="sec-hd"><span class="sec-t">Settings</span></div>
       <div class="card" style="padding:12px 14px">
-        <div style="display:flex;justify-content:space-between;padding:6px 0"><span style="font-size:13px;color:var(--text2)">Version</span><span style="font-size:13px;color:var(--text3)">1.1 - BC Budget</span></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0"><span style="font-size:13px;color:var(--text2)">Version</span><span style="font-size:13px;color:var(--text3)">1.2 - BC Budget</span></div>
         <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)"><span style="font-size:13px;color:var(--text2)">Storage</span><span style="font-size:13px;color:var(--text3)">On this device</span></div>
         <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)"><span style="font-size:13px;color:var(--text2)">Last saved</span><span style="font-size:13px;color:var(--text3)" id="last-saved">--</span></div>
       </div>
@@ -253,12 +288,31 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
   </nav>
 </div>
 
+<!-- SURPLUS DISTRIBUTOR MODAL -->
+<div class="modal-overlay hidden" id="dist-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Distribute Surplus</div>
+    <div class="modal-sub" id="dist-modal-sub"></div>
+    <div id="dist-options"></div>
+    <button class="apply-btn" id="dist-apply" onclick="applyOption()" disabled>Select an option to apply</button>
+    <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
 <script>
-const SK='bc_budget_v4';
+const SK='bc_budget_v5';
 let method='60-20-20',dm='avalanche',dc=0,debts=[];
 let customItems={needs:[],wants:[],saves:[]};
 let cic=0;
-const mtips={'60-20-20':'Recommended for Metro Vancouver -- housing often exceeds 40% of income here.','50-30-20':'Classic framework. Works well if housing is below ~40% of income.','zero':'Every dollar gets a job. Income minus all categories = $0.'};
+let selectedOption=null;
+let generatedOptions=[];
+
+const mtips={
+  '60-20-20':'Recommended for Metro Vancouver -- housing often exceeds 40% of income here.',
+  '50-30-20':'Classic framework. Works well if housing is below ~40% of income.',
+  'zero':'Every dollar gets a job. Income minus all categories = $0.'
+};
 const splits={'60-20-20':[0.60,0.20,0.20],'50-30-20':[0.50,0.30,0.20],'zero':[null,null,null]};
 
 function showPage(name,btn){
@@ -282,6 +336,7 @@ function setDM(m,btn){
   renderDebtOrder();
 }
 function gv(id){const e=document.getElementById(id);return e?parseFloat(e.value)||0:0;}
+function sv(id,val){const e=document.getElementById(id);if(e)e.value=Math.round(val);}
 function fmt(n){return '$'+Math.round(n).toLocaleString();}
 function pp(n,t){return t?Math.round(n/t*100)+'%':'0%';}
 function sb(id,v,t){const e=document.getElementById(id);if(e)e.style.width=Math.min(100,t?v/t*100:0)+'%';}
@@ -291,6 +346,174 @@ function getCustomTotal(cat){
     const e=document.getElementById('ci-amt-'+item.id);
     return sum+(e?parseFloat(e.value)||0:item.amount);
   },0);
+}
+
+function getBudgetState(){
+  const inc=gv('income')+gv('extra');
+  const needsFixed=gv('housing')+gv('homeins')+gv('icbc')+gv('carloan')+gv('transit')+gv('utils')+gv('groceries')+gv('health')+gv('lifeins')+gv('mindebt');
+  const wantsFixed=gv('dining')+gv('entertain')+gv('subs')+gv('shopping')+gv('hobbies')+gv('travel')+gv('education');
+  const savesFixed=gv('emerg')+gv('tfsa')+gv('rrsp')+gv('resp')+gv('xdebt')+gv('nonreg');
+  const needs=needsFixed+getCustomTotal('needs');
+  const wants=wantsFixed+getCustomTotal('wants');
+  const saves=savesFixed+getCustomTotal('saves');
+  const surplus=inc-needs-wants-saves;
+  const monthlyExp=needs+wants;
+  const emergTarget=monthlyExp*3;
+  const emergCurrent=gv('emerg');
+  const tfsa=gv('tfsa');
+  const rrsp=gv('rrsp');
+  const xdebt=gv('xdebt');
+  const highIntDebt=debts.filter(d=>d.rate>7);
+  const maxDebtRate=debts.length?Math.max(...debts.map(d=>d.rate)):0;
+  return{inc,needs,wants,saves,surplus,monthlyExp,emergTarget,emergCurrent,tfsa,rrsp,xdebt,highIntDebt,maxDebtRate};
+}
+
+// ─── SURPLUS DISTRIBUTION ENGINE ───────────────────────────────────────────
+// Priority rules embedded (Canadian / BC specific):
+// 1. High-interest debt (>7% APR) beats investing
+// 2. Emergency fund < 3 months of expenses
+// 3. TFSA up to $7,000/yr ($583/mo)
+// 4. RRSP (if income suggests benefit)
+// 5. Non-registered / extra savings
+function generateOptions(surplus){
+  if(surplus<=0)return[];
+  const s=getBudgetState();
+  const opts=[];
+  const r=n=>Math.round(n);
+
+  // ── OPTION A: Aggressive debt / emergency focus ──
+  const optA={id:'A',name:'Aggressive',tag:'Pay off debt fast',changes:[],reason:''};
+  let remA=surplus;
+  const reasons=[];
+  if(s.highIntDebt.length>0){
+    const debtChunk=r(Math.min(remA*0.70,remA));
+    optA.changes.push({label:'Extra debt payoff',field:'xdebt',current:s.xdebt,add:debtChunk});
+    remA-=debtChunk;
+    reasons.push('You have high-interest debt ('+s.maxDebtRate.toFixed(2)+'% APR) -- paying it off first beats any investment return.');
+  }
+  if(remA>0&&s.emergCurrent*12<s.emergTarget){
+    const emergChunk=r(Math.min(remA,s.emergTarget/12-s.emergCurrent));
+    if(emergChunk>0){optA.changes.push({label:'Emergency fund (TFSA)',field:'emerg',current:s.emergCurrent,add:emergChunk});remA-=emergChunk;reasons.push('Your emergency fund is below the 3-month target.');}
+  }
+  if(remA>0){
+    optA.changes.push({label:'TFSA investments',field:'tfsa',current:s.tfsa,add:r(remA)});
+    reasons.push('Remaining surplus goes to your TFSA (tax-free growth).');
+  }
+  optA.reason=reasons.join(' ');
+  if(optA.changes.length)opts.push(optA);
+
+  // ── OPTION B: Balanced ──
+  const optB={id:'B',name:'Balanced',tag:'Spread across priorities',changes:[],reason:''};
+  let remB=surplus;
+  const reasB=[];
+  if(s.highIntDebt.length>0){
+    const dc=r(remB*0.40);
+    optB.changes.push({label:'Extra debt payoff',field:'xdebt',current:s.xdebt,add:dc});remB-=dc;
+    reasB.push('40% tackles your high-interest debt ('+s.maxDebtRate.toFixed(2)+'% APR).');
+  }
+  if(s.emergCurrent*12<s.emergTarget){
+    const ec=r(remB*0.30);
+    optB.changes.push({label:'Emergency fund (TFSA)',field:'emerg',current:s.emergCurrent,add:ec});remB-=ec;
+    reasB.push('30% builds your emergency fund toward the 3-month target.');
+  }
+  const tfsaRoom=Math.max(0,583-s.tfsa);
+  if(remB>0&&tfsaRoom>0){
+    const tc=r(Math.min(remB*0.60,tfsaRoom));
+    optB.changes.push({label:'TFSA investments',field:'tfsa',current:s.tfsa,add:tc});remB-=tc;
+    reasB.push('TFSA gets the next priority -- tax-free growth with flexible withdrawal.');
+  }
+  if(remB>0){
+    optB.changes.push({label:'RRSP',field:'rrsp',current:s.rrsp,add:r(remB)});
+    reasB.push('Remaining goes to RRSP for tax-deferred retirement savings.');
+  }
+  optB.reason=reasB.join(' ');
+  if(optB.changes.length)opts.push(optB);
+
+  // ── OPTION C: Max savings / wealth building ──
+  const optC={id:'C',name:'Max Savings',tag:'Prioritize wealth building',changes:[],reason:''};
+  let remC=surplus;
+  const reasC=[];
+  if(s.highIntDebt.length===0||s.maxDebtRate<=7){
+    const tfsaRoomC=Math.max(0,583-s.tfsa);
+    if(tfsaRoomC>0){
+      const tc=r(Math.min(remC,tfsaRoomC));
+      optC.changes.push({label:'TFSA investments',field:'tfsa',current:s.tfsa,add:tc});remC-=tc;
+      reasC.push('No high-interest debt detected -- TFSA gets priority for tax-free compounding.');
+    }
+    if(remC>0){
+      const rc=r(remC*0.60);
+      optC.changes.push({label:'RRSP',field:'rrsp',current:s.rrsp,add:rc});remC-=rc;
+      reasC.push('RRSP reduces your taxable income now and grows tax-deferred.');
+    }
+    if(remC>0){
+      optC.changes.push({label:'Non-registered savings',field:'nonreg',current:gv('nonreg'),add:r(remC)});
+      reasC.push('Remaining goes to non-registered investing once registered accounts are optimized.');
+    }
+  } else {
+    const dc=r(remC*0.50);
+    optC.changes.push({label:'Extra debt payoff',field:'xdebt',current:s.xdebt,add:dc});remC-=dc;
+    const tc=r(Math.min(remC,583-s.tfsa));
+    if(tc>0){optC.changes.push({label:'TFSA investments',field:'tfsa',current:s.tfsa,add:tc});remC-=tc;}
+    if(remC>0){optC.changes.push({label:'RRSP',field:'rrsp',current:s.rrsp,add:r(remC)});}
+    reasC.push('Splits surplus 50/50 between debt payoff and TFSA investing -- balances interest savings with wealth building.');
+  }
+  optC.reason=reasC.join(' ');
+  if(optC.changes.length)opts.push(optC);
+
+  return opts;
+}
+
+function openDistributor(){
+  const s=getBudgetState();
+  if(s.surplus<=0){alert('No surplus to distribute. Balance your budget first.');return;}
+  selectedOption=null;
+  generatedOptions=generateOptions(s.surplus);
+  document.getElementById('dist-modal-sub').textContent='You have '+fmt(s.surplus)+'/mo unallocated. Choose how to put it to work:';
+  const apply=document.getElementById('dist-apply');
+  apply.disabled=true;
+  apply.textContent='Select an option to apply';
+
+  const optColors={A:'opt-a',B:'opt-b',C:'opt-c'};
+  const optEmoji={A:'A',B:'B',C:'C'};
+  let html='';
+  generatedOptions.forEach(opt=>{
+    html+='<div class="opt-card '+optColors[opt.id]+'" id="opt-card-'+opt.id+'" onclick="selectOption(\''+opt.id+'\')">'
+      +'<div class="opt-header"><div class="opt-badge">'+optEmoji[opt.id]+'</div><div><div class="opt-name">'+opt.name+'</div><div class="opt-tag">'+opt.tag+'</div></div></div>'
+      +'<div class="opt-reason">'+opt.reason+'</div>'
+      +'<div class="opt-items">';
+    opt.changes.forEach(c=>{
+      html+='<div class="opt-item"><span class="opt-item-label">'+c.label+'</span><span class="opt-item-val">+'+(fmt(c.add))+'/mo &rarr; '+fmt(c.current+c.add)+' total</span></div>';
+    });
+    html+='</div></div>';
+  });
+  document.getElementById('dist-options').innerHTML=html;
+  document.getElementById('dist-modal').classList.remove('hidden');
+}
+
+function selectOption(id){
+  selectedOption=id;
+  document.querySelectorAll('.opt-card').forEach(c=>c.classList.remove('selected'));
+  const card=document.getElementById('opt-card-'+id);
+  if(card)card.classList.add('selected');
+  const apply=document.getElementById('dist-apply');
+  apply.disabled=false;
+  apply.textContent='Apply Option '+id;
+}
+
+function applyOption(){
+  if(!selectedOption)return;
+  const opt=generatedOptions.find(o=>o.id===selectedOption);
+  if(!opt)return;
+  opt.changes.forEach(c=>{
+    sv(c.field,c.current+c.add);
+  });
+  closeModal();
+  recalc();
+}
+
+function closeModal(){
+  document.getElementById('dist-modal').classList.add('hidden');
+  selectedOption=null;
 }
 
 function addCustomItem(cat,data){
@@ -339,17 +562,28 @@ function recalc(){
   const [nt,wt,st]=splits[method];
   const ns=nt?(needs/inc<=nt+0.03?'ok':'bad'):'ok';
   const ss=st?(saves/inc>=st-0.03?'ok':'warn'):'ok';
+
   document.getElementById('ov-metrics').innerHTML=
     '<div class="met"><div class="met-l">Income</div><div class="met-v">'+fmt(inc)+'</div><div class="met-s">monthly net</div></div>'
     +'<div class="met"><div class="met-l">Surplus</div><div class="met-v '+(surplus>=0?'ok':'bad')+'">'+fmt(surplus)+'</div><div class="met-s">'+(surplus>=0?'on track':'over budget')+'</div></div>'
     +'<div class="met"><div class="met-l">Needs</div><div class="met-v '+ns+'">'+pp(needs,inc)+'</div><div class="met-s">'+fmt(needs)+'</div></div>'
     +'<div class="met"><div class="met-l">Saved</div><div class="met-v '+ss+'">'+pp(saves,inc)+'</div><div class="met-s">'+fmt(saves)+'</div></div>';
+
   const sc=surplus>0?'ok':surplus<0?'bad':'zero';
-  const sv=surplus>=0?'var(--green)':'var(--red)';
-  const sn=surplus>0?'Add surplus to your TFSA or extra debt payments.':surplus<0?'Spending exceeds income -- review Wants or Needs.':'Every dollar accounted for.';
-  document.getElementById('ov-surplus').innerHTML='<div class="surplus '+sc+'"><div class="srow"><span class="slbl">Surplus / deficit</span><span class="sval" style="color:'+sv+'">'+fmt(surplus)+'</span></div><div class="snote">'+sn+'</div></div>';
+  const sv2=surplus>=0?'var(--green)':'var(--red)';
+  const sn=surplus>0?'Tap "Distribute surplus" below to put this to work.':surplus<0?'Spending exceeds income -- review Wants or Needs.':'Every dollar accounted for.';
+  document.getElementById('ov-surplus').innerHTML='<div class="surplus '+sc+'"><div class="srow"><span class="slbl">Surplus / deficit</span><span class="sval" style="color:'+sv2+'">'+fmt(surplus)+'</span></div><div class="snote">'+sn+'</div></div>';
+
+  const distBtn=document.getElementById('ov-dist-btn');
+  if(surplus>0){
+    distBtn.innerHTML='<button class="dist-btn" onclick="openDistributor()"><span class="dist-icon">*</span> Distribute '+fmt(surplus)+' surplus</button>';
+  } else {
+    distBtn.innerHTML='';
+  }
+
   const hw=document.getElementById('ov-hwarn');
   hw.innerHTML=(gv('housing')+gv('homeins'))/inc>0.40?'<div class="tip tip-a">Housing exceeds 40% of income -- common in Metro Van. Try the 60/20/20 method.</div>':'';
+
   document.getElementById('ov-n').textContent=fmt(needs);
   document.getElementById('ov-npct').textContent=pp(needs,inc);
   document.getElementById('ov-w').textContent=fmt(wants);
@@ -357,9 +591,11 @@ function recalc(){
   document.getElementById('ov-s').textContent=fmt(saves);
   document.getElementById('ov-spct').textContent=pp(saves,inc);
   sb('ov-bn',needs,inc);sb('ov-bw',wants,inc);sb('ov-bs',saves,inc);
+
   const bn=document.getElementById('b-n');if(bn)bn.textContent=fmt(needs);
   const bw=document.getElementById('b-w');if(bw)bw.textContent=fmt(wants);
   const bs=document.getElementById('b-s');if(bs)bs.textContent=fmt(saves);
+
   const dt=document.getElementById('debt-tip');
   if(dt)dt.textContent='Extra payment of '+fmt(gv('xdebt'))+'/mo goes to debt #1 first, then rolls down once paid off.';
   renderDebtOrder();
@@ -459,6 +695,7 @@ function resetData(){
 document.getElementById('hdate').textContent=new Date().toLocaleString('en-CA',{month:'long',year:'numeric'});
 document.getElementById('mtip').textContent=mtips[method];
 document.querySelectorAll('input').forEach(el=>el.addEventListener('input',()=>{if(el.type!=='text')recalc();else gatherDebts();}));
+document.getElementById('dist-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 loadData();
 recalc();
 </script>
