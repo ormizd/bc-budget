@@ -10,11 +10,11 @@
 <meta name="theme-color" content="#0f1117">
 <title>BC Budget</title>
 <style>
-:root{--bg:#0f1117;--bg2:#181b24;--bg3:#1f2330;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--text:#f0f2f7;--text2:#8b91a8;--text3:#555c72;--accent:#4f8ef7;--green:#34d17a;--green-bg:rgba(52,209,122,0.1);--amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);--red:#f06070;--red-bg:rgba(240,96,112,0.1);--purple:#a78bfa;--purple-bg:rgba(167,139,250,0.1);--safe-top:env(safe-area-inset-top,44px);--safe-bottom:env(safe-area-inset-bottom,34px)}
+:root{--bg:#0f1117;--bg2:#181b24;--bg3:#1f2330;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--text:#f0f2f7;--text2:#8b91a8;--text3:#555c72;--accent:#4f8ef7;--green:#34d17a;--green-bg:rgba(52,209,122,0.1);--amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);--red:#f06070;--red-bg:rgba(240,96,112,0.1);--purple:#a78bfa;--purple-bg:rgba(167,139,250,0.1);--safe-top:env(safe-area-inset-top,52px);--safe-bottom:env(safe-area-inset-bottom,20px)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;position:fixed;width:100%}
 #app{display:flex;flex-direction:column;height:100%;height:100dvh;overflow:hidden}
-#header{background:var(--bg);border-bottom:1px solid var(--border);padding:calc(var(--safe-top)+6px) 18px 12px;flex-shrink:0}
+#header{background:var(--bg);border-bottom:1px solid var(--border);padding:calc(var(--safe-top) + 14px) 18px 12px;flex-shrink:0}
 .hrow{display:flex;align-items:center;justify-content:space-between}
 .app-title{font-size:20px;font-weight:700;letter-spacing:-0.5px}
 .app-title span{color:var(--accent)}
@@ -24,8 +24,8 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 .header-inc-val{font-size:17px;font-weight:600;letter-spacing:-0.3px}
 #content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--safe-bottom) + 90px);min-height:0}
 #content::-webkit-scrollbar{width:0}
-#nav{position:fixed;bottom:0;left:0;right:0;background:rgba(15,17,23,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;padding-bottom:var(--safe-bottom);z-index:100}
-.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0;background:none;border:none;color:var(--text3);font-size:10px;cursor:pointer;font-family:inherit}
+#nav{position:fixed;bottom:0;left:0;right:0;background:rgba(15,17,23,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;padding-bottom:calc(var(--safe-bottom) + 2px);z-index:100}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0;background:none;border:none;color:var(--text3);font-size:10px;cursor:pointer;font-family:inherit}
 .nav-btn.on{color:var(--accent)}
 .nav-icon{font-size:20px;line-height:1}
 .page{display:none;padding:14px 16px 24px}
