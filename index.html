@@ -13,7 +13,7 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden}
 #app{display:flex;flex-direction:column;height:100%;height:100dvh}
-#header{background:var(--bg);border-bottom:1px solid var(--border);padding:calc(var(--safe-top) + 6px) 18px 12px;flex-shrink:0}
+#header{background:var(--bg);border-bottom:1px solid var(--border);padding:calc(var(--safe-top)+6px) 18px 12px;flex-shrink:0}
 .hrow{display:flex;align-items:center;justify-content:space-between}
 .app-title{font-size:20px;font-weight:700;letter-spacing:-0.5px}
 .app-title span{color:var(--accent)}
@@ -21,19 +21,19 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 .header-inc{text-align:right}
 .header-inc-lbl{font-size:10px;color:var(--text3)}
 .header-inc-val{font-size:17px;font-weight:600;letter-spacing:-0.3px}
-#content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--safe-bottom) + 68px)}
+#content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--safe-bottom)+68px)}
 #content::-webkit-scrollbar{width:0}
 #nav{position:fixed;bottom:0;left:0;right:0;background:rgba(15,17,23,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;padding-bottom:var(--safe-bottom);z-index:100}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0;background:none;border:none;color:var(--text3);font-size:10px;cursor:pointer;font-family:inherit}
 .nav-btn.on{color:var(--accent)}
-.nav-icon{font-size:22px;line-height:1}
+.nav-icon{font-size:20px;line-height:1}
 .page{display:none;padding:14px 16px 0}
 .page.on{display:block}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:14px 16px;margin-bottom:10px}
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
 .met{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:12px 14px}
 .met-l{font-size:11px;color:var(--text3);margin-bottom:3px}
-.met-v{font-size:21px;font-weight:600;letter-spacing:-0.5px}
+.met-v{font-size:19px;font-weight:600;letter-spacing:-0.5px}
 .met-v.ok{color:var(--green)}.met-v.warn{color:var(--amber)}.met-v.bad{color:var(--red)}
 .met-s{font-size:11px;color:var(--text3);margin-top:1px}
 .sec-hd{display:flex;justify-content:space-between;align-items:center;margin:14px 0 8px}
@@ -53,6 +53,7 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 .tip{border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.5;margin-bottom:10px}
 .tip-b{background:rgba(79,142,247,0.1);color:#7aabff}
 .tip-a{background:var(--amber-bg);color:var(--amber)}
+.tip-g{background:var(--green-bg);color:var(--green)}
 .mtabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
 .mt{font-size:12px;padding:5px 12px;border-radius:99px;border:1px solid var(--border2);background:none;color:var(--text2);cursor:pointer;font-family:inherit;white-space:nowrap}
 .mt.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:500}
@@ -66,6 +67,7 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 .irow input[type=text]{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;padding:6px 9px;outline:none;font-family:inherit;min-width:0}
 .irow input[type=text]:focus{border-color:var(--accent)}
 .irow input[type=text]::placeholder{color:var(--text3)}
+.irow .irow-hint{font-size:11px;color:var(--text3);text-align:right;min-width:60px}
 .del-btn{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;padding:0 2px;line-height:1;flex-shrink:0}
 .del-btn:active{color:var(--red)}
 .cat-add-btn{width:100%;background:none;border:none;border-top:1px solid var(--border);padding:11px 14px;color:var(--accent);font-family:inherit;font-size:13px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:6px}
@@ -95,39 +97,52 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 .saved-note{font-size:11px;color:var(--text3);text-align:center;padding:6px 0 2px}
 .rst-btn{width:100%;background:var(--red-bg);border:1px solid rgba(240,96,112,0.2);border-radius:12px;padding:13px;color:var(--red);font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;margin-top:6px}
 
-/* Surplus distributor button */
+/* Paycheque plan */
+.pc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.pc-met{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:12px 14px}
+.pc-met-l{font-size:11px;color:var(--text3);margin-bottom:3px}
+.pc-met-v{font-size:17px;font-weight:600;letter-spacing:-0.3px}
+.pc-met-v.ok{color:var(--green)}.pc-met-v.warn{color:var(--amber)}.pc-met-v.bad{color:var(--red)}
+.pc-met-s{font-size:11px;color:var(--text3);margin-top:1px}
+.pc-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid var(--border)}
+.pc-item:first-child{border-top:none;padding-top:0}
+.pc-item-l{font-size:13px;color:var(--text2)}
+.pc-item-v{font-size:13px;font-weight:500;color:var(--text)}
+.pc-cheque-tab{display:flex;gap:6px;margin-bottom:12px}
+.pc-tab{flex:1;padding:8px;border-radius:10px;border:1px solid var(--border2);background:none;color:var(--text2);font-family:inherit;font-size:12px;cursor:pointer;text-align:center}
+.pc-tab.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:500}
+
+/* 3rd cheque banner */
+.bonus-banner{background:linear-gradient(135deg,rgba(52,209,122,0.15),rgba(79,142,247,0.15));border:1px solid rgba(52,209,122,0.3);border-radius:16px;padding:14px;margin-bottom:10px}
+.bonus-title{font-size:14px;font-weight:600;color:var(--green);margin-bottom:4px}
+.bonus-sub{font-size:12px;color:var(--text2);line-height:1.5}
+
+/* Surplus dist */
 .dist-btn{width:100%;background:linear-gradient(135deg,rgba(79,142,247,0.15),rgba(167,139,250,0.15));border:1px solid rgba(79,142,247,0.3);border-radius:14px;padding:14px 16px;color:var(--accent);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:-0.2px}
 .dist-btn:active{opacity:0.8}
-.dist-btn .dist-icon{font-size:18px}
-
-/* Modal overlay */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:flex;flex-direction:column;justify-content:flex-end;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
 .modal-overlay.hidden{display:none}
-.modal-sheet{background:var(--bg2);border-radius:20px 20px 0 0;padding:20px 16px calc(var(--safe-bottom) + 20px);max-height:85vh;overflow-y:auto}
+.modal-sheet{background:var(--bg2);border-radius:20px 20px 0 0;padding:20px 16px calc(var(--safe-bottom)+20px);max-height:88vh;overflow-y:auto}
 .modal-sheet::-webkit-scrollbar{width:0}
 .modal-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 16px}
 .modal-title{font-size:17px;font-weight:700;letter-spacing:-0.3px;margin-bottom:4px}
 .modal-sub{font-size:13px;color:var(--text2);margin-bottom:16px}
 .modal-cancel{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:13px;color:var(--text2);font-family:inherit;font-size:14px;cursor:pointer;margin-top:8px}
-
-/* Option cards */
-.opt-card{background:var(--bg3);border:1.5px solid var(--border2);border-radius:16px;padding:14px;margin-bottom:10px;cursor:pointer;transition:border-color 0.2s}
-.opt-card:active{border-color:var(--accent)}
+.opt-card{background:var(--bg3);border:1.5px solid var(--border2);border-radius:16px;padding:14px;margin-bottom:10px;cursor:pointer}
 .opt-card.selected{border-color:var(--accent);background:rgba(79,142,247,0.08)}
 .opt-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.opt-badge{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.opt-badge{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
 .opt-a .opt-badge{background:var(--red-bg);color:var(--red)}
 .opt-b .opt-badge{background:var(--green-bg);color:var(--green)}
 .opt-c .opt-badge{background:var(--purple-bg);color:var(--purple)}
-.opt-name{font-size:14px;font-weight:600;letter-spacing:-0.2px}
+.opt-name{font-size:14px;font-weight:600}
 .opt-tag{font-size:10px;color:var(--text3);margin-top:1px}
 .opt-reason{font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:10px;padding:8px 10px;background:rgba(255,255,255,0.04);border-radius:8px}
 .opt-items{display:flex;flex-direction:column;gap:5px}
 .opt-item{display:flex;justify-content:space-between;align-items:center;font-size:13px}
 .opt-item-label{color:var(--text2)}
 .opt-item-val{font-weight:600;color:var(--green)}
-.opt-item-val.neutral{color:var(--text)}
-.apply-btn{width:100%;background:var(--accent);border:none;border-radius:12px;padding:14px;color:#fff;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;letter-spacing:-0.2px}
+.apply-btn{width:100%;background:var(--accent);border:none;border-radius:12px;padding:14px;color:#fff;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;margin-top:4px}
 .apply-btn:disabled{opacity:0.4;cursor:default}
 </style>
 </head>
@@ -140,7 +155,7 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
         <div class="header-sub" id="hdate"></div>
       </div>
       <div class="header-inc">
-        <div class="header-inc-lbl">monthly income</div>
+        <div class="header-inc-lbl">bi-weekly paycheque</div>
         <div class="header-inc-val" id="hinc">$0</div>
       </div>
     </div>
@@ -153,37 +168,70 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
       <div class="mgrid" id="ov-metrics"></div>
       <div id="ov-surplus"></div>
       <div id="ov-dist-btn"></div>
+      <div id="ov-bonus"></div>
       <div id="ov-hwarn"></div>
       <div class="sec-hd"><span class="sec-t">Needs</span><span class="sec-a" id="ov-n"></span></div>
       <div class="card" style="padding:12px 14px">
-        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--text2)">of income</span><span style="font-size:12px;color:var(--text2)" id="ov-npct"></span></div>
+        <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--text2)">of monthly income</span><span style="font-size:12px;color:var(--text2)" id="ov-npct"></span></div>
         <div class="bwrap"><div class="bf bf-b" id="ov-bn" style="width:0"></div></div>
       </div>
       <div class="sec-hd"><span class="sec-t">Wants</span><span class="sec-a" id="ov-w"></span></div>
       <div class="card" style="padding:12px 14px">
-        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--text2)">of income</span><span style="font-size:12px;color:var(--text2)" id="ov-wpct"></span></div>
+        <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--text2)">of monthly income</span><span style="font-size:12px;color:var(--text2)" id="ov-wpct"></span></div>
         <div class="bwrap"><div class="bf bf-a" id="ov-bw" style="width:0"></div></div>
       </div>
       <div class="sec-hd"><span class="sec-t">Savings & investing</span><span class="sec-a" id="ov-s"></span></div>
       <div class="card" style="padding:12px 14px">
-        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--text2)">of income</span><span style="font-size:12px;color:var(--text2)" id="ov-spct"></span></div>
+        <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--text2)">of monthly income</span><span style="font-size:12px;color:var(--text2)" id="ov-spct"></span></div>
         <div class="bwrap"><div class="bf bf-g" id="ov-bs" style="width:0"></div></div>
       </div>
       <div class="saved-note" id="saved-note"></div>
     </div>
 
+    <!-- PAYCHEQUE PLAN -->
+    <div class="page" id="page-paycheque">
+      <div class="tip tip-b" style="margin-bottom:12px">Your monthly budget split across each bi-weekly paycheque. Bills are assigned to the cheque they fall closest to.</div>
+      <div id="bonus-month-tip"></div>
+      <div class="pc-cheque-tab">
+        <button class="pc-tab on" onclick="setPCTab(1,this)">Cheque 1</button>
+        <button class="pc-tab" onclick="setPCTab(2,this)">Cheque 2</button>
+        <button class="pc-tab" onclick="setPCTab(3,this)" id="cheque3-tab" style="display:none">Cheque 3</button>
+      </div>
+      <div class="pc-grid" id="pc-metrics"></div>
+      <div class="sec-hd"><span class="sec-t">Needs</span></div>
+      <div class="card" style="padding:12px 14px" id="pc-needs"></div>
+      <div class="sec-hd"><span class="sec-t">Wants</span></div>
+      <div class="card" style="padding:12px 14px" id="pc-wants"></div>
+      <div class="sec-hd"><span class="sec-t">Save & invest</span></div>
+      <div class="card" style="padding:12px 14px" id="pc-saves"></div>
+    </div>
+
     <!-- BUDGET -->
     <div class="page" id="page-budget">
+      <div class="tip tip-b" id="mtip" style="margin-bottom:10px"></div>
       <div class="mtabs" id="mtabs">
         <button class="mt on" onclick="setMethod('60-20-20',this)">60/20/20 — BC</button>
         <button class="mt" onclick="setMethod('50-30-20',this)">50/30/20</button>
         <button class="mt" onclick="setMethod('zero',this)">Zero-based</button>
       </div>
-      <div class="tip tip-b" id="mtip"></div>
       <div class="sec-hd" style="margin-top:2px"><span class="sec-t">Income</span></div>
       <div class="igrp">
-        <div class="irow"><label>Employment net (after-tax)</label><input type="number" id="income" value="5000" step="100" inputmode="decimal"></div>
-        <div class="irow"><label>Other income</label><input type="number" id="extra" value="0" step="50" inputmode="decimal"></div>
+        <div class="irow">
+          <label>Bi-weekly take-home pay</label>
+          <input type="number" id="biweekly" value="2500" step="50" inputmode="decimal">
+        </div>
+        <div class="irow">
+          <label>Other income (monthly)</label>
+          <input type="number" id="extra" value="0" step="50" inputmode="decimal">
+        </div>
+        <div class="irow" style="background:var(--bg3)">
+          <label style="color:var(--text3);font-size:12px">Monthly equivalent (x 26/12)</label>
+          <span class="irow-hint" id="monthly-equiv" style="font-size:13px;color:var(--text2);font-weight:500"></span>
+        </div>
+        <div class="irow" style="background:var(--bg3)">
+          <label style="color:var(--text3);font-size:12px">Annual income</label>
+          <span class="irow-hint" id="annual-equiv" style="font-size:13px;color:var(--text2);font-weight:500"></span>
+        </div>
       </div>
       <div class="sec-hd"><span class="sec-t">Needs</span><span class="sec-a" id="b-n"></span></div>
       <div class="igrp">
@@ -257,20 +305,25 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
         <div class="prow"><div class="pnum db1">1</div><div class="pb"><div class="pt">Employer match<span class="pill pill-g">free money</span></div><div class="ps">Always contribute enough to get the full employer match first.</div></div></div>
         <div class="prow"><div class="pnum db2">2</div><div class="pb"><div class="pt">Emergency fund in TFSA<span class="pill pill-b">3-6 mo</span></div><div class="ps">Use a TFSA HISA (EQ Bank, Oaken). Tax-free interest, withdraw anytime.</div></div></div>
         <div class="prow"><div class="pnum db3">3</div><div class="pb"><div class="pt">High-interest debt<span class="pill pill-a">>7% APR</span></div><div class="ps">Canadian credit cards: 19.99-22.99%. Paying these beats most investments.</div></div></div>
-        <div class="prow"><div class="pnum db4">4</div><div class="pb"><div class="pt">TFSA investing</div><div class="ps">Max $7,000/yr (2025). Lifetime up to $95,000. XEQT or VEQT ETFs are a simple low-cost choice.</div></div></div>
-        <div class="prow"><div class="pnum db5">5</div><div class="pb"><div class="pt">RRSP</div><div class="ps">Best when your tax rate now is higher than in retirement. BC combined rate hits 20.06% at ~$57K income.</div></div></div>
+        <div class="prow"><div class="pnum db4">4</div><div class="pb"><div class="pt">TFSA investing</div><div class="ps">Max $7,000/yr (2025). Lifetime up to $95,000. XEQT or VEQT ETFs are a great low-cost choice.</div></div></div>
+        <div class="prow"><div class="pnum db5">5</div><div class="pb"><div class="pt">RRSP</div><div class="ps">Best when your tax rate now is higher than in retirement. BC combined rate hits 20.06% at ~$57K.</div></div></div>
         <div class="prow"><div class="pnum" style="background:#EEEDFE;color:#3C3489">6</div><div class="pb"><div class="pt">RESP<span class="pill pill-g">20% CESG</span></div><div class="ps">$208/mo per child captures the full $500/yr federal grant.</div></div></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Bi-weekly pay explained</span></div>
+      <div class="card" style="padding:12px 14px">
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">!</div><div class="pb"><div class="pt">26 cheques, not 24</div><div class="ps">There are 26 bi-weekly pay periods per year. That means 2 months each year you receive 3 cheques instead of 2. This app detects those months automatically.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">!</div><div class="pb"><div class="pt">Monthly equivalent formula</div><div class="ps">Your bi-weekly cheque x 26 / 12 = true monthly income. This is slightly higher than 2 cheques because of those extra 2 annual cheques.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:var(--green-bg);color:var(--green)">$</div><div class="pb"><div class="pt">3rd cheque strategy</div><div class="ps">When a 3rd cheque month arrives, treat it as a windfall. The surplus distributor will suggest the best use — typically extra debt payoff or TFSA top-up.</div></div></div>
       </div>
       <div class="sec-hd"><span class="sec-t">Key rules</span></div>
       <div class="card" style="padding:12px 14px">
-        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Pay yourself first</div><div class="ps">Auto-transfer to savings on payday before spending anything.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Pay yourself first</div><div class="ps">On payday, auto-transfer savings before spending anything else.</div></div></div>
         <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Housing over 40%? Use 60/20/20</div><div class="ps">Metro Van housing often exceeds 40% of income.</div></div></div>
-        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Term life over whole life</div><div class="ps">20-30yr term is better value. Aim for 10-12x income in coverage.</div></div></div>
-        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Review monthly</div><div class="ps">Life changes. Revisit and adjust every month.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Review every paycheque</div><div class="ps">Check the Paycheque tab each time you get paid. Adjust if life changes.</div></div></div>
       </div>
       <div class="sec-hd"><span class="sec-t">Settings</span></div>
       <div class="card" style="padding:12px 14px">
-        <div style="display:flex;justify-content:space-between;padding:6px 0"><span style="font-size:13px;color:var(--text2)">Version</span><span style="font-size:13px;color:var(--text3)">1.2 - BC Budget</span></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0"><span style="font-size:13px;color:var(--text2)">Version</span><span style="font-size:13px;color:var(--text3)">2.0 - BC Budget</span></div>
         <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)"><span style="font-size:13px;color:var(--text2)">Storage</span><span style="font-size:13px;color:var(--text3)">On this device</span></div>
         <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)"><span style="font-size:13px;color:var(--text2)">Last saved</span><span style="font-size:13px;color:var(--text3)" id="last-saved">--</span></div>
       </div>
@@ -278,21 +331,22 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
       <div style="height:16px"></div>
     </div>
 
-  </div>
+  </div><!-- end content -->
 
   <nav id="nav">
     <button class="nav-btn on" onclick="showPage('overview',this)"><span class="nav-icon">o</span><span>Overview</span></button>
+    <button class="nav-btn" onclick="showPage('paycheque',this)"><span class="nav-icon">$</span><span>Paycheque</span></button>
     <button class="nav-btn" onclick="showPage('budget',this)"><span class="nav-icon">=</span><span>Budget</span></button>
     <button class="nav-btn" onclick="showPage('debt',this)"><span class="nav-icon">v</span><span>Debt</span></button>
     <button class="nav-btn" onclick="showPage('guide',this)"><span class="nav-icon">*</span><span>Guide</span></button>
   </nav>
 </div>
 
-<!-- SURPLUS DISTRIBUTOR MODAL -->
+<!-- SURPLUS MODAL -->
 <div class="modal-overlay hidden" id="dist-modal">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
-    <div class="modal-title">Distribute Surplus</div>
+    <div class="modal-title" id="dist-modal-title">Distribute Surplus</div>
     <div class="modal-sub" id="dist-modal-sub"></div>
     <div id="dist-options"></div>
     <button class="apply-btn" id="dist-apply" onclick="applyOption()" disabled>Select an option to apply</button>
@@ -301,27 +355,248 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 </div>
 
 <script>
-const SK='bc_budget_v5';
+const SK='bc_budget_v6';
 let method='60-20-20',dm='avalanche',dc=0,debts=[];
 let customItems={needs:[],wants:[],saves:[]};
-let cic=0;
-let selectedOption=null;
-let generatedOptions=[];
+let cic=0,pcTab=1,selectedOption=null,generatedOptions=[];
 
 const mtips={
-  '60-20-20':'Recommended for Metro Vancouver -- housing often exceeds 40% of income here.',
+  '60-20-20':'Recommended for Metro Vancouver. All amounts below are monthly — your paycheque tab shows the bi-weekly split.',
   '50-30-20':'Classic framework. Works well if housing is below ~40% of income.',
-  'zero':'Every dollar gets a job. Income minus all categories = $0.'
+  'zero':'Every dollar gets a job. Monthly income minus all categories = $0.'
 };
 const splits={'60-20-20':[0.60,0.20,0.20],'50-30-20':[0.50,0.30,0.20],'zero':[null,null,null]};
 
+// ── CORE CALCULATIONS ────────────────────────────────────────────────────────
+// 26 bi-weekly periods / 12 months = 2.1667
+// Monthly income = biweekly * 26 / 12
+function biweeklyToMonthly(bw){ return bw * 26 / 12; }
+function monthlyToBiweekly(mo){ return mo * 12 / 26; }
+
+// Detect if current month is a 3-cheque month
+// A month has 3 bi-weekly paydays if it spans enough days
+function isThreeChequeMonth(){
+  const now=new Date();
+  const yr=now.getFullYear(),mo=now.getMonth();
+  const days=new Date(yr,mo+1,0).getDate();
+  return days>=29&&(mo===0||mo===2||mo===4||mo===6||mo===7||mo===9||mo===11);
+  // Approximate: months with 31 days that align commonly produce 3 cheques
+}
+
+// Better 3-cheque detection: count how many bi-weekly Fridays fall in this month
+function countPaydays(){
+  const now=new Date();
+  const yr=now.getFullYear(),mo=now.getMonth();
+  const first=new Date(yr,mo,1);
+  const last=new Date(yr,mo+1,0);
+  // Find first Friday
+  let day=new Date(first);
+  while(day.getDay()!==5)day.setDate(day.getDate()+1);
+  let count=0;
+  while(day<=last){count++;day.setDate(day.getDate()+14);}
+  return count;
+}
+
+function gv(id){const e=document.getElementById(id);return e?parseFloat(e.value)||0:0;}
+function sv(id,val){const e=document.getElementById(id);if(e)e.value=Math.round(val);}
+function fmt(n){return '$'+Math.round(Math.abs(n)).toLocaleString();}
+function fmtS(n){return(n<0?'-':'')+fmt(n);}
+function pp(n,t){return t?Math.round(n/t*100)+'%':'0%';}
+function sb(id,v,t){const e=document.getElementById(id);if(e)e.style.width=Math.min(100,t?v/t*100:0)+'%';}
+
+function getMonthlyIncome(){
+  const bw=gv('biweekly');
+  return biweeklyToMonthly(bw)+gv('extra');
+}
+
+function getCustomTotal(cat){
+  return customItems[cat].reduce((sum,item)=>{
+    const e=document.getElementById('ci-amt-'+item.id);
+    return sum+(e?parseFloat(e.value)||0:item.amount);
+  },0);
+}
+
+function getBudgetState(){
+  const inc=getMonthlyIncome();
+  const bw=gv('biweekly');
+  const needsFixed=gv('housing')+gv('homeins')+gv('icbc')+gv('carloan')+gv('transit')+gv('utils')+gv('groceries')+gv('health')+gv('lifeins')+gv('mindebt');
+  const wantsFixed=gv('dining')+gv('entertain')+gv('subs')+gv('shopping')+gv('hobbies')+gv('travel')+gv('education');
+  const savesFixed=gv('emerg')+gv('tfsa')+gv('rrsp')+gv('resp')+gv('xdebt')+gv('nonreg');
+  const needs=needsFixed+getCustomTotal('needs');
+  const wants=wantsFixed+getCustomTotal('wants');
+  const saves=savesFixed+getCustomTotal('saves');
+  const surplus=inc-needs-wants-saves;
+  const paydays=countPaydays();
+  const isBonus=paydays>=3;
+  return{inc,bw,needs,wants,saves,surplus,paydays,isBonus,
+    emerg:gv('emerg'),tfsa:gv('tfsa'),rrsp:gv('rrsp'),xdebt:gv('xdebt'),
+    monthlyExp:needs+wants,
+    highIntDebt:debts.filter(d=>d.rate>7),
+    maxDebtRate:debts.length?Math.max(...debts.map(d=>d.rate)):0
+  };
+}
+
+// ── PAYCHEQUE PLAN ───────────────────────────────────────────────────────────
+// Splits monthly budget into per-cheque amounts
+// Cheque 1: rent/mortgage + half of everything else
+// Cheque 2: remaining bills + savings
+// Cheque 3 (bonus): pure surplus -> distributor
+
+function setPCTab(n,btn){
+  pcTab=n;
+  document.querySelectorAll('.pc-tab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderPaycheque();
+}
+
+function renderPaycheque(){
+  const s=getBudgetState();
+  const bw=s.bw;
+  const isBonus=s.isBonus;
+
+  // Show/hide cheque 3 tab
+  const tab3=document.getElementById('cheque3-tab');
+  if(tab3)tab3.style.display=isBonus?'':'none';
+
+  // Bonus month tip
+  const bmt=document.getElementById('bonus-month-tip');
+  if(bmt){
+    bmt.innerHTML=isBonus
+      ?'<div class="bonus-banner"><div class="bonus-title">3-cheque month this month!</div><div class="bonus-sub">This month has 3 paydays. Cheques 1 & 2 cover your regular budget. Cheque 3 is a windfall — use the surplus distributor to put it to work.</div></div>'
+      :'';
+  }
+
+  // Define what goes on each cheque
+  // Large fixed bills on cheque 1, variable/savings on cheque 2
+  const ch1Items=[];
+  const ch2Items=[];
+  const ch3Items=[];
+
+  // NEEDS split: rent on ch1, everything else half-half
+  if(gv('housing'))ch1Items.push({l:'Rent / mortgage',v:gv('housing')});
+  if(gv('homeins'))ch1Items.push({l:'Home insurance',v:gv('homeins')});
+  if(gv('icbc'))ch1Items.push({l:'ICBC insurance',v:gv('icbc')});
+  if(gv('carloan'))ch2Items.push({l:'Car loan',v:gv('carloan')});
+  if(gv('transit'))ch2Items.push({l:'Gas / TransLink',v:Math.round(gv('transit')/2)});
+  if(gv('utils'))ch2Items.push({l:'Utilities & internet',v:gv('utils')});
+  if(gv('groceries')){
+    ch1Items.push({l:'Groceries (wk 1-2)',v:Math.round(gv('groceries')/2)});
+    ch2Items.push({l:'Groceries (wk 3-4)',v:Math.round(gv('groceries')/2)});
+  }
+  if(gv('health'))ch2Items.push({l:'Health / dental',v:gv('health')});
+  if(gv('lifeins'))ch1Items.push({l:'Life insurance',v:gv('lifeins')});
+  if(gv('mindebt'))ch2Items.push({l:'Min. debt payments',v:gv('mindebt')});
+
+  // Custom needs split
+  customItems.needs.forEach(item=>{
+    const amtEl=document.getElementById('ci-amt-'+item.id);
+    const amt=amtEl?parseFloat(amtEl.value)||0:item.amount;
+    const nameEl=document.getElementById('ci-name-'+item.id);
+    const name=nameEl?nameEl.value:item.name;
+    if(amt)ch2Items.push({l:name||'Custom need',v:amt});
+  });
+
+  // WANTS: split across both cheques
+  const wantFields=[
+    {id:'dining',l:'Dining'},
+    {id:'entertain',l:'Entertainment'},
+    {id:'subs',l:'Subscriptions'},
+    {id:'shopping',l:'Shopping'},
+    {id:'hobbies',l:'Hobbies'},
+    {id:'travel',l:'Travel'},
+    {id:'education',l:'Education'}
+  ];
+  wantFields.forEach((f,i)=>{
+    const v=gv(f.id);
+    if(!v)return;
+    if(i%2===0)ch1Items.push({l:f.l,v:Math.round(v/2),cat:'want'});
+    else ch2Items.push({l:f.l,v:Math.round(v/2),cat:'want'});
+  });
+  customItems.wants.forEach(item=>{
+    const amtEl=document.getElementById('ci-amt-'+item.id);
+    const amt=amtEl?parseFloat(amtEl.value)||0:item.amount;
+    const nameEl=document.getElementById('ci-name-'+item.id);
+    const name=nameEl?nameEl.value:item.name;
+    if(amt)ch1Items.push({l:name||'Custom want',v:Math.round(amt/2),cat:'want'});
+  });
+
+  // SAVES: all on cheque 2 (or cheque 1 for TFSA)
+  const saveFields=[
+    {id:'emerg',l:'Emergency fund (TFSA)',ch:1},
+    {id:'tfsa',l:'TFSA investments',ch:1},
+    {id:'rrsp',l:'RRSP',ch:2},
+    {id:'resp',l:'RESP',ch:2},
+    {id:'xdebt',l:'Extra debt payoff',ch:2},
+    {id:'nonreg',l:'Non-reg savings',ch:2}
+  ];
+  saveFields.forEach(f=>{
+    const v=gv(f.id);
+    if(!v)return;
+    const half=Math.round(v/2);
+    if(f.ch===1)ch1Items.push({l:f.l+' (half)',v:half,cat:'save'});
+    else ch2Items.push({l:f.l+' (half)',v:half,cat:'save'});
+    // Add the other half to the other cheque too
+    if(f.ch===1)ch2Items.push({l:f.l+' (half)',v:half,cat:'save'});
+    else ch1Items.push({l:f.l+' (half)',v:half,cat:'save'});
+  });
+  customItems.saves.forEach(item=>{
+    const amtEl=document.getElementById('ci-amt-'+item.id);
+    const amt=amtEl?parseFloat(amtEl.value)||0:item.amount;
+    const nameEl=document.getElementById('ci-name-'+item.id);
+    const name=nameEl?nameEl.value:item.name;
+    if(amt)ch2Items.push({l:name||'Custom saving',v:Math.round(amt/2),cat:'save'});
+  });
+
+  // Cheque 3 is just the full paycheque as windfall
+  if(isBonus){
+    ch3Items.push({l:'Full extra paycheque',v:bw,cat:'bonus'});
+  }
+
+  const items=pcTab===1?ch1Items:pcTab===2?ch2Items:ch3Items;
+  const total=items.reduce((s,i)=>s+i.v,0);
+  const remaining=bw-total;
+
+  // Metrics
+  const metricsEl=document.getElementById('pc-metrics');
+  if(metricsEl){
+    metricsEl.innerHTML=
+      '<div class="pc-met"><div class="pc-met-l">Paycheque '+(isBonus&&pcTab===3?'3 (bonus)':pcTab)+'</div><div class="pc-met-v">'+fmt(bw)+'</div><div class="pc-met-s">bi-weekly net</div></div>'
+      +'<div class="pc-met"><div class="pc-met-l">Allocated</div><div class="pc-met-v '+(remaining>=0?'ok':'bad')+'">'+fmt(total)+'</div><div class="pc-met-s">'+(remaining>=0?fmt(remaining)+' left':'over by '+fmt(-remaining))+'</div></div>';
+  }
+
+  // Items split by category
+  const needItems=items.filter(i=>!i.cat||i.cat==='need');
+  const wantItems=items.filter(i=>i.cat==='want');
+  const saveItems=items.filter(i=>i.cat==='save'||i.cat==='bonus');
+
+  function renderItems(els,containerId){
+    const c=document.getElementById(containerId);
+    if(!c)return;
+    if(!els.length){c.innerHTML='<p style="font-size:13px;color:var(--text3);padding:4px 0">Nothing assigned to this cheque.</p>';return;}
+    c.innerHTML=els.map(i=>'<div class="pc-item"><span class="pc-item-l">'+i.l+'</span><span class="pc-item-v">'+fmt(i.v)+'</span></div>').join('');
+  }
+
+  if(pcTab===3&&isBonus){
+    document.getElementById('pc-needs').innerHTML='<div class="pc-item"><span class="pc-item-l" style="color:var(--green);font-weight:500">Full bonus paycheque</span><span class="pc-item-v" style="color:var(--green)">'+fmt(bw)+'</span></div>';
+    document.getElementById('pc-wants').innerHTML='<p style="font-size:13px;color:var(--text3);padding:4px 0">Use the surplus distributor to put this to work.</p>';
+    document.getElementById('pc-saves').innerHTML='<button class="dist-btn" style="margin-top:4px" onclick="openDistributor(true)">Distribute '+fmt(bw)+' bonus cheque</button>';
+  } else {
+    renderItems(needItems,'pc-needs');
+    renderItems(wantItems,'pc-wants');
+    renderItems(saveItems,'pc-saves');
+  }
+}
+
+// ── OVERVIEW ─────────────────────────────────────────────────────────────────
 function showPage(name,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('on'));
   document.getElementById('page-'+name).classList.add('on');
   btn.classList.add('on');
   document.getElementById('content').scrollTop=0;
+  if(name==='paycheque')renderPaycheque();
 }
+
 function setMethod(m,btn){
   method=m;
   btn.closest('.mtabs').querySelectorAll('.mt').forEach(b=>b.classList.remove('on'));
@@ -335,154 +610,155 @@ function setDM(m,btn){
   btn.classList.add('on');
   renderDebtOrder();
 }
-function gv(id){const e=document.getElementById(id);return e?parseFloat(e.value)||0:0;}
-function sv(id,val){const e=document.getElementById(id);if(e)e.value=Math.round(val);}
-function fmt(n){return '$'+Math.round(n).toLocaleString();}
-function pp(n,t){return t?Math.round(n/t*100)+'%':'0%';}
-function sb(id,v,t){const e=document.getElementById(id);if(e)e.style.width=Math.min(100,t?v/t*100:0)+'%';}
 
-function getCustomTotal(cat){
-  return customItems[cat].reduce((sum,item)=>{
-    const e=document.getElementById('ci-amt-'+item.id);
-    return sum+(e?parseFloat(e.value)||0:item.amount);
-  },0);
+function recalc(){
+  const s=getBudgetState();
+  const inc=s.inc;
+  const bw=s.bw;
+
+  // Update income display
+  document.getElementById('hinc').textContent=fmt(bw);
+  const me=document.getElementById('monthly-equiv');if(me)me.textContent=fmt(inc)+'/mo';
+  const ae=document.getElementById('annual-equiv');if(ae)ae.textContent=fmt(bw*26)+'/yr';
+
+  const {needs,wants,saves,surplus}=s;
+  const [nt,wt,st]=splits[method];
+  const ns=nt?(needs/inc<=nt+0.03?'ok':'bad'):'ok';
+  const ss=st?(saves/inc>=st-0.03?'ok':'warn'):'ok';
+
+  document.getElementById('ov-metrics').innerHTML=
+    '<div class="met"><div class="met-l">Monthly income</div><div class="met-v">'+fmt(inc)+'</div><div class="met-s">'+fmt(bw)+' bi-wkly</div></div>'
+    +'<div class="met"><div class="met-l">Surplus</div><div class="met-v '+(surplus>=0?'ok':'bad')+'">'+fmtS(surplus)+'</div><div class="met-s">'+(surplus>=0?'on track':'over budget')+'</div></div>'
+    +'<div class="met"><div class="met-l">Needs</div><div class="met-v '+ns+'">'+pp(needs,inc)+'</div><div class="met-s">'+fmt(needs)+'/mo</div></div>'
+    +'<div class="met"><div class="met-l">Saved</div><div class="met-v '+ss+'">'+pp(saves,inc)+'</div><div class="met-s">'+fmt(saves)+'/mo</div></div>';
+
+  const sc=surplus>0?'ok':surplus<0?'bad':'zero';
+  const sv2=surplus>=0?'var(--green)':'var(--red)';
+  const sn=surplus>0?'Tap below to distribute this across savings & debt.':surplus<0?'Spending exceeds income -- review Wants or Needs.':'Every dollar accounted for.';
+  document.getElementById('ov-surplus').innerHTML='<div class="surplus '+sc+'"><div class="srow"><span class="slbl">Surplus / deficit</span><span class="sval" style="color:'+sv2+'">'+fmtS(surplus)+'</span></div><div class="snote">'+sn+'</div></div>';
+
+  const distBtn=document.getElementById('ov-dist-btn');
+  if(surplus>0){
+    distBtn.innerHTML='<button class="dist-btn" onclick="openDistributor(false)">Distribute '+fmt(surplus)+'/mo surplus</button>';
+  } else {distBtn.innerHTML='';}
+
+  // 3-cheque bonus banner on overview
+  const bonusEl=document.getElementById('ov-bonus');
+  if(bonusEl){
+    bonusEl.innerHTML=s.isBonus
+      ?'<div class="bonus-banner"><div class="bonus-title">3-cheque month! Bonus paycheque this month</div><div class="bonus-sub">This month has '+s.paydays+' paydays. Your extra cheque ('+fmt(bw)+') is a windfall. See the Paycheque tab for how to use it.</div></div>'
+      :'';
+  }
+
+  const hw=document.getElementById('ov-hwarn');
+  hw.innerHTML=(gv('housing')+gv('homeins'))/inc>0.40?'<div class="tip tip-a">Housing exceeds 40% of income -- common in Metro Van. Try the 60/20/20 method.</div>':'';
+
+  document.getElementById('ov-n').textContent=fmt(needs)+'/mo';
+  document.getElementById('ov-npct').textContent=pp(needs,inc);
+  document.getElementById('ov-w').textContent=fmt(wants)+'/mo';
+  document.getElementById('ov-wpct').textContent=pp(wants,inc);
+  document.getElementById('ov-s').textContent=fmt(saves)+'/mo';
+  document.getElementById('ov-spct').textContent=pp(saves,inc);
+  sb('ov-bn',needs,inc);sb('ov-bw',wants,inc);sb('ov-bs',saves,inc);
+
+  const bn=document.getElementById('b-n');if(bn)bn.textContent=fmt(needs)+'/mo';
+  const bw2=document.getElementById('b-w');if(bw2)bw2.textContent=fmt(wants)+'/mo';
+  const bs=document.getElementById('b-s');if(bs)bs.textContent=fmt(saves)+'/mo';
+
+  const dt=document.getElementById('debt-tip');
+  if(dt)dt.textContent='Extra payment of '+fmt(gv('xdebt'))+'/mo goes to debt #1 first, then rolls down once paid off.';
+  renderDebtOrder();
+  saveData();
 }
 
-function getBudgetState(){
-  const inc=gv('income')+gv('extra');
-  const needsFixed=gv('housing')+gv('homeins')+gv('icbc')+gv('carloan')+gv('transit')+gv('utils')+gv('groceries')+gv('health')+gv('lifeins')+gv('mindebt');
-  const wantsFixed=gv('dining')+gv('entertain')+gv('subs')+gv('shopping')+gv('hobbies')+gv('travel')+gv('education');
-  const savesFixed=gv('emerg')+gv('tfsa')+gv('rrsp')+gv('resp')+gv('xdebt')+gv('nonreg');
-  const needs=needsFixed+getCustomTotal('needs');
-  const wants=wantsFixed+getCustomTotal('wants');
-  const saves=savesFixed+getCustomTotal('saves');
-  const surplus=inc-needs-wants-saves;
-  const monthlyExp=needs+wants;
-  const emergTarget=monthlyExp*3;
-  const emergCurrent=gv('emerg');
-  const tfsa=gv('tfsa');
-  const rrsp=gv('rrsp');
-  const xdebt=gv('xdebt');
-  const highIntDebt=debts.filter(d=>d.rate>7);
-  const maxDebtRate=debts.length?Math.max(...debts.map(d=>d.rate)):0;
-  return{inc,needs,wants,saves,surplus,monthlyExp,emergTarget,emergCurrent,tfsa,rrsp,xdebt,highIntDebt,maxDebtRate};
-}
-
-// ─── SURPLUS DISTRIBUTION ENGINE ───────────────────────────────────────────
-// Priority rules embedded (Canadian / BC specific):
-// 1. High-interest debt (>7% APR) beats investing
-// 2. Emergency fund < 3 months of expenses
-// 3. TFSA up to $7,000/yr ($583/mo)
-// 4. RRSP (if income suggests benefit)
-// 5. Non-registered / extra savings
-function generateOptions(surplus){
+// ── SURPLUS DISTRIBUTOR ───────────────────────────────────────────────────────
+function generateOptions(surplus,isBonus){
   if(surplus<=0)return[];
   const s=getBudgetState();
-  const opts=[];
   const r=n=>Math.round(n);
+  const opts=[];
 
-  // ── OPTION A: Aggressive debt / emergency focus ──
-  const optA={id:'A',name:'Aggressive',tag:'Pay off debt fast',changes:[],reason:''};
-  let remA=surplus;
-  const reasons=[];
+  // Option A: Aggressive debt / emergency
+  const optA={id:'A',name:'Aggressive',tag:'Crush debt fast',changes:[],reason:''};
+  let remA=surplus;const rA=[];
   if(s.highIntDebt.length>0){
-    const debtChunk=r(Math.min(remA*0.70,remA));
-    optA.changes.push({label:'Extra debt payoff',field:'xdebt',current:s.xdebt,add:debtChunk});
-    remA-=debtChunk;
-    reasons.push('You have high-interest debt ('+s.maxDebtRate.toFixed(2)+'% APR) -- paying it off first beats any investment return.');
+    const dc=r(remA*0.70);
+    optA.changes.push({label:'Extra debt payoff',field:'xdebt',current:s.xdebt,add:dc});remA-=dc;
+    rA.push('High-interest debt ('+s.maxDebtRate.toFixed(1)+'% APR) is costing you more than investments earn -- 70% goes here first.');
   }
-  if(remA>0&&s.emergCurrent*12<s.emergTarget){
-    const emergChunk=r(Math.min(remA,s.emergTarget/12-s.emergCurrent));
-    if(emergChunk>0){optA.changes.push({label:'Emergency fund (TFSA)',field:'emerg',current:s.emergCurrent,add:emergChunk});remA-=emergChunk;reasons.push('Your emergency fund is below the 3-month target.');}
+  const emergTarget=s.monthlyExp*3;
+  if(s.emerg*12<emergTarget&&remA>0){
+    const ec=r(Math.min(remA,emergTarget/12-s.emerg));
+    if(ec>0){optA.changes.push({label:'Emergency fund (TFSA)',field:'emerg',current:s.emerg,add:ec});remA-=ec;rA.push('Emergency fund is below 3 months of expenses.');}
   }
-  if(remA>0){
-    optA.changes.push({label:'TFSA investments',field:'tfsa',current:s.tfsa,add:r(remA)});
-    reasons.push('Remaining surplus goes to your TFSA (tax-free growth).');
-  }
-  optA.reason=reasons.join(' ');
+  if(remA>0){optA.changes.push({label:'TFSA investments',field:'tfsa',current:s.tfsa,add:r(remA)});rA.push('Remaining goes to TFSA for tax-free growth.');}
+  optA.reason=rA.join(' ');
   if(optA.changes.length)opts.push(optA);
 
-  // ── OPTION B: Balanced ──
+  // Option B: Balanced
   const optB={id:'B',name:'Balanced',tag:'Spread across priorities',changes:[],reason:''};
-  let remB=surplus;
-  const reasB=[];
+  let remB=surplus;const rB=[];
   if(s.highIntDebt.length>0){
     const dc=r(remB*0.40);
     optB.changes.push({label:'Extra debt payoff',field:'xdebt',current:s.xdebt,add:dc});remB-=dc;
-    reasB.push('40% tackles your high-interest debt ('+s.maxDebtRate.toFixed(2)+'% APR).');
-  }
-  if(s.emergCurrent*12<s.emergTarget){
-    const ec=r(remB*0.30);
-    optB.changes.push({label:'Emergency fund (TFSA)',field:'emerg',current:s.emergCurrent,add:ec});remB-=ec;
-    reasB.push('30% builds your emergency fund toward the 3-month target.');
+    rB.push('40% to high-interest debt ('+s.maxDebtRate.toFixed(1)+'% APR).');
   }
   const tfsaRoom=Math.max(0,583-s.tfsa);
-  if(remB>0&&tfsaRoom>0){
-    const tc=r(Math.min(remB*0.60,tfsaRoom));
+  if(tfsaRoom>0&&remB>0){
+    const tc=r(Math.min(remB*0.50,tfsaRoom));
     optB.changes.push({label:'TFSA investments',field:'tfsa',current:s.tfsa,add:tc});remB-=tc;
-    reasB.push('TFSA gets the next priority -- tax-free growth with flexible withdrawal.');
+    rB.push('50% to TFSA for tax-free growth.');
   }
   if(remB>0){
     optB.changes.push({label:'RRSP',field:'rrsp',current:s.rrsp,add:r(remB)});
-    reasB.push('Remaining goes to RRSP for tax-deferred retirement savings.');
+    rB.push('Rest goes to RRSP for tax-deferred retirement savings.');
   }
-  optB.reason=reasB.join(' ');
+  optB.reason=rB.join(' ');
   if(optB.changes.length)opts.push(optB);
 
-  // ── OPTION C: Max savings / wealth building ──
-  const optC={id:'C',name:'Max Savings',tag:'Prioritize wealth building',changes:[],reason:''};
-  let remC=surplus;
-  const reasC=[];
-  if(s.highIntDebt.length===0||s.maxDebtRate<=7){
-    const tfsaRoomC=Math.max(0,583-s.tfsa);
-    if(tfsaRoomC>0){
-      const tc=r(Math.min(remC,tfsaRoomC));
-      optC.changes.push({label:'TFSA investments',field:'tfsa',current:s.tfsa,add:tc});remC-=tc;
-      reasC.push('No high-interest debt detected -- TFSA gets priority for tax-free compounding.');
-    }
-    if(remC>0){
-      const rc=r(remC*0.60);
-      optC.changes.push({label:'RRSP',field:'rrsp',current:s.rrsp,add:rc});remC-=rc;
-      reasC.push('RRSP reduces your taxable income now and grows tax-deferred.');
-    }
-    if(remC>0){
-      optC.changes.push({label:'Non-registered savings',field:'nonreg',current:gv('nonreg'),add:r(remC)});
-      reasC.push('Remaining goes to non-registered investing once registered accounts are optimized.');
-    }
-  } else {
-    const dc=r(remC*0.50);
-    optC.changes.push({label:'Extra debt payoff',field:'xdebt',current:s.xdebt,add:dc});remC-=dc;
-    const tc=r(Math.min(remC,583-s.tfsa));
-    if(tc>0){optC.changes.push({label:'TFSA investments',field:'tfsa',current:s.tfsa,add:tc});remC-=tc;}
-    if(remC>0){optC.changes.push({label:'RRSP',field:'rrsp',current:s.rrsp,add:r(remC)});}
-    reasC.push('Splits surplus 50/50 between debt payoff and TFSA investing -- balances interest savings with wealth building.');
+  // Option C: Max savings / wealth building
+  const optC={id:'C',name:'Max Savings',tag:'Build wealth faster',changes:[],reason:''};
+  let remC=surplus;const rC=[];
+  const tfsaRoomC=Math.max(0,583-s.tfsa);
+  if(tfsaRoomC>0){
+    const tc=r(Math.min(remC,tfsaRoomC));
+    optC.changes.push({label:'TFSA investments',field:'tfsa',current:s.tfsa,add:tc});remC-=tc;
+    rC.push('Max out TFSA first -- $7,000/yr limit, tax-free compounding.');
   }
-  optC.reason=reasC.join(' ');
+  if(remC>0){
+    const rc=r(remC*0.70);
+    optC.changes.push({label:'RRSP',field:'rrsp',current:s.rrsp,add:rc});remC-=rc;
+    rC.push('RRSP reduces taxable income and grows tax-deferred.');
+  }
+  if(remC>0){
+    optC.changes.push({label:'Non-registered savings',field:'nonreg',current:gv('nonreg'),add:r(remC)});
+    rC.push('Any remainder goes to non-registered investing.');
+  }
+  optC.reason=rC.join(' ');
   if(optC.changes.length)opts.push(optC);
 
   return opts;
 }
 
-function openDistributor(){
+function openDistributor(isBonus){
   const s=getBudgetState();
-  if(s.surplus<=0){alert('No surplus to distribute. Balance your budget first.');return;}
+  const amount=isBonus?s.bw:s.surplus;
+  if(amount<=0){alert('No surplus to distribute.');return;}
   selectedOption=null;
-  generatedOptions=generateOptions(s.surplus);
-  document.getElementById('dist-modal-sub').textContent='You have '+fmt(s.surplus)+'/mo unallocated. Choose how to put it to work:';
+  generatedOptions=generateOptions(amount,isBonus);
+  document.getElementById('dist-modal-title').textContent=isBonus?'Invest Your Bonus Cheque':'Distribute Monthly Surplus';
+  document.getElementById('dist-modal-sub').textContent=(isBonus?'Bonus paycheque of ':'You have ')+fmt(amount)+(isBonus?' — put this windfall to work:':(amount>0?'/mo unallocated. Choose how to use it:':''));
   const apply=document.getElementById('dist-apply');
-  apply.disabled=true;
-  apply.textContent='Select an option to apply';
-
+  apply.disabled=true;apply.textContent='Select an option to apply';
   const optColors={A:'opt-a',B:'opt-b',C:'opt-c'};
-  const optEmoji={A:'A',B:'B',C:'C'};
   let html='';
   generatedOptions.forEach(opt=>{
     html+='<div class="opt-card '+optColors[opt.id]+'" id="opt-card-'+opt.id+'" onclick="selectOption(\''+opt.id+'\')">'
-      +'<div class="opt-header"><div class="opt-badge">'+optEmoji[opt.id]+'</div><div><div class="opt-name">'+opt.name+'</div><div class="opt-tag">'+opt.tag+'</div></div></div>'
+      +'<div class="opt-header"><div class="opt-badge">'+opt.id+'</div><div><div class="opt-name">'+opt.name+'</div><div class="opt-tag">'+opt.tag+'</div></div></div>'
       +'<div class="opt-reason">'+opt.reason+'</div>'
       +'<div class="opt-items">';
     opt.changes.forEach(c=>{
-      html+='<div class="opt-item"><span class="opt-item-label">'+c.label+'</span><span class="opt-item-val">+'+(fmt(c.add))+'/mo &rarr; '+fmt(c.current+c.add)+' total</span></div>';
+      html+='<div class="opt-item"><span class="opt-item-label">'+c.label+'</span><span class="opt-item-val">+'+fmt(c.add)+' -> '+fmt(c.current+c.add)+'/mo</span></div>';
     });
     html+='</div></div>';
   });
@@ -493,46 +769,38 @@ function openDistributor(){
 function selectOption(id){
   selectedOption=id;
   document.querySelectorAll('.opt-card').forEach(c=>c.classList.remove('selected'));
-  const card=document.getElementById('opt-card-'+id);
-  if(card)card.classList.add('selected');
+  const card=document.getElementById('opt-card-'+id);if(card)card.classList.add('selected');
   const apply=document.getElementById('dist-apply');
-  apply.disabled=false;
-  apply.textContent='Apply Option '+id;
+  apply.disabled=false;apply.textContent='Apply Option '+id;
 }
 
 function applyOption(){
   if(!selectedOption)return;
   const opt=generatedOptions.find(o=>o.id===selectedOption);
   if(!opt)return;
-  opt.changes.forEach(c=>{
-    sv(c.field,c.current+c.add);
-  });
-  closeModal();
-  recalc();
+  opt.changes.forEach(c=>sv(c.field,c.current+c.add));
+  closeModal();recalc();
 }
-
 function closeModal(){
   document.getElementById('dist-modal').classList.add('hidden');
   selectedOption=null;
 }
 
+// ── CUSTOM ITEMS ─────────────────────────────────────────────────────────────
 function addCustomItem(cat,data){
-  cic++;
-  const id=cic;
-  const name=data?data.name:'';
-  const amount=data?data.amount:0;
+  cic++;const id=cic;
+  const name=data?data.name:'';const amount=data?data.amount:0;
   customItems[cat].push({id,name,amount});
   const container=document.getElementById('custom-'+cat);
   const row=document.createElement('div');
-  row.className='irow';
-  row.id='ci-row-'+id;
+  row.className='irow';row.id='ci-row-'+id;
   row.innerHTML='<input type="text" id="ci-name-'+id+'" placeholder="Item name" value="'+name+'" oninput="updateCustomName('+id+',\''+cat+'\')">'
     +'<input type="number" id="ci-amt-'+id+'" value="'+amount+'" step="10" inputmode="decimal" style="width:96px">'
     +'<button class="del-btn" onclick="removeCustomItem('+id+',\''+cat+'\')" aria-label="Remove">x</button>';
   container.appendChild(row);
   row.querySelector('input[type=number]').addEventListener('input',recalc);
   row.querySelector('input[type=text]').addEventListener('input',recalc);
-  if(!data){setTimeout(()=>row.querySelector('input[type=text]').focus(),50);}
+  if(!data)setTimeout(()=>row.querySelector('input[type=text]').focus(),50);
   recalc();
 }
 
@@ -543,70 +811,15 @@ function updateCustomName(id,cat){
 }
 
 function removeCustomItem(id,cat){
-  const row=document.getElementById('ci-row-'+id);
-  if(row)row.remove();
-  customItems[cat]=customItems[cat].filter(i=>i.id!==id);
-  recalc();
+  const row=document.getElementById('ci-row-'+id);if(row)row.remove();
+  customItems[cat]=customItems[cat].filter(i=>i.id!==id);recalc();
 }
 
-function recalc(){
-  const inc=gv('income')+gv('extra');
-  document.getElementById('hinc').textContent=fmt(inc);
-  const needsFixed=gv('housing')+gv('homeins')+gv('icbc')+gv('carloan')+gv('transit')+gv('utils')+gv('groceries')+gv('health')+gv('lifeins')+gv('mindebt');
-  const wantsFixed=gv('dining')+gv('entertain')+gv('subs')+gv('shopping')+gv('hobbies')+gv('travel')+gv('education');
-  const savesFixed=gv('emerg')+gv('tfsa')+gv('rrsp')+gv('resp')+gv('xdebt')+gv('nonreg');
-  const needs=needsFixed+getCustomTotal('needs');
-  const wants=wantsFixed+getCustomTotal('wants');
-  const saves=savesFixed+getCustomTotal('saves');
-  const surplus=inc-needs-wants-saves;
-  const [nt,wt,st]=splits[method];
-  const ns=nt?(needs/inc<=nt+0.03?'ok':'bad'):'ok';
-  const ss=st?(saves/inc>=st-0.03?'ok':'warn'):'ok';
-
-  document.getElementById('ov-metrics').innerHTML=
-    '<div class="met"><div class="met-l">Income</div><div class="met-v">'+fmt(inc)+'</div><div class="met-s">monthly net</div></div>'
-    +'<div class="met"><div class="met-l">Surplus</div><div class="met-v '+(surplus>=0?'ok':'bad')+'">'+fmt(surplus)+'</div><div class="met-s">'+(surplus>=0?'on track':'over budget')+'</div></div>'
-    +'<div class="met"><div class="met-l">Needs</div><div class="met-v '+ns+'">'+pp(needs,inc)+'</div><div class="met-s">'+fmt(needs)+'</div></div>'
-    +'<div class="met"><div class="met-l">Saved</div><div class="met-v '+ss+'">'+pp(saves,inc)+'</div><div class="met-s">'+fmt(saves)+'</div></div>';
-
-  const sc=surplus>0?'ok':surplus<0?'bad':'zero';
-  const sv2=surplus>=0?'var(--green)':'var(--red)';
-  const sn=surplus>0?'Tap "Distribute surplus" below to put this to work.':surplus<0?'Spending exceeds income -- review Wants or Needs.':'Every dollar accounted for.';
-  document.getElementById('ov-surplus').innerHTML='<div class="surplus '+sc+'"><div class="srow"><span class="slbl">Surplus / deficit</span><span class="sval" style="color:'+sv2+'">'+fmt(surplus)+'</span></div><div class="snote">'+sn+'</div></div>';
-
-  const distBtn=document.getElementById('ov-dist-btn');
-  if(surplus>0){
-    distBtn.innerHTML='<button class="dist-btn" onclick="openDistributor()"><span class="dist-icon">*</span> Distribute '+fmt(surplus)+' surplus</button>';
-  } else {
-    distBtn.innerHTML='';
-  }
-
-  const hw=document.getElementById('ov-hwarn');
-  hw.innerHTML=(gv('housing')+gv('homeins'))/inc>0.40?'<div class="tip tip-a">Housing exceeds 40% of income -- common in Metro Van. Try the 60/20/20 method.</div>':'';
-
-  document.getElementById('ov-n').textContent=fmt(needs);
-  document.getElementById('ov-npct').textContent=pp(needs,inc);
-  document.getElementById('ov-w').textContent=fmt(wants);
-  document.getElementById('ov-wpct').textContent=pp(wants,inc);
-  document.getElementById('ov-s').textContent=fmt(saves);
-  document.getElementById('ov-spct').textContent=pp(saves,inc);
-  sb('ov-bn',needs,inc);sb('ov-bw',wants,inc);sb('ov-bs',saves,inc);
-
-  const bn=document.getElementById('b-n');if(bn)bn.textContent=fmt(needs);
-  const bw=document.getElementById('b-w');if(bw)bw.textContent=fmt(wants);
-  const bs=document.getElementById('b-s');if(bs)bs.textContent=fmt(saves);
-
-  const dt=document.getElementById('debt-tip');
-  if(dt)dt.textContent='Extra payment of '+fmt(gv('xdebt'))+'/mo goes to debt #1 first, then rolls down once paid off.';
-  renderDebtOrder();
-  saveData();
-}
-
+// ── DEBT ─────────────────────────────────────────────────────────────────────
 function addDebt(data){
   dc++;const id=dc;
   const c=document.getElementById('debt-inputs');
-  const d=document.createElement('div');
-  d.className='de';d.id='de-'+id;
+  const d=document.createElement('div');d.className='de';d.id='de-'+id;
   d.innerHTML='<div class="de-hd"><span class="de-t">Debt #'+id+'</span><button class="de-del" onclick="removeDebt('+id+')">x</button></div>'
     +'<div class="dfs">'
     +'<div class="df full"><label>Name</label><input type="text" id="dn-'+id+'" placeholder="e.g. credit card" value="'+(data?data.name:'')+'" oninput="gatherDebts()"></div>'
@@ -648,7 +861,8 @@ function renderDebtOrder(){
   el.innerHTML=h;
 }
 
-const IDS=['income','extra','housing','homeins','icbc','carloan','transit','utils','groceries','health','lifeins','mindebt','dining','entertain','subs','shopping','hobbies','travel','education','emerg','tfsa','rrsp','resp','xdebt','nonreg'];
+// ── PERSISTENCE ───────────────────────────────────────────────────────────────
+const IDS=['biweekly','extra','housing','homeins','icbc','carloan','transit','utils','groceries','health','lifeins','mindebt','dining','entertain','subs','shopping','hobbies','travel','education','emerg','tfsa','rrsp','resp','xdebt','nonreg'];
 
 function saveData(){
   const vals={};
@@ -678,7 +892,7 @@ function loadData(){
     if(data.cic)cic=data.cic;
     if(data.customItems){
       ['needs','wants','saves'].forEach(cat=>{
-        if(data.customItems[cat]){data.customItems[cat].forEach(item=>addCustomItem(cat,item));}
+        if(data.customItems[cat])data.customItems[cat].forEach(item=>addCustomItem(cat,item));
       });
     }
     if(data.debts&&data.debts.length)data.debts.forEach(d=>addDebt(d));
@@ -692,6 +906,7 @@ function resetData(){
   location.reload();
 }
 
+// ── INIT ─────────────────────────────────────────────────────────────────────
 document.getElementById('hdate').textContent=new Date().toLocaleString('en-CA',{month:'long',year:'numeric'});
 document.getElementById('mtip').textContent=mtips[method];
 document.querySelectorAll('input').forEach(el=>el.addEventListener('input',()=>{if(el.type!=='text')recalc();else gatherDebts();}));
