@@ -1001,6 +1001,18 @@ function renderTodayCard(){
   const halfWants=Math.round(wants/2);
   const halfSaves=Math.round(saves/2);
 
+  // Current pay period: last payday to day before next payday
+  const lastPayday=new Date(nextPayday);
+  lastPayday.setDate(lastPayday.getDate()-14);
+  const periodEnd=new Date(nextPayday);
+  periodEnd.setDate(periodEnd.getDate()-1);
+
+  // Format helpers
+  const shortDate=d=>d.toLocaleDateString('en-CA',{month:'short',day:'numeric'});
+  const longDate=d=>d.toLocaleDateString('en-CA',{weekday:'long',month:'short',day:'numeric'});
+  const periodRange=shortDate(lastPayday)+' – '+shortDate(periodEnd);
+  const nextDateStr=longDate(nextPayday);
+
   // Determine card state
   let cardClass,badge,heading,sub,actions;
 
@@ -1009,45 +1021,44 @@ function renderTodayCard(){
     cardClass='payday';
     badge='💰';
     heading='Payday! Here\'s what to do now';
-    sub='Your '+fmt(bw)+' cheque just landed. Move money before you spend it.';
+    sub='Your '+fmt(bw)+' cheque just landed. Move money before you spend it. New period: '+shortDate(today)+' – '+shortDate(periodEnd)+'.';
     actions=[
-      {label:'Transfer to savings & TFSA',val:fmt(halfSaves),color:'green'},
+      {label:'Move to savings & TFSA now',val:fmt(halfSaves),color:'green'},
       {label:'Set aside for rent & bills',val:fmt(halfNeeds),color:'blue'},
-      {label:'Spending money (wants)',val:fmt(halfWants),color:'amber'},
+      {label:'Your spending money until '+shortDate(periodEnd),val:fmt(halfWants),color:'amber'},
     ];
   } else if(daysUntil===1){
     // DAY BEFORE PAYDAY
     cardClass='day-before';
     badge='⏰';
-    heading='Payday tomorrow — check in';
-    sub='Make sure your accounts are ready. Set up your transfers tonight so money moves automatically when your cheque arrives.';
+    heading='Payday tomorrow — get ready';
+    sub='Set up your transfers tonight so savings move automatically the moment your cheque arrives on '+nextDateStr+'.';
     actions=[
-      {label:'Tomorrow\'s paycheque',val:fmt(bw),color:'green'},
-      {label:'Savings to move first',val:fmt(halfSaves),color:'blue'},
-      {label:'Days until payday',val:'1',color:'amber'},
+      {label:'Cheque arriving tomorrow',val:fmt(bw),color:'green'},
+      {label:'Move to savings first thing',val:fmt(halfSaves),color:'blue'},
+      {label:'Spending money ('+shortDate(nextPayday)+' onward)',val:fmt(halfWants),color:'amber'},
     ];
   } else if(daysUntil<=5){
     // WITHIN THE SAME WEEK AS PAYDAY
     cardClass='week-of';
     badge='📅';
-    heading='Payday in '+daysUntil+' day'+(daysUntil===1?'':'s');
-    sub='You\'re in the home stretch. Stay on budget this week — your next cheque arrives '+nextPayday.toLocaleDateString('en-CA',{weekday:'long',month:'short',day:'numeric'})+'.';
-    const spent=halfNeeds+halfWants;
+    heading='Payday in '+daysUntil+' days — almost there';
+    sub='Pay period '+periodRange+'. Your next cheque lands on '+nextDateStr+'. Hold your spending until then.';
     actions=[
-      {label:'Days until next paycheque',val:daysUntil+'d',color:'blue'},
-      {label:'Spending budget this period',val:fmt(halfWants),color:'amber'},
-      {label:'Savings this period',val:fmt(halfSaves),color:'green'},
+      {label:'Days until '+shortDate(nextPayday),val:daysUntil+'d',color:'blue'},
+      {label:'Spending budget '+periodRange,val:fmt(halfWants),color:'amber'},
+      {label:'Savings going out '+shortDate(nextPayday),val:fmt(halfSaves),color:'green'},
     ];
   } else {
     // MID PERIOD (6-13 days out)
     cardClass='mid-period';
     badge='📊';
-    heading='Mid-period — stay the course';
-    sub='Next payday is '+nextPayday.toLocaleDateString('en-CA',{weekday:'long',month:'short',day:'numeric'})+'. '+daysUntil+' days away. Keep spending within your wants budget.';
+    heading='On track — next payday '+shortDate(nextPayday);
+    sub='Pay period '+periodRange+'. You have '+daysUntil+' days left until your cheque arrives. Stay within your spending budget below.';
     actions=[
-      {label:'Days until paycheque',val:daysUntil+'d',color:'blue'},
-      {label:'Remaining wants budget',val:fmt(halfWants),color:'amber'},
-      {label:'Savings on track',val:fmt(halfSaves),color:'green'},
+      {label:'Days until '+shortDate(nextPayday),val:daysUntil+'d',color:'blue'},
+      {label:'Spending budget '+periodRange,val:fmt(halfWants),color:'amber'},
+      {label:'Savings going out '+shortDate(nextPayday),val:fmt(halfSaves),color:'green'},
     ];
   }
 
