@@ -1036,7 +1036,7 @@ function renderTodayCard(){
     actions=[
       {label:'Cheque arriving tomorrow',val:fmt(bw),color:'green'},
       {label:'Move to savings first thing',val:fmt(halfSaves),color:'blue'},
-      {label:'Spending money ('+shortDate(nextPayday)+' onward)',val:fmt(halfWants),color:'amber'},
+      {label:'Spending money '+shortDate(nextPayday)+' – '+shortDate(new Date(nextPayday.getTime()+13*24*60*60*1000)),val:fmt(halfWants),color:'amber'},
     ];
   } else if(daysUntil<=5){
     // WITHIN THE SAME WEEK AS PAYDAY
