@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -96,57 +95,79 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 .pill{display:inline-block;font-size:10px;padding:1px 6px;border-radius:99px;font-weight:500;margin-left:4px;vertical-align:middle}
 .pill-g{background:var(--green-bg);color:var(--green)}.pill-b{background:rgba(79,142,247,0.15);color:var(--accent)}.pill-a{background:var(--amber-bg);color:var(--amber)}
 .saved-note{font-size:11px;color:var(--text3);text-align:center;padding:6px 0 2px}
+
+/* Today card */
+.today-card{border-radius:18px;padding:16px 18px;margin-bottom:12px;border:1px solid}
+.today-card.payday{background:linear-gradient(135deg,rgba(52,209,122,0.18),rgba(79,142,247,0.12));border-color:rgba(52,209,122,0.35)}
+.today-card.day-before{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(79,142,247,0.1));border-color:rgba(245,158,11,0.3)}
+.today-card.mid-period{background:var(--bg2);border-color:var(--border)}
+.today-card.week-of{background:linear-gradient(135deg,rgba(79,142,247,0.12),rgba(167,139,250,0.1));border-color:rgba(79,142,247,0.3)}
+.today-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.today-badge{font-size:22px;line-height:1}
+.today-days{font-size:11px;font-weight:500;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,0.07);color:var(--text2)}
+.today-heading{font-size:16px;font-weight:700;letter-spacing:-0.3px;margin-bottom:4px}
+.today-sub{font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:12px}
+.today-actions{display:flex;flex-direction:column;gap:7px}
+.today-action{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.05);border-radius:10px;padding:9px 12px}
+.today-action-label{font-size:13px;color:var(--text2)}
+.today-action-val{font-size:14px;font-weight:600}
+.today-action-val.green{color:var(--green)}
+.today-action-val.blue{color:var(--accent)}
+.today-action-val.amber{color:var(--amber)}
+.today-action-val.purple{color:var(--purple)}
+.today-payday-setting{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.today-payday-lbl{font-size:12px;color:var(--text3)}
+.today-payday-val{font-size:12px;color:var(--accent);cursor:pointer;text-decoration:underline}
 .rst-btn{width:100%;background:var(--red-bg);border:1px solid rgba(240,96,112,0.2);border-radius:12px;padding:13px;color:var(--red);font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;margin-top:6px}
 
 /* Paycheque plan */
 .pc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-.pc-met{background:var(–bg2);border:1px solid var(–border);border-radius:14px;padding:12px 14px}
-.pc-met-l{font-size:11px;color:var(–text3);margin-bottom:3px}
+.pc-met{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:12px 14px}
+.pc-met-l{font-size:11px;color:var(--text3);margin-bottom:3px}
 .pc-met-v{font-size:17px;font-weight:600;letter-spacing:-0.3px}
-.pc-met-v.ok{color:var(–green)}.pc-met-v.warn{color:var(–amber)}.pc-met-v.bad{color:var(–red)}
-.pc-met-s{font-size:11px;color:var(–text3);margin-top:1px}
-.pc-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid var(–border)}
+.pc-met-v.ok{color:var(--green)}.pc-met-v.warn{color:var(--amber)}.pc-met-v.bad{color:var(--red)}
+.pc-met-s{font-size:11px;color:var(--text3);margin-top:1px}
+.pc-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid var(--border)}
 .pc-item:first-child{border-top:none;padding-top:0}
-.pc-item-l{font-size:13px;color:var(–text2)}
-.pc-item-v{font-size:13px;font-weight:500;color:var(–text)}
+.pc-item-l{font-size:13px;color:var(--text2)}
+.pc-item-v{font-size:13px;font-weight:500;color:var(--text)}
 .pc-cheque-tab{display:flex;gap:6px;margin-bottom:12px}
-.pc-tab{flex:1;padding:8px;border-radius:10px;border:1px solid var(–border2);background:none;color:var(–text2);font-family:inherit;font-size:12px;cursor:pointer;text-align:center}
-.pc-tab.on{background:var(–accent);border-color:var(–accent);color:#fff;font-weight:500}
+.pc-tab{flex:1;padding:8px;border-radius:10px;border:1px solid var(--border2);background:none;color:var(--text2);font-family:inherit;font-size:12px;cursor:pointer;text-align:center}
+.pc-tab.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:500}
 
 /* 3rd cheque banner */
 .bonus-banner{background:linear-gradient(135deg,rgba(52,209,122,0.15),rgba(79,142,247,0.15));border:1px solid rgba(52,209,122,0.3);border-radius:16px;padding:14px;margin-bottom:10px}
-.bonus-title{font-size:14px;font-weight:600;color:var(–green);margin-bottom:4px}
-.bonus-sub{font-size:12px;color:var(–text2);line-height:1.5}
+.bonus-title{font-size:14px;font-weight:600;color:var(--green);margin-bottom:4px}
+.bonus-sub{font-size:12px;color:var(--text2);line-height:1.5}
 
 /* Surplus dist */
-.dist-btn{width:100%;background:linear-gradient(135deg,rgba(79,142,247,0.15),rgba(167,139,250,0.15));border:1px solid rgba(79,142,247,0.3);border-radius:14px;padding:14px 16px;color:var(–accent);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:-0.2px}
+.dist-btn{width:100%;background:linear-gradient(135deg,rgba(79,142,247,0.15),rgba(167,139,250,0.15));border:1px solid rgba(79,142,247,0.3);border-radius:14px;padding:14px 16px;color:var(--accent);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:-0.2px}
 .dist-btn:active{opacity:0.8}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:flex;flex-direction:column;justify-content:flex-end;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
 .modal-overlay.hidden{display:none}
-.modal-sheet{background:var(–bg2);border-radius:20px 20px 0 0;padding:20px 16px calc(var(–safe-bottom)+20px);max-height:88vh;overflow-y:auto}
+.modal-sheet{background:var(--bg2);border-radius:20px 20px 0 0;padding:20px 16px calc(var(--safe-bottom)+20px);max-height:88vh;overflow-y:auto}
 .modal-sheet::-webkit-scrollbar{width:0}
-.modal-handle{width:36px;height:4px;background:var(–border2);border-radius:2px;margin:0 auto 16px}
+.modal-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 16px}
 .modal-title{font-size:17px;font-weight:700;letter-spacing:-0.3px;margin-bottom:4px}
-.modal-sub{font-size:13px;color:var(–text2);margin-bottom:16px}
-.modal-cancel{width:100%;background:var(–bg3);border:1px solid var(–border2);border-radius:12px;padding:13px;color:var(–text2);font-family:inherit;font-size:14px;cursor:pointer;margin-top:8px}
-.opt-card{background:var(–bg3);border:1.5px solid var(–border2);border-radius:16px;padding:14px;margin-bottom:10px;cursor:pointer}
-.opt-card.selected{border-color:var(–accent);background:rgba(79,142,247,0.08)}
+.modal-sub{font-size:13px;color:var(--text2);margin-bottom:16px}
+.modal-cancel{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:13px;color:var(--text2);font-family:inherit;font-size:14px;cursor:pointer;margin-top:8px}
+.opt-card{background:var(--bg3);border:1.5px solid var(--border2);border-radius:16px;padding:14px;margin-bottom:10px;cursor:pointer}
+.opt-card.selected{border-color:var(--accent);background:rgba(79,142,247,0.08)}
 .opt-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .opt-badge{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
-.opt-a .opt-badge{background:var(–red-bg);color:var(–red)}
-.opt-b .opt-badge{background:var(–green-bg);color:var(–green)}
-.opt-c .opt-badge{background:var(–purple-bg);color:var(–purple)}
+.opt-a .opt-badge{background:var(--red-bg);color:var(--red)}
+.opt-b .opt-badge{background:var(--green-bg);color:var(--green)}
+.opt-c .opt-badge{background:var(--purple-bg);color:var(--purple)}
 .opt-name{font-size:14px;font-weight:600}
-.opt-tag{font-size:10px;color:var(–text3);margin-top:1px}
-.opt-reason{font-size:12px;color:var(–text2);line-height:1.5;margin-bottom:10px;padding:8px 10px;background:rgba(255,255,255,0.04);border-radius:8px}
+.opt-tag{font-size:10px;color:var(--text3);margin-top:1px}
+.opt-reason{font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:10px;padding:8px 10px;background:rgba(255,255,255,0.04);border-radius:8px}
 .opt-items{display:flex;flex-direction:column;gap:5px}
 .opt-item{display:flex;justify-content:space-between;align-items:center;font-size:13px}
-.opt-item-label{color:var(–text2)}
-.opt-item-val{font-weight:600;color:var(–green)}
-.apply-btn{width:100%;background:var(–accent);border:none;border-radius:12px;padding:14px;color:#fff;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;margin-top:4px}
+.opt-item-label{color:var(--text2)}
+.opt-item-val{font-weight:600;color:var(--green)}
+.apply-btn{width:100%;background:var(--accent);border:none;border-radius:12px;padding:14px;color:#fff;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;margin-top:4px}
 .apply-btn:disabled{opacity:0.4;cursor:default}
 </style>
-
 </head>
 <body>
 <div id="app">
@@ -165,175 +186,190 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 
   <div id="content">
 
-```
-<!-- OVERVIEW -->
-<div class="page on" id="page-overview">
-  <div class="mgrid" id="ov-metrics"></div>
-  <div id="ov-surplus"></div>
-  <div id="ov-dist-btn"></div>
-  <div id="ov-bonus"></div>
-  <div id="ov-hwarn"></div>
-  <div class="sec-hd"><span class="sec-t">Needs</span><span class="sec-a" id="ov-n"></span></div>
-  <div class="card" style="padding:12px 14px">
-    <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--text2)">of monthly income</span><span style="font-size:12px;color:var(--text2)" id="ov-npct"></span></div>
-    <div class="bwrap"><div class="bf bf-b" id="ov-bn" style="width:0"></div></div>
-  </div>
-  <div class="sec-hd"><span class="sec-t">Wants</span><span class="sec-a" id="ov-w"></span></div>
-  <div class="card" style="padding:12px 14px">
-    <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--text2)">of monthly income</span><span style="font-size:12px;color:var(--text2)" id="ov-wpct"></span></div>
-    <div class="bwrap"><div class="bf bf-a" id="ov-bw" style="width:0"></div></div>
-  </div>
-  <div class="sec-hd"><span class="sec-t">Savings & investing</span><span class="sec-a" id="ov-s"></span></div>
-  <div class="card" style="padding:12px 14px">
-    <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--text2)">of monthly income</span><span style="font-size:12px;color:var(--text2)" id="ov-spct"></span></div>
-    <div class="bwrap"><div class="bf bf-g" id="ov-bs" style="width:0"></div></div>
-  </div>
-  <div class="saved-note" id="saved-note"></div>
-</div>
-
-<!-- PAYCHEQUE PLAN -->
-<div class="page" id="page-paycheque">
-  <div class="tip tip-b" style="margin-bottom:12px">Your monthly budget split across each bi-weekly paycheque. Bills are assigned to the cheque they fall closest to.</div>
-  <div id="bonus-month-tip"></div>
-  <div class="pc-cheque-tab">
-    <button class="pc-tab on" onclick="setPCTab(1,this)">Cheque 1</button>
-    <button class="pc-tab" onclick="setPCTab(2,this)">Cheque 2</button>
-    <button class="pc-tab" onclick="setPCTab(3,this)" id="cheque3-tab" style="display:none">Cheque 3</button>
-  </div>
-  <div class="pc-grid" id="pc-metrics"></div>
-  <div class="sec-hd"><span class="sec-t">Needs</span></div>
-  <div class="card" style="padding:12px 14px" id="pc-needs"></div>
-  <div class="sec-hd"><span class="sec-t">Wants</span></div>
-  <div class="card" style="padding:12px 14px" id="pc-wants"></div>
-  <div class="sec-hd"><span class="sec-t">Save & invest</span></div>
-  <div class="card" style="padding:12px 14px" id="pc-saves"></div>
-</div>
-
-<!-- BUDGET -->
-<div class="page" id="page-budget">
-  <div class="tip tip-b" id="mtip" style="margin-bottom:10px"></div>
-  <div class="mtabs" id="mtabs">
-    <button class="mt on" onclick="setMethod('60-20-20',this)">60/20/20 — BC</button>
-    <button class="mt" onclick="setMethod('50-30-20',this)">50/30/20</button>
-    <button class="mt" onclick="setMethod('zero',this)">Zero-based</button>
-  </div>
-  <div class="sec-hd" style="margin-top:2px"><span class="sec-t">Income</span></div>
-  <div class="igrp">
-    <div class="irow">
-      <label>Bi-weekly take-home pay</label>
-      <input type="number" id="biweekly" value="2500" step="50" inputmode="decimal">
+    <!-- OVERVIEW -->
+    <div class="page on" id="page-overview">
+      <div id="today-card"></div>
+      <div class="mgrid" id="ov-metrics"></div>
+      <div id="ov-surplus"></div>
+      <div id="ov-dist-btn"></div>
+      <div id="ov-bonus"></div>
+      <div id="ov-hwarn"></div>
+      <div class="sec-hd"><span class="sec-t">Needs</span><span class="sec-a" id="ov-n"></span></div>
+      <div class="card" style="padding:12px 14px">
+        <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--text2)">of monthly income</span><span style="font-size:12px;color:var(--text2)" id="ov-npct"></span></div>
+        <div class="bwrap"><div class="bf bf-b" id="ov-bn" style="width:0"></div></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Wants</span><span class="sec-a" id="ov-w"></span></div>
+      <div class="card" style="padding:12px 14px">
+        <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--text2)">of monthly income</span><span style="font-size:12px;color:var(--text2)" id="ov-wpct"></span></div>
+        <div class="bwrap"><div class="bf bf-a" id="ov-bw" style="width:0"></div></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Savings & investing</span><span class="sec-a" id="ov-s"></span></div>
+      <div class="card" style="padding:12px 14px">
+        <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--text2)">of monthly income</span><span style="font-size:12px;color:var(--text2)" id="ov-spct"></span></div>
+        <div class="bwrap"><div class="bf bf-g" id="ov-bs" style="width:0"></div></div>
+      </div>
+      <div class="saved-note" id="saved-note"></div>
     </div>
-    <div class="irow">
-      <label>Other income (monthly)</label>
-      <input type="number" id="extra" value="0" step="50" inputmode="decimal">
-    </div>
-    <div class="irow" style="background:var(--bg3)">
-      <label style="color:var(--text3);font-size:12px">Monthly equivalent (x 26/12)</label>
-      <span class="irow-hint" id="monthly-equiv" style="font-size:13px;color:var(--text2);font-weight:500"></span>
-    </div>
-    <div class="irow" style="background:var(--bg3)">
-      <label style="color:var(--text3);font-size:12px">Annual income</label>
-      <span class="irow-hint" id="annual-equiv" style="font-size:13px;color:var(--text2);font-weight:500"></span>
-    </div>
-  </div>
-  <div class="sec-hd"><span class="sec-t">Needs</span><span class="sec-a" id="b-n"></span></div>
-  <div class="igrp">
-    <div class="sub-l">Housing</div>
-    <div class="irow"><label>Rent / mortgage</label><input type="number" id="housing" value="2000" step="50" inputmode="decimal"></div>
-    <div class="irow"><label>Home insurance</label><input type="number" id="homeins" value="120" step="10" inputmode="decimal"></div>
-    <div class="sub-l">Transportation</div>
-    <div class="irow"><label>ICBC insurance</label><input type="number" id="icbc" value="180" step="10" inputmode="decimal"></div>
-    <div class="irow"><label>Car loan payment</label><input type="number" id="carloan" value="400" step="25" inputmode="decimal"></div>
-    <div class="irow"><label>Gas / TransLink</label><input type="number" id="transit" value="130" step="10" inputmode="decimal"></div>
-    <div class="sub-l">Living essentials</div>
-    <div class="irow"><label>Utilities & internet</label><input type="number" id="utils" value="180" step="10" inputmode="decimal"></div>
-    <div class="irow"><label>Groceries</label><input type="number" id="groceries" value="450" step="25" inputmode="decimal"></div>
-    <div class="irow"><label>Extended health / dental</label><input type="number" id="health" value="80" step="10" inputmode="decimal"></div>
-    <div class="irow"><label>Life insurance</label><input type="number" id="lifeins" value="50" step="5" inputmode="decimal"></div>
-    <div class="sub-l">Debt minimums</div>
-    <div class="irow"><label>Min. debt payments</label><input type="number" id="mindebt" value="150" step="25" inputmode="decimal"></div>
-    <div class="sub-l">Custom items</div>
-    <div id="custom-needs"></div>
-    <button class="cat-add-btn" onclick="addCustomItem('needs')">+ Add item</button>
-  </div>
-  <div class="sec-hd"><span class="sec-t">Wants</span><span class="sec-a" id="b-w"></span></div>
-  <div class="igrp">
-    <div class="sub-l">Food & social</div>
-    <div class="irow"><label>Dining & restaurants</label><input type="number" id="dining" value="250" step="25" inputmode="decimal"></div>
-    <div class="irow"><label>Entertainment & events</label><input type="number" id="entertain" value="100" step="25" inputmode="decimal"></div>
-    <div class="sub-l">Lifestyle</div>
-    <div class="irow"><label>Streaming & subscriptions</label><input type="number" id="subs" value="60" step="5" inputmode="decimal"></div>
-    <div class="irow"><label>Shopping & clothing</label><input type="number" id="shopping" value="120" step="25" inputmode="decimal"></div>
-    <div class="irow"><label>Hobbies & recreation</label><input type="number" id="hobbies" value="100" step="25" inputmode="decimal"></div>
-    <div class="irow"><label>Travel & getaways</label><input type="number" id="travel" value="150" step="25" inputmode="decimal"></div>
-    <div class="sub-l">Personal growth</div>
-    <div class="irow"><label>Education & courses</label><input type="number" id="education" value="100" step="25" inputmode="decimal"></div>
-    <div class="sub-l">Custom items</div>
-    <div id="custom-wants"></div>
-    <button class="cat-add-btn" onclick="addCustomItem('wants')">+ Add item</button>
-  </div>
-  <div class="sec-hd"><span class="sec-t">Save & invest</span><span class="sec-a" id="b-s"></span></div>
-  <div class="igrp">
-    <div class="sub-l">Canadian accounts</div>
-    <div class="irow"><label>Emergency fund (TFSA)</label><input type="number" id="emerg" value="200" step="25" inputmode="decimal"></div>
-    <div class="irow"><label>TFSA — investments</label><input type="number" id="tfsa" value="250" step="25" inputmode="decimal"></div>
-    <div class="irow"><label>RRSP</label><input type="number" id="rrsp" value="200" step="25" inputmode="decimal"></div>
-    <div class="irow"><label>RESP (if applicable)</label><input type="number" id="resp" value="0" step="25" inputmode="decimal"></div>
-    <div class="sub-l">Debt acceleration</div>
-    <div class="irow"><label>Extra debt payoff</label><input type="number" id="xdebt" value="150" step="25" inputmode="decimal"></div>
-    <div class="sub-l">Other</div>
-    <div class="irow"><label>Non-registered savings</label><input type="number" id="nonreg" value="0" step="25" inputmode="decimal"></div>
-    <div class="sub-l">Custom items</div>
-    <div id="custom-saves"></div>
-    <button class="cat-add-btn" onclick="addCustomItem('saves')">+ Add item</button>
-  </div>
-</div>
 
-<!-- DEBT -->
-<div class="page" id="page-debt">
-  <div class="tip tip-b" id="debt-tip" style="margin-top:2px"></div>
-  <div id="debt-inputs"></div>
-  <button class="add-btn" onclick="addDebt()">+ Add a debt</button>
-  <div class="mtabs">
-    <button class="mt on" onclick="setDM('avalanche',this)">Avalanche — saves most $</button>
-    <button class="mt" onclick="setDM('snowball',this)">Snowball — quick wins</button>
-  </div>
-  <div class="card" id="debt-order" style="padding:12px 14px"></div>
-</div>
+    <!-- PAYCHEQUE PLAN -->
+    <div class="page" id="page-paycheque">
+      <div class="tip tip-b" style="margin-bottom:12px">Your monthly budget split across each bi-weekly paycheque. Bills are assigned to the cheque they fall closest to.</div>
+      <div id="bonus-month-tip"></div>
+      <div class="pc-cheque-tab">
+        <button class="pc-tab on" onclick="setPCTab(1,this)">Cheque 1</button>
+        <button class="pc-tab" onclick="setPCTab(2,this)">Cheque 2</button>
+        <button class="pc-tab" onclick="setPCTab(3,this)" id="cheque3-tab" style="display:none">Cheque 3</button>
+      </div>
+      <div class="pc-grid" id="pc-metrics"></div>
+      <div class="sec-hd"><span class="sec-t">Needs</span></div>
+      <div class="card" style="padding:12px 14px" id="pc-needs"></div>
+      <div class="sec-hd"><span class="sec-t">Wants</span></div>
+      <div class="card" style="padding:12px 14px" id="pc-wants"></div>
+      <div class="sec-hd"><span class="sec-t">Save & invest</span></div>
+      <div class="card" style="padding:12px 14px" id="pc-saves"></div>
+    </div>
 
-<!-- GUIDE -->
-<div class="page" id="page-guide">
-  <div class="sec-hd" style="margin-top:2px"><span class="sec-t">Canadian account priority</span></div>
-  <div class="card" style="padding:12px 14px">
-    <div class="prow"><div class="pnum db1">1</div><div class="pb"><div class="pt">Employer match<span class="pill pill-g">free money</span></div><div class="ps">Always contribute enough to get the full employer match first.</div></div></div>
-    <div class="prow"><div class="pnum db2">2</div><div class="pb"><div class="pt">Emergency fund in TFSA<span class="pill pill-b">3-6 mo</span></div><div class="ps">Use a TFSA HISA (EQ Bank, Oaken). Tax-free interest, withdraw anytime.</div></div></div>
-    <div class="prow"><div class="pnum db3">3</div><div class="pb"><div class="pt">High-interest debt<span class="pill pill-a">>7% APR</span></div><div class="ps">Canadian credit cards: 19.99-22.99%. Paying these beats most investments.</div></div></div>
-    <div class="prow"><div class="pnum db4">4</div><div class="pb"><div class="pt">TFSA investing</div><div class="ps">Max $7,000/yr (2025). Lifetime up to $95,000. XEQT or VEQT ETFs are a great low-cost choice.</div></div></div>
-    <div class="prow"><div class="pnum db5">5</div><div class="pb"><div class="pt">RRSP</div><div class="ps">Best when your tax rate now is higher than in retirement. BC combined rate hits 20.06% at ~$57K.</div></div></div>
-    <div class="prow"><div class="pnum" style="background:#EEEDFE;color:#3C3489">6</div><div class="pb"><div class="pt">RESP<span class="pill pill-g">20% CESG</span></div><div class="ps">$208/mo per child captures the full $500/yr federal grant.</div></div></div>
-  </div>
-  <div class="sec-hd"><span class="sec-t">Bi-weekly pay explained</span></div>
-  <div class="card" style="padding:12px 14px">
-    <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">!</div><div class="pb"><div class="pt">26 cheques, not 24</div><div class="ps">There are 26 bi-weekly pay periods per year. That means 2 months each year you receive 3 cheques instead of 2. This app detects those months automatically.</div></div></div>
-    <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">!</div><div class="pb"><div class="pt">Monthly equivalent formula</div><div class="ps">Your bi-weekly cheque x 26 / 12 = true monthly income. This is slightly higher than 2 cheques because of those extra 2 annual cheques.</div></div></div>
-    <div class="prow"><div class="pnum" style="background:var(--green-bg);color:var(--green)">$</div><div class="pb"><div class="pt">3rd cheque strategy</div><div class="ps">When a 3rd cheque month arrives, treat it as a windfall. The surplus distributor will suggest the best use — typically extra debt payoff or TFSA top-up.</div></div></div>
-  </div>
-  <div class="sec-hd"><span class="sec-t">Key rules</span></div>
-  <div class="card" style="padding:12px 14px">
-    <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Pay yourself first</div><div class="ps">On payday, auto-transfer savings before spending anything else.</div></div></div>
-    <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Housing over 40%? Use 60/20/20</div><div class="ps">Metro Van housing often exceeds 40% of income.</div></div></div>
-    <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Review every paycheque</div><div class="ps">Check the Paycheque tab each time you get paid. Adjust if life changes.</div></div></div>
-  </div>
-  <div class="sec-hd"><span class="sec-t">Settings</span></div>
-  <div class="card" style="padding:12px 14px">
-    <div style="display:flex;justify-content:space-between;padding:6px 0"><span style="font-size:13px;color:var(--text2)">Version</span><span style="font-size:13px;color:var(--text3)">2.0 - BC Budget</span></div>
-    <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)"><span style="font-size:13px;color:var(--text2)">Storage</span><span style="font-size:13px;color:var(--text3)">On this device</span></div>
-    <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)"><span style="font-size:13px;color:var(--text2)">Last saved</span><span style="font-size:13px;color:var(--text3)" id="last-saved">--</span></div>
-  </div>
-  <button class="rst-btn" onclick="resetData()">Reset all data</button>
-  <div style="height:16px"></div>
-</div>
-```
+    <!-- BUDGET -->
+    <div class="page" id="page-budget">
+      <div class="tip tip-b" id="mtip" style="margin-bottom:10px"></div>
+      <div class="mtabs" id="mtabs">
+        <button class="mt on" onclick="setMethod('60-20-20',this)">60/20/20 — BC</button>
+        <button class="mt" onclick="setMethod('50-30-20',this)">50/30/20</button>
+        <button class="mt" onclick="setMethod('zero',this)">Zero-based</button>
+      </div>
+      <div class="sec-hd" style="margin-top:2px"><span class="sec-t">Income</span></div>
+      <div class="igrp">
+        <div class="irow">
+          <label>Bi-weekly take-home pay</label>
+          <input type="number" id="biweekly" value="2500" step="50" inputmode="decimal">
+        </div>
+        <div class="irow">
+          <label>Other income (monthly)</label>
+          <input type="number" id="extra" value="0" step="50" inputmode="decimal">
+        </div>
+        <div class="irow">
+          <label>Payday (day of week)</label>
+          <select id="payday-dow" style="background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:16px;padding:6px 8px;outline:none;font-family:inherit">
+            <option value="0">Sunday</option>
+            <option value="1">Monday</option>
+            <option value="2">Tuesday</option>
+            <option value="3">Wednesday</option>
+            <option value="4">Thursday</option>
+            <option value="5" selected>Friday</option>
+            <option value="6">Saturday</option>
+          </select>
+        </div>
+        <div class="irow">
+          <label>Last payday date</label>
+          <input type="date" id="last-payday" style="background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:16px;padding:6px 8px;outline:none;font-family:inherit">
+        </div>
+        <div class="irow" style="background:var(--bg3)">
+          <label style="color:var(--text3);font-size:12px">Monthly equivalent (x 26/12)</label>
+          <span class="irow-hint" id="monthly-equiv" style="font-size:13px;color:var(--text2);font-weight:500"></span>
+        </div>
+        <div class="irow" style="background:var(--bg3)">
+          <label style="color:var(--text3);font-size:12px">Annual income</label>
+          <span class="irow-hint" id="annual-equiv" style="font-size:13px;color:var(--text2);font-weight:500"></span>
+        </div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Needs</span><span class="sec-a" id="b-n"></span></div>
+      <div class="igrp">
+        <div class="sub-l">Housing</div>
+        <div class="irow"><label>Rent / mortgage</label><input type="number" id="housing" value="2000" step="50" inputmode="decimal"></div>
+        <div class="irow"><label>Home insurance</label><input type="number" id="homeins" value="120" step="10" inputmode="decimal"></div>
+        <div class="sub-l">Transportation</div>
+        <div class="irow"><label>ICBC insurance</label><input type="number" id="icbc" value="180" step="10" inputmode="decimal"></div>
+        <div class="irow"><label>Car loan payment</label><input type="number" id="carloan" value="400" step="25" inputmode="decimal"></div>
+        <div class="irow"><label>Gas / TransLink</label><input type="number" id="transit" value="130" step="10" inputmode="decimal"></div>
+        <div class="sub-l">Living essentials</div>
+        <div class="irow"><label>Utilities & internet</label><input type="number" id="utils" value="180" step="10" inputmode="decimal"></div>
+        <div class="irow"><label>Groceries</label><input type="number" id="groceries" value="450" step="25" inputmode="decimal"></div>
+        <div class="irow"><label>Extended health / dental</label><input type="number" id="health" value="80" step="10" inputmode="decimal"></div>
+        <div class="irow"><label>Life insurance</label><input type="number" id="lifeins" value="50" step="5" inputmode="decimal"></div>
+        <div class="sub-l">Debt minimums</div>
+        <div class="irow"><label>Min. debt payments</label><input type="number" id="mindebt" value="150" step="25" inputmode="decimal"></div>
+        <div class="sub-l">Custom items</div>
+        <div id="custom-needs"></div>
+        <button class="cat-add-btn" onclick="addCustomItem('needs')">+ Add item</button>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Wants</span><span class="sec-a" id="b-w"></span></div>
+      <div class="igrp">
+        <div class="sub-l">Food & social</div>
+        <div class="irow"><label>Dining & restaurants</label><input type="number" id="dining" value="250" step="25" inputmode="decimal"></div>
+        <div class="irow"><label>Entertainment & events</label><input type="number" id="entertain" value="100" step="25" inputmode="decimal"></div>
+        <div class="sub-l">Lifestyle</div>
+        <div class="irow"><label>Streaming & subscriptions</label><input type="number" id="subs" value="60" step="5" inputmode="decimal"></div>
+        <div class="irow"><label>Shopping & clothing</label><input type="number" id="shopping" value="120" step="25" inputmode="decimal"></div>
+        <div class="irow"><label>Hobbies & recreation</label><input type="number" id="hobbies" value="100" step="25" inputmode="decimal"></div>
+        <div class="irow"><label>Travel & getaways</label><input type="number" id="travel" value="150" step="25" inputmode="decimal"></div>
+        <div class="sub-l">Personal growth</div>
+        <div class="irow"><label>Education & courses</label><input type="number" id="education" value="100" step="25" inputmode="decimal"></div>
+        <div class="sub-l">Custom items</div>
+        <div id="custom-wants"></div>
+        <button class="cat-add-btn" onclick="addCustomItem('wants')">+ Add item</button>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Save & invest</span><span class="sec-a" id="b-s"></span></div>
+      <div class="igrp">
+        <div class="sub-l">Canadian accounts</div>
+        <div class="irow"><label>Emergency fund (TFSA)</label><input type="number" id="emerg" value="200" step="25" inputmode="decimal"></div>
+        <div class="irow"><label>TFSA — investments</label><input type="number" id="tfsa" value="250" step="25" inputmode="decimal"></div>
+        <div class="irow"><label>RRSP</label><input type="number" id="rrsp" value="200" step="25" inputmode="decimal"></div>
+        <div class="irow"><label>RESP (if applicable)</label><input type="number" id="resp" value="0" step="25" inputmode="decimal"></div>
+        <div class="sub-l">Debt acceleration</div>
+        <div class="irow"><label>Extra debt payoff</label><input type="number" id="xdebt" value="150" step="25" inputmode="decimal"></div>
+        <div class="sub-l">Other</div>
+        <div class="irow"><label>Non-registered savings</label><input type="number" id="nonreg" value="0" step="25" inputmode="decimal"></div>
+        <div class="sub-l">Custom items</div>
+        <div id="custom-saves"></div>
+        <button class="cat-add-btn" onclick="addCustomItem('saves')">+ Add item</button>
+      </div>
+    </div>
+
+    <!-- DEBT -->
+    <div class="page" id="page-debt">
+      <div class="tip tip-b" id="debt-tip" style="margin-top:2px"></div>
+      <div id="debt-inputs"></div>
+      <button class="add-btn" onclick="addDebt()">+ Add a debt</button>
+      <div class="mtabs">
+        <button class="mt on" onclick="setDM('avalanche',this)">Avalanche — saves most $</button>
+        <button class="mt" onclick="setDM('snowball',this)">Snowball — quick wins</button>
+      </div>
+      <div class="card" id="debt-order" style="padding:12px 14px"></div>
+    </div>
+
+    <!-- GUIDE -->
+    <div class="page" id="page-guide">
+      <div class="sec-hd" style="margin-top:2px"><span class="sec-t">Canadian account priority</span></div>
+      <div class="card" style="padding:12px 14px">
+        <div class="prow"><div class="pnum db1">1</div><div class="pb"><div class="pt">Employer match<span class="pill pill-g">free money</span></div><div class="ps">Always contribute enough to get the full employer match first.</div></div></div>
+        <div class="prow"><div class="pnum db2">2</div><div class="pb"><div class="pt">Emergency fund in TFSA<span class="pill pill-b">3-6 mo</span></div><div class="ps">Use a TFSA HISA (EQ Bank, Oaken). Tax-free interest, withdraw anytime.</div></div></div>
+        <div class="prow"><div class="pnum db3">3</div><div class="pb"><div class="pt">High-interest debt<span class="pill pill-a">>7% APR</span></div><div class="ps">Canadian credit cards: 19.99-22.99%. Paying these beats most investments.</div></div></div>
+        <div class="prow"><div class="pnum db4">4</div><div class="pb"><div class="pt">TFSA investing</div><div class="ps">Max $7,000/yr (2025). Lifetime up to $95,000. XEQT or VEQT ETFs are a great low-cost choice.</div></div></div>
+        <div class="prow"><div class="pnum db5">5</div><div class="pb"><div class="pt">RRSP</div><div class="ps">Best when your tax rate now is higher than in retirement. BC combined rate hits 20.06% at ~$57K.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:#EEEDFE;color:#3C3489">6</div><div class="pb"><div class="pt">RESP<span class="pill pill-g">20% CESG</span></div><div class="ps">$208/mo per child captures the full $500/yr federal grant.</div></div></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Bi-weekly pay explained</span></div>
+      <div class="card" style="padding:12px 14px">
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">!</div><div class="pb"><div class="pt">26 cheques, not 24</div><div class="ps">There are 26 bi-weekly pay periods per year. That means 2 months each year you receive 3 cheques instead of 2. This app detects those months automatically.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">!</div><div class="pb"><div class="pt">Monthly equivalent formula</div><div class="ps">Your bi-weekly cheque x 26 / 12 = true monthly income. This is slightly higher than 2 cheques because of those extra 2 annual cheques.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:var(--green-bg);color:var(--green)">$</div><div class="pb"><div class="pt">3rd cheque strategy</div><div class="ps">When a 3rd cheque month arrives, treat it as a windfall. The surplus distributor will suggest the best use — typically extra debt payoff or TFSA top-up.</div></div></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Key rules</span></div>
+      <div class="card" style="padding:12px 14px">
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Pay yourself first</div><div class="ps">On payday, auto-transfer savings before spending anything else.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Housing over 40%? Use 60/20/20</div><div class="ps">Metro Van housing often exceeds 40% of income.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Review every paycheque</div><div class="ps">Check the Paycheque tab each time you get paid. Adjust if life changes.</div></div></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Settings</span></div>
+      <div class="card" style="padding:12px 14px">
+        <div style="display:flex;justify-content:space-between;padding:6px 0"><span style="font-size:13px;color:var(--text2)">Version</span><span style="font-size:13px;color:var(--text3)">2.0 - BC Budget</span></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)"><span style="font-size:13px;color:var(--text2)">Storage</span><span style="font-size:13px;color:var(--text3)">On this device</span></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)"><span style="font-size:13px;color:var(--text2)">Last saved</span><span style="font-size:13px;color:var(--text3)" id="last-saved">--</span></div>
+      </div>
+      <button class="rst-btn" onclick="resetData()">Reset all data</button>
+      <div style="height:16px"></div>
+    </div>
 
   </div><!-- end content -->
 
@@ -347,7 +383,6 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 </div>
 
 <!-- SURPLUS MODAL -->
-
 <div class="modal-overlay hidden" id="dist-modal">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -868,10 +903,14 @@ function renderDebtOrder(){
 
 // ── PERSISTENCE ───────────────────────────────────────────────────────────────
 const IDS=['biweekly','extra','housing','homeins','icbc','carloan','transit','utils','groceries','health','lifeins','mindebt','dining','entertain','subs','shopping','hobbies','travel','education','emerg','tfsa','rrsp','resp','xdebt','nonreg'];
+const PAYDAY_IDS=['last-payday'];
 
 function saveData(){
   const vals={};
   IDS.forEach(id=>{const e=document.getElementById(id);if(e)vals[id]=e.value;});
+  PAYDAY_IDS.forEach(id=>{const e=document.getElementById(id);if(e)vals[id]=e.value;});
+  const dowEl=document.getElementById('payday-dow');
+  if(dowEl)vals['payday-dow']=dowEl.value;
   const savedCustom={};
   ['needs','wants','saves'].forEach(cat=>{
     savedCustom[cat]=customItems[cat].map(item=>{
@@ -891,6 +930,8 @@ function loadData(){
     const raw=localStorage.getItem(SK);if(!raw)return;
     const data=JSON.parse(raw);
     if(data.vals)Object.entries(data.vals).forEach(([id,val])=>{const e=document.getElementById(id);if(e)e.value=val;});
+    const dowEl=document.getElementById('payday-dow');
+    if(dowEl&&data.vals&&data.vals['payday-dow'])dowEl.value=data.vals['payday-dow'];
     if(data.method)method=data.method;
     if(data.dm)dm=data.dm;
     if(data.dc)dc=data.dc;
@@ -911,14 +952,156 @@ function resetData(){
   location.reload();
 }
 
+// ── TODAY CARD ────────────────────────────────────────────────────────────────
+function getNextPayday(){
+  const dowEl=document.getElementById('payday-dow');
+  const lastEl=document.getElementById('last-payday');
+  const dow=dowEl?parseInt(dowEl.value):5; // default Friday
+  const lastStr=lastEl?lastEl.value:'';
+
+  const today=new Date();
+  today.setHours(0,0,0,0);
+
+  if(lastStr){
+    // Calculate from last payday + 14 day intervals
+    const last=new Date(lastStr+'T00:00:00');
+    last.setHours(0,0,0,0);
+    let next=new Date(last);
+    next.setDate(next.getDate()+14);
+    while(next<today) next.setDate(next.getDate()+14);
+    return next;
+  } else {
+    // Fall back: find next occurrence of payday DOW
+    let d=new Date(today);
+    let tries=0;
+    while(d.getDay()!==dow&&tries<14){d.setDate(d.getDate()+1);tries++;}
+    // If more than 7 days away, go back 7 and find bi-weekly from there
+    return d;
+  }
+}
+
+function renderTodayCard(){
+  const el=document.getElementById('today-card');
+  if(!el)return;
+
+  const today=new Date();
+  today.setHours(0,0,0,0);
+  const nextPayday=getNextPayday();
+  const diffMs=nextPayday-today;
+  const daysUntil=Math.round(diffMs/(1000*60*60*24));
+
+  const s=getBudgetState();
+  const bw=s.bw;
+  const needs=s.needs;
+  const wants=s.wants;
+  const saves=s.saves;
+
+  // Per-cheque splits (half of monthly)
+  const halfNeeds=Math.round(needs/2);
+  const halfWants=Math.round(wants/2);
+  const halfSaves=Math.round(saves/2);
+
+  // Determine card state
+  let cardClass,badge,heading,sub,actions;
+
+  if(daysUntil===0){
+    // PAYDAY
+    cardClass='payday';
+    badge='💰';
+    heading='Payday! Here\'s what to do now';
+    sub='Your '+fmt(bw)+' cheque just landed. Move money before you spend it.';
+    actions=[
+      {label:'Transfer to savings & TFSA',val:fmt(halfSaves),color:'green'},
+      {label:'Set aside for rent & bills',val:fmt(halfNeeds),color:'blue'},
+      {label:'Spending money (wants)',val:fmt(halfWants),color:'amber'},
+    ];
+  } else if(daysUntil===1){
+    // DAY BEFORE PAYDAY
+    cardClass='day-before';
+    badge='⏰';
+    heading='Payday tomorrow — check in';
+    sub='Make sure your accounts are ready. Set up your transfers tonight so money moves automatically when your cheque arrives.';
+    actions=[
+      {label:'Tomorrow\'s paycheque',val:fmt(bw),color:'green'},
+      {label:'Savings to move first',val:fmt(halfSaves),color:'blue'},
+      {label:'Days until payday',val:'1',color:'amber'},
+    ];
+  } else if(daysUntil<=5){
+    // WITHIN THE SAME WEEK AS PAYDAY
+    cardClass='week-of';
+    badge='📅';
+    heading='Payday in '+daysUntil+' day'+(daysUntil===1?'':'s');
+    sub='You\'re in the home stretch. Stay on budget this week — your next cheque arrives '+nextPayday.toLocaleDateString('en-CA',{weekday:'long',month:'short',day:'numeric'})+'.';
+    const spent=halfNeeds+halfWants;
+    actions=[
+      {label:'Days until next paycheque',val:daysUntil+'d',color:'blue'},
+      {label:'Spending budget this period',val:fmt(halfWants),color:'amber'},
+      {label:'Savings this period',val:fmt(halfSaves),color:'green'},
+    ];
+  } else {
+    // MID PERIOD (6-13 days out)
+    cardClass='mid-period';
+    badge='📊';
+    heading='Mid-period — stay the course';
+    sub='Next payday is '+nextPayday.toLocaleDateString('en-CA',{weekday:'long',month:'short',day:'numeric'})+'. '+daysUntil+' days away. Keep spending within your wants budget.';
+    actions=[
+      {label:'Days until paycheque',val:daysUntil+'d',color:'blue'},
+      {label:'Remaining wants budget',val:fmt(halfWants),color:'amber'},
+      {label:'Savings on track',val:fmt(halfSaves),color:'green'},
+    ];
+  }
+
+  const actionsHtml=actions.map(a=>
+    '<div class="today-action">'
+    +'<span class="today-action-label">'+a.label+'</span>'
+    +'<span class="today-action-val '+a.color+'">'+a.val+'</span>'
+    +'</div>'
+  ).join('');
+
+  el.innerHTML='<div class="today-card '+cardClass+'">'
+    +'<div class="today-top"><span class="today-badge">'+badge+'</span><span class="today-days">'+
+    (daysUntil===0?'Today':'Next payday: '+nextPayday.toLocaleDateString('en-CA',{month:'short',day:'numeric'}))
+    +'</span></div>'
+    +'<div class="today-heading">'+heading+'</div>'
+    +'<div class="today-sub">'+sub+'</div>'
+    +'<div class="today-actions">'+actionsHtml+'</div>'
+    +'</div>';
+}
+
 // ── INIT ─────────────────────────────────────────────────────────────────────
+// Set default last payday to most recent Friday before today
+function setDefaultLastPayday(){
+  const el=document.getElementById('last-payday');
+  if(!el||el.value)return;
+  // Known anchor: May 1 2026 is a confirmed Friday payday
+  // From this we can calculate all future bi-weekly paydays correctly
+  const anchor=new Date('2026-05-01T00:00:00');
+  const today=new Date();
+  today.setHours(0,0,0,0);
+  // Walk forward from anchor in 14-day steps to find last payday <= today
+  let last=new Date(anchor);
+  while(true){
+    const next=new Date(last);
+    next.setDate(next.getDate()+14);
+    if(next>today)break;
+    last=next;
+  }
+  const y=last.getFullYear();
+  const m=String(last.getMonth()+1).padStart(2,'0');
+  const d=String(last.getDate()).padStart(2,'0');
+  el.value=y+'-'+m+'-'+d;
+}
+
 document.getElementById('hdate').textContent=new Date().toLocaleString('en-CA',{month:'long',year:'numeric'});
 document.getElementById('mtip').textContent=mtips[method];
-document.querySelectorAll('input').forEach(el=>el.addEventListener('input',()=>{if(el.type!=='text')recalc();else gatherDebts();}));
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',()=>{if(el.type!=='text'&&el.type!=='date')recalc();else if(el.type==='date'){recalc();renderTodayCard();}else gatherDebts();}));
+const dowSel=document.getElementById('payday-dow');
+if(dowSel)dowSel.addEventListener('change',()=>{recalc();renderTodayCard();});
 document.getElementById('dist-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 loadData();
+setDefaultLastPayday();
 recalc();
+renderTodayCard();
 </script>
-
 </body>
 </html>
