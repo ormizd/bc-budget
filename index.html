@@ -430,6 +430,34 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 
   </div><!-- end content -->
 
+<!-- ADD CUSTOM ITEM MODAL -->
+<div class="modal-overlay hidden" id="ci-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="ci-modal-title">Add Custom Item</div>
+    <div class="modal-sub" id="ci-modal-sub"></div>
+    <div class="igrp" style="margin-bottom:12px">
+      <div class="irow" style="border-top:none">
+        <label>Item name</label>
+        <input type="text" id="ci-modal-name" placeholder="e.g. Pet food" style="width:160px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:16px;padding:6px 9px;outline:none;font-family:inherit;text-align:right">
+      </div>
+      <div class="irow">
+        <label>Monthly amount ($)</label>
+        <input type="number" id="ci-modal-amt" value="0" step="10" inputmode="decimal" style="width:110px">
+      </div>
+      <div class="irow">
+        <label>Payment method</label>
+        <div class="pay-toggle" id="ci-modal-pt" style="height:30px">
+          <button onclick="setCIModalPT('chq',this)" id="ci-pt-chq" style="padding:0 10px;font-size:11px">CHQ</button>
+          <button onclick="setCIModalPT('cc',this)" id="ci-pt-cc" class="pt-on-cc" style="padding:0 10px;font-size:11px">CC</button>
+        </div>
+      </div>
+    </div>
+    <button class="apply-btn" id="ci-confirm-btn" onclick="confirmCustomItem()">Add to budget</button>
+    <button class="modal-cancel" onclick="closeCIModal()">Cancel</button>
+  </div>
+</div>
+
   <nav id="nav">
     <button class="nav-btn on" onclick="showPage('overview',this)"><span class="nav-icon">o</span><span>Overview</span></button>
     <button class="nav-btn" onclick="showPage('paycheque',this)"><span class="nav-icon">$</span><span>Paycheque</span></button>
@@ -976,20 +1004,91 @@ function closeModal(){
 }
 
 // ── CUSTOM ITEMS ─────────────────────────────────────────────────────────────
+let ciModalCat=null;
+let ciModalPT='cc';
+
 function addCustomItem(cat,data){
-  cic++;const id=cic;
-  const name=data?data.name:'';const amount=data?data.amount:0;
-  customItems[cat].push({id,name,amount});
+  if(data){
+    // Loading from saved data — render directly without modal
+    _renderCustomRow(cat,data);
+    return;
+  }
+  // Open modal
+  ciModalCat=cat;
+  ciModalPT='cc';
+  const titles={needs:'Add to Needs',wants:'Add to Wants',saves:'Add to Savings'};
+  const subs={needs:'e.g. Pet food, parking, phone plan','wants':'e.g. Concert tickets, gym membership',saves:'e.g. Vacation fund, new car savings'};
+  document.getElementById('ci-modal-title').textContent=titles[cat]||'Add Custom Item';
+  document.getElementById('ci-modal-sub').textContent=subs[cat]||'';
+  document.getElementById('ci-modal-name').value='';
+  document.getElementById('ci-modal-amt').value='0';
+  // Reset PT toggle to CC default
+  setCIModalPT('cc',document.getElementById('ci-pt-cc'));
+  document.getElementById('ci-modal').classList.remove('hidden');
+  setTimeout(()=>document.getElementById('ci-modal-name').focus(),200);
+}
+
+function setCIModalPT(type,btn){
+  ciModalPT=type;
+  document.getElementById('ci-modal-pt').querySelectorAll('button').forEach(b=>b.classList.remove('pt-on-cc','pt-on-chq'));
+  btn.classList.add(type==='cc'?'pt-on-cc':'pt-on-chq');
+}
+
+function confirmCustomItem(){
+  const name=document.getElementById('ci-modal-name').value.trim();
+  const amount=parseFloat(document.getElementById('ci-modal-amt').value)||0;
+  if(!name){document.getElementById('ci-modal-name').focus();return;}
+  cic++;
+  const id=cic;
+  const item={id,name,amount,pt:ciModalPT};
+  customItems[ciModalCat].push(item);
+  _renderCustomRow(ciModalCat,item);
+  closeCIModal();
+  recalc();
+}
+
+function closeCIModal(){
+  document.getElementById('ci-modal').classList.add('hidden');
+  ciModalCat=null;
+}
+
+function _renderCustomRow(cat,item){
   const container=document.getElementById('custom-'+cat);
+  if(!container)return;
+  const pt=item.pt||'cc';
   const row=document.createElement('div');
-  row.className='irow';row.id='ci-row-'+id;
-  row.innerHTML='<input type="text" id="ci-name-'+id+'" placeholder="Item name" value="'+name+'" oninput="updateCustomName('+id+',\''+cat+'\')">'
-    +'<input type="number" id="ci-amt-'+id+'" value="'+amount+'" step="10" inputmode="decimal" style="width:96px">'
-    +'<button class="del-btn" onclick="removeCustomItem('+id+',\''+cat+'\')" aria-label="Remove">x</button>';
+  row.className='irow';row.id='ci-row-'+item.id;
+  row.innerHTML='<label style="font-size:13px;color:var(--text2);flex:1" id="ci-lbl-'+item.id+'">'+escHtml(item.name)+'</label>'
+    +'<input type="number" id="ci-amt-'+item.id+'" value="'+item.amount+'" step="10" inputmode="decimal" style="width:96px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:16px;padding:4px 8px;text-align:right;outline:none;-webkit-appearance:none;transform:scale(0.875);transform-origin:right center;margin-right:-6px">'
+    +'<div class="pay-toggle" id="ci-pt-'+item.id+'">'
+    +'<button onclick="setCIPT('+item.id+',\'chq\',this,'+(JSON.stringify(cat))+','+(JSON.stringify(item.id))+')\"'+(pt==='chq'?' class="pt-on-chq"':'')+'>CHQ</button>'
+    +'<button onclick="setCIPT('+item.id+',\'cc\',this,'+(JSON.stringify(cat))+','+(JSON.stringify(item.id))+')\"'+(pt==='cc'?' class="pt-on-cc"':'')+'>CC</button>'
+    +'</div>'
+    +'<button class="del-btn" onclick="removeCustomItem('+item.id+',\''+cat+'\')" aria-label="Remove">×</button>';
   container.appendChild(row);
   row.querySelector('input[type=number]').addEventListener('input',recalc);
-  row.querySelector('input[type=text]').addEventListener('input',recalc);
-  if(!data)setTimeout(()=>row.querySelector('input[type=text]').focus(),50);
+  // Store pt in payTypes so CC calc picks it up
+  payTypes['ci-'+item.id]=pt;
+}
+
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function setCIPT(id,type,btn,cat,itemId){
+  payTypes['ci-'+id]=type;
+  const toggle=document.getElementById('ci-pt-'+id);
+  if(toggle){toggle.querySelectorAll('button').forEach(b=>b.classList.remove('pt-on-cc','pt-on-chq'));btn.classList.add(type==='cc'?'pt-on-cc':'pt-on-chq');}
+  // Update in customItems array
+  ['needs','wants','saves'].forEach(c=>{
+    const item=customItems[c].find(i=>i.id===id);
+    if(item)item.pt=type;
+  });
+  renderCCCard();saveData();
+}
+
+function removeCustomItem(id,cat){
+  const row=document.getElementById('ci-row-'+id);if(row)row.remove();
+  customItems[cat]=customItems[cat].filter(i=>i.id!==id);
+  delete payTypes['ci-'+id];
   recalc();
 }
 
@@ -997,11 +1096,6 @@ function updateCustomName(id,cat){
   const item=customItems[cat].find(i=>i.id===id);
   if(item){const e=document.getElementById('ci-name-'+id);item.name=e?e.value:'';}
   saveData();
-}
-
-function removeCustomItem(id,cat){
-  const row=document.getElementById('ci-row-'+id);if(row)row.remove();
-  customItems[cat]=customItems[cat].filter(i=>i.id!==id);recalc();
 }
 
 // ── DEBT ─────────────────────────────────────────────────────────────────────
@@ -1063,9 +1157,8 @@ function saveData(){
   const savedCustom={};
   ['needs','wants','saves'].forEach(cat=>{
     savedCustom[cat]=customItems[cat].map(item=>{
-      const nameEl=document.getElementById('ci-name-'+item.id);
       const amtEl=document.getElementById('ci-amt-'+item.id);
-      return{id:item.id,name:nameEl?nameEl.value:item.name,amount:amtEl?parseFloat(amtEl.value)||0:item.amount};
+      return{id:item.id,name:item.name,amount:amtEl?parseFloat(amtEl.value)||0:item.amount,pt:item.pt||payTypes['ci-'+item.id]||'cc'};
     });
   });
   const ts=new Date().toLocaleString('en-CA',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
@@ -1383,6 +1476,7 @@ document.querySelectorAll('input').forEach(el=>el.addEventListener('input',()=>{
 const dowSel=document.getElementById('payday-dow');
 if(dowSel)dowSel.addEventListener('change',()=>{recalc();renderTodayCard();});
 document.getElementById('dist-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.getElementById('ci-modal').addEventListener('click',function(e){if(e.target===this)closeCIModal();});
 loadData();
 loadPTToggles();
 setDefaultLastPayday();
