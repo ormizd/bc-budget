@@ -120,6 +120,36 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 .today-payday-val{font-size:12px;color:var(--accent);cursor:pointer;text-decoration:underline}
 .rst-btn{width:100%;background:var(--red-bg);border:1px solid rgba(240,96,112,0.2);border-radius:12px;padding:13px;color:var(--red);font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;margin-top:6px}
 
+/* CC cashflow card */
+.cc-card{border-radius:18px;padding:16px 18px;margin-bottom:12px;border:1px solid;background:var(--bg2);border-color:var(--border)}
+.cc-card.warning{background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(240,96,112,0.08));border-color:rgba(245,158,11,0.3)}
+.cc-card.due-soon{background:linear-gradient(135deg,rgba(240,96,112,0.15),rgba(245,158,11,0.08));border-color:rgba(240,96,112,0.35)}
+.cc-card.clear{background:var(--bg2);border-color:var(--border)}
+.cc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.cc-title{font-size:14px;font-weight:700;letter-spacing:-0.2px}
+.cc-badge{font-size:11px;font-weight:500;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,0.07);color:var(--text2)}
+.cc-cycle{display:flex;align-items:stretch;gap:0;margin-bottom:12px;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.cc-cycle-seg{flex:1;padding:8px 6px;text-align:center;font-size:10px;color:var(--text3);background:var(--bg3);position:relative}
+.cc-cycle-seg.active{background:rgba(245,158,11,0.15);color:var(--amber)}
+.cc-cycle-seg.pay-seg{background:rgba(240,96,112,0.15);color:var(--red)}
+.cc-cycle-seg.today-seg{background:rgba(79,142,247,0.2);color:var(--accent)}
+.cc-cycle-label{font-weight:600;font-size:11px;display:block;margin-bottom:1px}
+.cc-cycle-sub{font-size:9px;opacity:0.8}
+.cc-steps{display:flex;flex-direction:column;gap:6px}
+.cc-step{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border-radius:10px;padding:10px 12px}
+.cc-step-num{width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cc-step-num.red{background:var(--red-bg);color:var(--red)}
+.cc-step-num.green{background:var(--green-bg);color:var(--green)}
+.cc-step-num.blue{background:rgba(79,142,247,0.15);color:var(--accent)}
+.cc-step-num.amber{background:var(--amber-bg);color:var(--amber)}
+.cc-step-body{flex:1}
+.cc-step-label{font-size:13px;color:var(--text2);line-height:1.2}
+.cc-step-val{font-size:14px;font-weight:600;margin-top:1px}
+.cc-buffer{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.cc-buffer-label{font-size:11px;color:var(--text3);margin-bottom:5px}
+.cc-buffer-bar{background:var(--bg3);border-radius:4px;height:6px;overflow:hidden}
+.cc-buffer-fill{height:100%;border-radius:4px;background:var(--green);transition:width 0.4s}
+
 /* Paycheque plan */
 .pc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
 .pc-met{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:12px 14px}
@@ -189,6 +219,7 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
     <!-- OVERVIEW -->
     <div class="page on" id="page-overview">
       <div id="today-card"></div>
+      <div id="cc-card"></div>
       <div class="mgrid" id="ov-metrics"></div>
       <div id="ov-surplus"></div>
       <div id="ov-dist-btn"></div>
@@ -271,6 +302,27 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
         <div class="irow" style="background:var(--bg3)">
           <label style="color:var(--text3);font-size:12px">Annual income</label>
           <span class="irow-hint" id="annual-equiv" style="font-size:13px;color:var(--text2);font-weight:500"></span>
+        </div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Credit card</span></div>
+      <div class="igrp">
+        <div class="sub-l">Statement cycle</div>
+        <div class="irow">
+          <label>Statement closes (day of month)</label>
+          <input type="number" id="cc-close-day" value="19" min="1" max="31" step="1" inputmode="numeric">
+        </div>
+        <div class="irow">
+          <label>Payment due (day of month)</label>
+          <input type="number" id="cc-due-day" value="15" min="1" max="31" step="1" inputmode="numeric">
+        </div>
+        <div class="sub-l">Buffer goal</div>
+        <div class="irow">
+          <label>CC buffer saved so far</label>
+          <input type="number" id="cc-buffer-saved" value="0" step="50" inputmode="decimal">
+        </div>
+        <div class="irow" style="background:var(--bg3)">
+          <label style="color:var(--text3);font-size:12px">Buffer target (1 month CC spend)</label>
+          <span class="irow-hint" id="cc-buffer-target" style="font-size:13px;color:var(--text2);font-weight:500"></span>
         </div>
       </div>
       <div class="sec-hd"><span class="sec-t">Needs</span><span class="sec-a" id="b-n"></span></div>
@@ -708,6 +760,7 @@ function recalc(){
   const dt=document.getElementById('debt-tip');
   if(dt)dt.textContent='Extra payment of '+fmt(gv('xdebt'))+'/mo goes to debt #1 first, then rolls down once paid off.';
   renderDebtOrder();
+  renderCCCard();
   saveData();
 }
 
@@ -902,7 +955,7 @@ function renderDebtOrder(){
 }
 
 // ── PERSISTENCE ───────────────────────────────────────────────────────────────
-const IDS=['biweekly','extra','housing','homeins','icbc','carloan','transit','utils','groceries','health','lifeins','mindebt','dining','entertain','subs','shopping','hobbies','travel','education','emerg','tfsa','rrsp','resp','xdebt','nonreg'];
+const IDS=['biweekly','extra','housing','homeins','icbc','carloan','transit','utils','groceries','health','lifeins','mindebt','dining','entertain','subs','shopping','hobbies','travel','education','emerg','tfsa','rrsp','resp','xdebt','nonreg','cc-close-day','cc-due-day','cc-buffer-saved'];
 const PAYDAY_IDS=['last-payday'];
 
 function saveData(){
@@ -950,6 +1003,113 @@ function resetData(){
   if(!confirm('Reset all budget data? This cannot be undone.'))return;
   try{localStorage.removeItem(SK);}catch(e){}
   location.reload();
+}
+
+// ── CC CASHFLOW CARD ──────────────────────────────────────────────────────────
+function getCCDates(){
+  const today=new Date();
+  today.setHours(0,0,0,0);
+  const yr=today.getFullYear();
+  const mo=today.getMonth();
+  const closeDay=parseInt(gv('cc-close-day'))||19;
+  const dueDay=parseInt(gv('cc-due-day'))||15;
+
+  // Statement close date — this month or last month depending on where today falls
+  let closeDate=new Date(yr,mo,closeDay);
+  if(today>closeDate){
+    // Statement already closed this month — next close is next month
+    closeDate=new Date(yr,mo+1,closeDay);
+  }
+  // Previous close = one month back
+  const prevClose=new Date(closeDate);
+  prevClose.setMonth(prevClose.getMonth()-1);
+
+  // Due date — after close date, typically next month
+  let dueDate=new Date(closeDate.getFullYear(),closeDate.getMonth()+1,dueDay);
+  // If due day is before close day in same month sequence, it's next month
+  // Standard: due is ~21-25 days after close
+  const daysAfterClose=Math.round((dueDate-closeDate)/(1000*60*60*24));
+  if(daysAfterClose<10) dueDate.setMonth(dueDate.getMonth()+1);
+
+  const daysToClose=Math.round((closeDate-today)/(1000*60*60*24));
+  const daysToDue=Math.round((dueDate-today)/(1000*60*60*24));
+
+  return{today,closeDate,prevClose,dueDate,daysToClose,daysToDue};
+}
+
+function renderCCCard(){
+  const el=document.getElementById('cc-card');
+  if(!el)return;
+
+  const s=getBudgetState();
+  const cc=getCCDates();
+  const shortDate=d=>d.toLocaleDateString('en-CA',{month:'short',day:'numeric'});
+
+  // Estimate CC spend = all wants + some needs paid by CC
+  // (groceries, gas, dining, entertainment, subscriptions, shopping, hobbies, travel, education)
+  const ccSpendMonthly=gv('groceries')+gv('transit')+gv('dining')+gv('entertain')+gv('subs')+gv('shopping')+gv('hobbies')+gv('travel')+gv('education')+getCustomTotal('wants');
+  const ccSpendPerPeriod=Math.round(ccSpendMonthly/2);
+  const bufferTarget=ccSpendMonthly;
+  const bufferSaved=gv('cc-buffer-saved');
+  const bufferPct=bufferTarget>0?Math.min(100,Math.round(bufferSaved/bufferTarget*100)):0;
+
+  // Update buffer target display in budget tab
+  const bt=document.getElementById('cc-buffer-target');
+  if(bt)bt.textContent=fmt(bufferTarget)+'/mo';
+
+  // Payday sequence — what to do on payday with CC awareness
+  // Real available after paying CC = paycheque - estimated CC balance owing
+  const nextPayday=getNextPayday();
+  const bw=s.bw;
+  const ccOwing=ccSpendPerPeriod; // estimate: half monthly CC spend built up since last payday
+  const realAvailable=bw-ccOwing;
+  const halfSaves=Math.round(s.saves/2);
+  const halfNeeds=Math.round(s.needs/2);
+  const halfWants=Math.round(s.wants/2);
+
+  // Card urgency
+  let cardClass='cc-card clear';
+  let ccStatus='';
+  if(cc.daysToDue<=3){cardClass='cc-card due-soon';ccStatus='Due in '+cc.daysToDue+'d';}
+  else if(cc.daysToDue<=7){cardClass='cc-card warning';ccStatus='Due in '+cc.daysToDue+'d';}
+  else if(cc.daysToClose<=3){cardClass='cc-card warning';ccStatus='Closes in '+cc.daysToClose+'d';}
+  else{ccStatus=cc.daysToClose+'d to close';}
+
+  // Cycle timeline — 4 segments: statement period, close, grace, due
+  const totalDays=Math.round((cc.dueDate-cc.prevClose)/(1000*60*60*24));
+  const todayPos=Math.round((cc.today-cc.prevClose)/(1000*60*60*24));
+  const closePos=Math.round((cc.closeDate-cc.prevClose)/(1000*60*60*24));
+  const inGrace=cc.today>=cc.closeDate;
+  const seg1Class=!inGrace?'cc-cycle-seg active':'cc-cycle-seg';
+  const seg2Class=inGrace?'cc-cycle-seg pay-seg':'cc-cycle-seg';
+
+  const cycleHtml='<div class="cc-cycle">'
+    +'<div class="'+seg1Class+'"><span class="cc-cycle-label">Spending</span><span class="cc-cycle-sub">'+shortDate(cc.prevClose)+' – '+shortDate(cc.closeDate)+'</span></div>'
+    +'<div class="'+seg2Class+'"><span class="cc-cycle-label">'+(inGrace?'Grace period':'Closes')+'</span><span class="cc-cycle-sub">'+(inGrace?shortDate(cc.closeDate)+' – '+shortDate(cc.dueDate):''+shortDate(cc.closeDate))+'</span></div>'
+    +'<div class="cc-cycle-seg '+(cc.daysToDue<=3?'pay-seg':'')+'"><span class="cc-cycle-label">Due</span><span class="cc-cycle-sub">'+shortDate(cc.dueDate)+'</span></div>'
+    +'</div>';
+
+  // Payday action sequence
+  const stepsHtml='<div class="cc-steps">'
+    +'<div class="cc-step"><div class="cc-step-num red">1</div><div class="cc-step-body"><div class="cc-step-label">Pay credit card bill first</div><div class="cc-step-val" style="color:var(--red)">~'+fmt(ccOwing)+' est.</div></div></div>'
+    +'<div class="cc-step"><div class="cc-step-num green">2</div><div class="cc-step-body"><div class="cc-step-label">Transfer to savings & TFSA</div><div class="cc-step-val" style="color:var(--green)">'+fmt(halfSaves)+'</div></div></div>'
+    +'<div class="cc-step"><div class="cc-step-num blue">3</div><div class="cc-step-body"><div class="cc-step-label">Set aside for rent & fixed bills</div><div class="cc-step-val" style="color:var(--accent)">'+fmt(halfNeeds-ccOwing>0?halfNeeds-gv('carloan')-gv('mindebt'):halfNeeds)+'</div></div></div>'
+    +'<div class="cc-step"><div class="cc-step-num amber">4</div><div class="cc-step-body"><div class="cc-step-label">Spending money (goes on CC)</div><div class="cc-step-val" style="color:var(--amber)">'+fmt(halfWants)+'</div></div></div>'
+    +'</div>';
+
+  // Buffer progress
+  const bufferHtml=bufferTarget>0?'<div class="cc-buffer">'
+    +'<div class="cc-buffer-label">CC buffer: '+fmt(bufferSaved)+' of '+fmt(bufferTarget)+' goal ('+bufferPct+'%) — when full, cashflow problems disappear</div>'
+    +'<div class="cc-buffer-bar"><div class="cc-buffer-fill" style="width:'+bufferPct+'%"></div></div>'
+    +'</div>':'';
+
+  el.innerHTML='<div class="'+cardClass+'">'
+    +'<div class="cc-header"><span class="cc-title">💳 Credit Card Cashflow</span><span class="cc-badge">'+ccStatus+'</span></div>'
+    +cycleHtml
+    +'<div style="font-size:11px;color:var(--text3);margin-bottom:8px">Payday sequence — do this in order on '+shortDate(nextPayday)+':</div>'
+    +stepsHtml
+    +bufferHtml
+    +'</div>';
 }
 
 // ── TODAY CARD ────────────────────────────────────────────────────────────────
@@ -1113,6 +1273,7 @@ loadData();
 setDefaultLastPayday();
 recalc();
 renderTodayCard();
+renderCCCard();
 </script>
 </body>
 </html>
