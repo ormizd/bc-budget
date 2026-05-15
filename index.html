@@ -68,6 +68,11 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 .irow input[type=text]:focus{border-color:var(--accent)}
 .irow input[type=text]::placeholder{color:var(--text3)}
 .irow .irow-hint{font-size:11px;color:var(--text3);text-align:right;min-width:60px}
+/* CC / CHQ toggle */
+.pay-toggle{display:flex;border-radius:6px;overflow:hidden;border:1px solid var(--border2);flex-shrink:0;height:26px}
+.pay-toggle button{padding:0 7px;font-size:10px;font-weight:600;border:none;cursor:pointer;font-family:inherit;background:var(--bg3);color:var(--text3);transition:all 0.15s;letter-spacing:0.02em}
+.pay-toggle button.pt-on-cc{background:#1a3a6e;color:#7aabff}
+.pay-toggle button.pt-on-chq{background:#1a3d28;color:var(--green)}
 .del-btn{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;padding:0 2px;line-height:1;flex-shrink:0}
 .del-btn:active{color:var(--red)}
 .cat-add-btn{width:100%;background:none;border:none;border-top:1px solid var(--border);padding:11px 14px;color:var(--accent);font-family:inherit;font-size:13px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:6px}
@@ -328,19 +333,19 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
       <div class="sec-hd"><span class="sec-t">Needs</span><span class="sec-a" id="b-n"></span></div>
       <div class="igrp">
         <div class="sub-l">Housing</div>
-        <div class="irow"><label>Rent / mortgage</label><input type="number" id="housing" value="2000" step="50" inputmode="decimal"></div>
-        <div class="irow"><label>Home insurance</label><input type="number" id="homeins" value="120" step="10" inputmode="decimal"></div>
+        <div class="irow" id="irow-housing"><label>Rent / mortgage</label><input type="number" id="housing" value="2000" step="50" inputmode="decimal"><div class="pay-toggle" id="pt-housing"><button onclick="setPT('housing','chq',this)" class="pt-on-chq">CHQ</button><button onclick="setPT('housing','cc',this)">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('housing')" title="Remove">×</button></div>
+        <div class="irow" id="irow-homeins"><label>Home insurance</label><input type="number" id="homeins" value="120" step="10" inputmode="decimal"><div class="pay-toggle" id="pt-homeins"><button onclick="setPT('homeins','chq',this)" class="pt-on-chq">CHQ</button><button onclick="setPT('homeins','cc',this)">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('homeins')" title="Remove">×</button></div>
         <div class="sub-l">Transportation</div>
-        <div class="irow"><label>ICBC insurance</label><input type="number" id="icbc" value="180" step="10" inputmode="decimal"></div>
-        <div class="irow"><label>Car loan payment</label><input type="number" id="carloan" value="400" step="25" inputmode="decimal"></div>
-        <div class="irow"><label>Gas / TransLink</label><input type="number" id="transit" value="130" step="10" inputmode="decimal"></div>
+        <div class="irow" id="irow-icbc"><label>ICBC insurance</label><input type="number" id="icbc" value="180" step="10" inputmode="decimal"><div class="pay-toggle" id="pt-icbc"><button onclick="setPT('icbc','chq',this)" class="pt-on-chq">CHQ</button><button onclick="setPT('icbc','cc',this)">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('icbc')" title="Remove">×</button></div>
+        <div class="irow" id="irow-carloan"><label>Car loan payment</label><input type="number" id="carloan" value="400" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-carloan"><button onclick="setPT('carloan','chq',this)" class="pt-on-chq">CHQ</button><button onclick="setPT('carloan','cc',this)">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('carloan')" title="Remove">×</button></div>
+        <div class="irow" id="irow-transit"><label>Gas / TransLink</label><input type="number" id="transit" value="130" step="10" inputmode="decimal"><div class="pay-toggle" id="pt-transit"><button onclick="setPT('transit','chq',this)">CHQ</button><button onclick="setPT('transit','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('transit')" title="Remove">×</button></div>
         <div class="sub-l">Living essentials</div>
-        <div class="irow"><label>Utilities & internet</label><input type="number" id="utils" value="180" step="10" inputmode="decimal"></div>
-        <div class="irow"><label>Groceries</label><input type="number" id="groceries" value="450" step="25" inputmode="decimal"></div>
-        <div class="irow"><label>Extended health / dental</label><input type="number" id="health" value="80" step="10" inputmode="decimal"></div>
-        <div class="irow"><label>Life insurance</label><input type="number" id="lifeins" value="50" step="5" inputmode="decimal"></div>
+        <div class="irow" id="irow-utils"><label>Utilities & internet</label><input type="number" id="utils" value="180" step="10" inputmode="decimal"><div class="pay-toggle" id="pt-utils"><button onclick="setPT('utils','chq',this)">CHQ</button><button onclick="setPT('utils','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('utils')" title="Remove">×</button></div>
+        <div class="irow" id="irow-groceries"><label>Groceries</label><input type="number" id="groceries" value="450" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-groceries"><button onclick="setPT('groceries','chq',this)">CHQ</button><button onclick="setPT('groceries','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('groceries')" title="Remove">×</button></div>
+        <div class="irow" id="irow-health"><label>Extended health / dental</label><input type="number" id="health" value="80" step="10" inputmode="decimal"><div class="pay-toggle" id="pt-health"><button onclick="setPT('health','chq',this)">CHQ</button><button onclick="setPT('health','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('health')" title="Remove">×</button></div>
+        <div class="irow" id="irow-lifeins"><label>Life insurance</label><input type="number" id="lifeins" value="50" step="5" inputmode="decimal"><div class="pay-toggle" id="pt-lifeins"><button onclick="setPT('lifeins','chq',this)" class="pt-on-chq">CHQ</button><button onclick="setPT('lifeins','cc',this)">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('lifeins')" title="Remove">×</button></div>
         <div class="sub-l">Debt minimums</div>
-        <div class="irow"><label>Min. debt payments</label><input type="number" id="mindebt" value="150" step="25" inputmode="decimal"></div>
+        <div class="irow" id="irow-mindebt"><label>Min. debt payments</label><input type="number" id="mindebt" value="150" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-mindebt"><button onclick="setPT('mindebt','chq',this)" class="pt-on-chq">CHQ</button><button onclick="setPT('mindebt','cc',this)">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('mindebt')" title="Remove">×</button></div>
         <div class="sub-l">Custom items</div>
         <div id="custom-needs"></div>
         <button class="cat-add-btn" onclick="addCustomItem('needs')">+ Add item</button>
@@ -348,15 +353,15 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
       <div class="sec-hd"><span class="sec-t">Wants</span><span class="sec-a" id="b-w"></span></div>
       <div class="igrp">
         <div class="sub-l">Food & social</div>
-        <div class="irow"><label>Dining & restaurants</label><input type="number" id="dining" value="250" step="25" inputmode="decimal"></div>
-        <div class="irow"><label>Entertainment & events</label><input type="number" id="entertain" value="100" step="25" inputmode="decimal"></div>
+        <div class="irow" id="irow-dining"><label>Dining & restaurants</label><input type="number" id="dining" value="250" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-dining"><button onclick="setPT('dining','chq',this)">CHQ</button><button onclick="setPT('dining','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('dining')" title="Remove">×</button></div>
+        <div class="irow" id="irow-entertain"><label>Entertainment & events</label><input type="number" id="entertain" value="100" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-entertain"><button onclick="setPT('entertain','chq',this)">CHQ</button><button onclick="setPT('entertain','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('entertain')" title="Remove">×</button></div>
         <div class="sub-l">Lifestyle</div>
-        <div class="irow"><label>Streaming & subscriptions</label><input type="number" id="subs" value="60" step="5" inputmode="decimal"></div>
-        <div class="irow"><label>Shopping & clothing</label><input type="number" id="shopping" value="120" step="25" inputmode="decimal"></div>
-        <div class="irow"><label>Hobbies & recreation</label><input type="number" id="hobbies" value="100" step="25" inputmode="decimal"></div>
-        <div class="irow"><label>Travel & getaways</label><input type="number" id="travel" value="150" step="25" inputmode="decimal"></div>
+        <div class="irow" id="irow-subs"><label>Streaming & subscriptions</label><input type="number" id="subs" value="60" step="5" inputmode="decimal"><div class="pay-toggle" id="pt-subs"><button onclick="setPT('subs','chq',this)">CHQ</button><button onclick="setPT('subs','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('subs')" title="Remove">×</button></div>
+        <div class="irow" id="irow-shopping"><label>Shopping & clothing</label><input type="number" id="shopping" value="120" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-shopping"><button onclick="setPT('shopping','chq',this)">CHQ</button><button onclick="setPT('shopping','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('shopping')" title="Remove">×</button></div>
+        <div class="irow" id="irow-hobbies"><label>Hobbies & recreation</label><input type="number" id="hobbies" value="100" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-hobbies"><button onclick="setPT('hobbies','chq',this)">CHQ</button><button onclick="setPT('hobbies','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('hobbies')" title="Remove">×</button></div>
+        <div class="irow" id="irow-travel"><label>Travel & getaways</label><input type="number" id="travel" value="150" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-travel"><button onclick="setPT('travel','chq',this)">CHQ</button><button onclick="setPT('travel','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('travel')" title="Remove">×</button></div>
         <div class="sub-l">Personal growth</div>
-        <div class="irow"><label>Education & courses</label><input type="number" id="education" value="100" step="25" inputmode="decimal"></div>
+        <div class="irow" id="irow-education"><label>Education & courses</label><input type="number" id="education" value="100" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-education"><button onclick="setPT('education','chq',this)">CHQ</button><button onclick="setPT('education','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('education')" title="Remove">×</button></div>
         <div class="sub-l">Custom items</div>
         <div id="custom-wants"></div>
         <button class="cat-add-btn" onclick="addCustomItem('wants')">+ Add item</button>
@@ -364,14 +369,14 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
       <div class="sec-hd"><span class="sec-t">Save & invest</span><span class="sec-a" id="b-s"></span></div>
       <div class="igrp">
         <div class="sub-l">Canadian accounts</div>
-        <div class="irow"><label>Emergency fund (TFSA)</label><input type="number" id="emerg" value="200" step="25" inputmode="decimal"></div>
-        <div class="irow"><label>TFSA — investments</label><input type="number" id="tfsa" value="250" step="25" inputmode="decimal"></div>
-        <div class="irow"><label>RRSP</label><input type="number" id="rrsp" value="200" step="25" inputmode="decimal"></div>
-        <div class="irow"><label>RESP (if applicable)</label><input type="number" id="resp" value="0" step="25" inputmode="decimal"></div>
+        <div class="irow" id="irow-emerg"><label>Emergency fund (TFSA)</label><input type="number" id="emerg" value="200" step="25" inputmode="decimal"><button class="del-btn" onclick="hideBuiltinRow('emerg')" title="Remove">×</button></div>
+        <div class="irow" id="irow-tfsa"><label>TFSA — investments</label><input type="number" id="tfsa" value="250" step="25" inputmode="decimal"><button class="del-btn" onclick="hideBuiltinRow('tfsa')" title="Remove">×</button></div>
+        <div class="irow" id="irow-rrsp"><label>RRSP</label><input type="number" id="rrsp" value="200" step="25" inputmode="decimal"><button class="del-btn" onclick="hideBuiltinRow('rrsp')" title="Remove">×</button></div>
+        <div class="irow" id="irow-resp"><label>RESP (if applicable)</label><input type="number" id="resp" value="0" step="25" inputmode="decimal"><button class="del-btn" onclick="hideBuiltinRow('resp')" title="Remove">×</button></div>
         <div class="sub-l">Debt acceleration</div>
-        <div class="irow"><label>Extra debt payoff</label><input type="number" id="xdebt" value="150" step="25" inputmode="decimal"></div>
+        <div class="irow" id="irow-xdebt"><label>Extra debt payoff</label><input type="number" id="xdebt" value="150" step="25" inputmode="decimal"><button class="del-btn" onclick="hideBuiltinRow('xdebt')" title="Remove">×</button></div>
         <div class="sub-l">Other</div>
-        <div class="irow"><label>Non-registered savings</label><input type="number" id="nonreg" value="0" step="25" inputmode="decimal"></div>
+        <div class="irow" id="irow-nonreg"><label>Non-registered savings</label><input type="number" id="nonreg" value="0" step="25" inputmode="decimal"><button class="del-btn" onclick="hideBuiltinRow('nonreg')" title="Remove">×</button></div>
         <div class="sub-l">Custom items</div>
         <div id="custom-saves"></div>
         <button class="cat-add-btn" onclick="addCustomItem('saves')">+ Add item</button>
@@ -451,6 +456,97 @@ const SK='bc_budget_v6';
 let method='60-20-20',dm='avalanche',dc=0,debts=[];
 let customItems={needs:[],wants:[],saves:[]};
 let cic=0,pcTab=1,selectedOption=null,generatedOptions=[];
+
+// Payment type state: 'cc' or 'chq' per field ID
+// Defaults: CHQ for auto-debits, CC for discretionary
+const PT_DEFAULTS={
+  housing:'chq',homeins:'chq',icbc:'chq',carloan:'chq',transit:'cc',
+  utils:'cc',groceries:'cc',health:'cc',lifeins:'chq',mindebt:'chq',
+  dining:'cc',entertain:'cc',subs:'cc',shopping:'cc',hobbies:'cc',travel:'cc',education:'cc'
+};
+let payTypes={...PT_DEFAULTS};
+let hiddenRows=new Set(); // IDs of built-in rows that have been deleted
+
+function hideBuiltinRow(id){
+  hiddenRows.add(id);
+  const row=document.getElementById('irow-'+id);
+  if(row)row.style.display='none';
+  const inp=document.getElementById(id);
+  if(inp){inp.dataset.savedVal=inp.value;inp.value=0;}
+  recalc();
+  saveData();
+  // Show undo toast
+  showUndo(id);
+}
+
+function restoreBuiltinRow(id){
+  hiddenRows.delete(id);
+  const row=document.getElementById('irow-'+id);
+  if(row)row.style.display='';
+  const inp=document.getElementById(id);
+  if(inp&&inp.dataset.savedVal)inp.value=inp.dataset.savedVal;
+  recalc();
+  saveData();
+}
+
+let undoTimer=null;
+function showUndo(id){
+  let toast=document.getElementById('undo-toast');
+  if(!toast){
+    toast=document.createElement('div');
+    toast.id='undo-toast';
+    toast.style.cssText='position:fixed;bottom:calc(var(--safe-bottom)+80px);left:50%;transform:translateX(-50%);background:#252a38;border:1px solid rgba(255,255,255,0.13);border-radius:10px;padding:10px 16px;font-size:13px;color:#f0f2f7;display:flex;align-items:center;gap:12px;z-index:300;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.4)';
+    document.body.appendChild(toast);
+  }
+  toast.innerHTML='Item removed <button onclick="restoreBuiltinRow(\''+id+'\')" style="background:none;border:none;color:#4f8ef7;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;padding:0">Undo</button>';
+  toast.style.display='flex';
+  if(undoTimer)clearTimeout(undoTimer);
+  undoTimer=setTimeout(()=>{toast.style.display='none';},4000);
+}
+
+function setPT(fieldId,type,btn){
+  payTypes[fieldId]=type;
+  const toggle=document.getElementById('pt-'+fieldId);
+  if(toggle){
+    toggle.querySelectorAll('button').forEach(b=>b.classList.remove('pt-on-cc','pt-on-chq'));
+    btn.classList.add(type==='cc'?'pt-on-cc':'pt-on-chq');
+  }
+  renderCCCard();
+  saveData();
+}
+
+function loadPTToggles(){
+  Object.keys(payTypes).forEach(fieldId=>{
+    const toggle=document.getElementById('pt-'+fieldId);
+    if(!toggle)return;
+    const type=payTypes[fieldId];
+    toggle.querySelectorAll('button').forEach(b=>b.classList.remove('pt-on-cc','pt-on-chq'));
+    const btn=toggle.querySelector('button['+(type==='cc'?'onclick*=",\'cc\'"':'onclick*=",\'chq\'"')+']');
+    if(btn)btn.classList.add(type==='cc'?'pt-on-cc':'pt-on-chq');
+  });
+}
+
+// Get total CC spend and CHQ spend from tagged fields
+function getPayTotals(){
+  const fields=['housing','homeins','icbc','carloan','transit','utils','groceries','health','lifeins','mindebt','dining','entertain','subs','shopping','hobbies','travel','education'];
+  let ccTotal=0,chqTotal=0;
+  fields.forEach(id=>{
+    const v=gv(id);
+    if(payTypes[id]==='cc') ccTotal+=v;
+    else chqTotal+=v;
+  });
+  // Custom items — default to CC
+  ['needs','wants'].forEach(cat=>{
+    customItems[cat].forEach(item=>{
+      const amtEl=document.getElementById('ci-amt-'+item.id);
+      const amt=amtEl?parseFloat(amtEl.value)||0:item.amount;
+      const pt=payTypes['ci-'+item.id]||'cc';
+      if(pt==='cc') ccTotal+=amt;
+      else chqTotal+=amt;
+    });
+  });
+  return{ccTotal,chqTotal};
+}
 
 const mtips={
   '60-20-20':'Recommended for Metro Vancouver. All amounts below are monthly — your paycheque tab shows the bi-weekly split.',
@@ -973,7 +1069,7 @@ function saveData(){
     });
   });
   const ts=new Date().toLocaleString('en-CA',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
-  try{localStorage.setItem(SK,JSON.stringify({vals,method,dm,debts,dc,customItems:savedCustom,cic,ts}));}catch(e){}
+  try{localStorage.setItem(SK,JSON.stringify({vals,method,dm,debts,dc,customItems:savedCustom,cic,ts,payTypes,hiddenRows:[...hiddenRows]}));}catch(e){}
   const sn=document.getElementById('saved-note');if(sn)sn.textContent='Saved '+ts;
   const ls=document.getElementById('last-saved');if(ls)ls.textContent=ts;
 }
@@ -994,7 +1090,16 @@ function loadData(){
         if(data.customItems[cat])data.customItems[cat].forEach(item=>addCustomItem(cat,item));
       });
     }
-    if(data.debts&&data.debts.length)data.debts.forEach(d=>addDebt(d));
+    if(data.payTypes){payTypes={...PT_DEFAULTS,...data.payTypes};}
+    if(data.hiddenRows){
+      hiddenRows=new Set(data.hiddenRows);
+      hiddenRows.forEach(id=>{
+        const row=document.getElementById('irow-'+id);
+        if(row)row.style.display='none';
+        const inp=document.getElementById(id);
+        if(inp&&inp.dataset.savedVal===undefined)inp.dataset.savedVal=inp.value;
+      });
+    }
     if(data.ts){const ls=document.getElementById('last-saved');if(ls)ls.textContent=data.ts;}
   }catch(e){}
 }
@@ -1043,70 +1148,79 @@ function renderCCCard(){
 
   const s=getBudgetState();
   const cc=getCCDates();
+  const pt=getPayTotals();
   const shortDate=d=>d.toLocaleDateString('en-CA',{month:'short',day:'numeric'});
 
-  // Estimate CC spend = all wants + some needs paid by CC
-  // (groceries, gas, dining, entertainment, subscriptions, shopping, hobbies, travel, education)
-  const ccSpendMonthly=gv('groceries')+gv('transit')+gv('dining')+gv('entertain')+gv('subs')+gv('shopping')+gv('hobbies')+gv('travel')+gv('education')+getCustomTotal('wants');
+  // Use real tagged amounts
+  const ccSpendMonthly=pt.ccTotal;
+  const chqAutoMonthly=pt.chqTotal;
   const ccSpendPerPeriod=Math.round(ccSpendMonthly/2);
+  const chqAutoPerPeriod=Math.round(chqAutoMonthly/2);
   const bufferTarget=ccSpendMonthly;
   const bufferSaved=gv('cc-buffer-saved');
   const bufferPct=bufferTarget>0?Math.min(100,Math.round(bufferSaved/bufferTarget*100)):0;
 
   // Update buffer target display in budget tab
   const bt=document.getElementById('cc-buffer-target');
-  if(bt)bt.textContent=fmt(bufferTarget)+'/mo';
+  if(bt)bt.textContent=fmt(bufferTarget)+'/mo CC spend';
 
-  // Payday sequence — what to do on payday with CC awareness
-  // Real available after paying CC = paycheque - estimated CC balance owing
   const nextPayday=getNextPayday();
   const bw=s.bw;
-  const ccOwing=ccSpendPerPeriod; // estimate: half monthly CC spend built up since last payday
-  const realAvailable=bw-ccOwing;
   const halfSaves=Math.round(s.saves/2);
-  const halfNeeds=Math.round(s.needs/2);
-  const halfWants=Math.round(s.wants/2);
+
+  // Real available after CC is settled
+  const afterCC=bw-ccSpendPerPeriod;
+  const afterCCAndSaves=afterCC-halfSaves;
 
   // Card urgency
   let cardClass='cc-card clear';
   let ccStatus='';
-  if(cc.daysToDue<=3){cardClass='cc-card due-soon';ccStatus='Due in '+cc.daysToDue+'d';}
+  if(cc.daysToDue<=3){cardClass='cc-card due-soon';ccStatus='Due in '+cc.daysToDue+'d!';}
   else if(cc.daysToDue<=7){cardClass='cc-card warning';ccStatus='Due in '+cc.daysToDue+'d';}
   else if(cc.daysToClose<=3){cardClass='cc-card warning';ccStatus='Closes in '+cc.daysToClose+'d';}
   else{ccStatus=cc.daysToClose+'d to close';}
 
-  // Cycle timeline — 4 segments: statement period, close, grace, due
-  const totalDays=Math.round((cc.dueDate-cc.prevClose)/(1000*60*60*24));
-  const todayPos=Math.round((cc.today-cc.prevClose)/(1000*60*60*24));
-  const closePos=Math.round((cc.closeDate-cc.prevClose)/(1000*60*60*24));
+  // Cycle timeline
   const inGrace=cc.today>=cc.closeDate;
   const seg1Class=!inGrace?'cc-cycle-seg active':'cc-cycle-seg';
   const seg2Class=inGrace?'cc-cycle-seg pay-seg':'cc-cycle-seg';
-
   const cycleHtml='<div class="cc-cycle">'
     +'<div class="'+seg1Class+'"><span class="cc-cycle-label">Spending</span><span class="cc-cycle-sub">'+shortDate(cc.prevClose)+' – '+shortDate(cc.closeDate)+'</span></div>'
-    +'<div class="'+seg2Class+'"><span class="cc-cycle-label">'+(inGrace?'Grace period':'Closes')+'</span><span class="cc-cycle-sub">'+(inGrace?shortDate(cc.closeDate)+' – '+shortDate(cc.dueDate):''+shortDate(cc.closeDate))+'</span></div>'
+    +'<div class="'+seg2Class+'"><span class="cc-cycle-label">'+(inGrace?'Grace period':'Closes')+'</span><span class="cc-cycle-sub">'+(inGrace?shortDate(cc.closeDate)+' – '+shortDate(cc.dueDate):shortDate(cc.closeDate))+'</span></div>'
     +'<div class="cc-cycle-seg '+(cc.daysToDue<=3?'pay-seg':'')+'"><span class="cc-cycle-label">Due</span><span class="cc-cycle-sub">'+shortDate(cc.dueDate)+'</span></div>'
     +'</div>';
 
-  // Payday action sequence
-  const stepsHtml='<div class="cc-steps">'
-    +'<div class="cc-step"><div class="cc-step-num red">1</div><div class="cc-step-body"><div class="cc-step-label">Pay credit card bill first</div><div class="cc-step-val" style="color:var(--red)">~'+fmt(ccOwing)+' est.</div></div></div>'
+  // Summary line
+  const summaryHtml='<div style="display:flex;gap:8px;margin-bottom:10px">'
+    +'<div style="flex:1;background:rgba(79,142,247,0.1);border-radius:8px;padding:8px 10px;text-align:center">'
+    +'<div style="font-size:10px;color:var(--text3);margin-bottom:2px">On CC per period</div>'
+    +'<div style="font-size:14px;font-weight:600;color:var(--accent)">'+fmt(ccSpendPerPeriod)+'</div>'
+    +'</div>'
+    +'<div style="flex:1;background:var(--green-bg);border-radius:8px;padding:8px 10px;text-align:center">'
+    +'<div style="font-size:10px;color:var(--text3);margin-bottom:2px">Auto-CHQ per period</div>'
+    +'<div style="font-size:14px;font-weight:600;color:var(--green)">'+fmt(chqAutoPerPeriod)+'</div>'
+    +'</div>'
+    +'</div>';
+
+  // Payday sequence using real numbers
+  const stepsHtml='<div style="font-size:11px;color:var(--text3);margin-bottom:7px">Do this in order on '+shortDate(nextPayday)+':</div>'
+    +'<div class="cc-steps">'
+    +'<div class="cc-step"><div class="cc-step-num red">1</div><div class="cc-step-body"><div class="cc-step-label">Pay CC bill (last period charges)</div><div class="cc-step-val" style="color:var(--red)">'+fmt(ccSpendPerPeriod)+'</div></div></div>'
     +'<div class="cc-step"><div class="cc-step-num green">2</div><div class="cc-step-body"><div class="cc-step-label">Transfer to savings & TFSA</div><div class="cc-step-val" style="color:var(--green)">'+fmt(halfSaves)+'</div></div></div>'
-    +'<div class="cc-step"><div class="cc-step-num blue">3</div><div class="cc-step-body"><div class="cc-step-label">Set aside for rent & fixed bills</div><div class="cc-step-val" style="color:var(--accent)">'+fmt(halfNeeds-ccOwing>0?halfNeeds-gv('carloan')-gv('mindebt'):halfNeeds)+'</div></div></div>'
-    +'<div class="cc-step"><div class="cc-step-num amber">4</div><div class="cc-step-body"><div class="cc-step-label">Spending money (goes on CC)</div><div class="cc-step-val" style="color:var(--amber)">'+fmt(halfWants)+'</div></div></div>'
+    +'<div class="cc-step"><div class="cc-step-num blue">3</div><div class="cc-step-body"><div class="cc-step-label">Leave in CHQ for auto-withdrawals</div><div class="cc-step-val" style="color:var(--accent)">'+fmt(chqAutoPerPeriod)+'</div></div></div>'
+    +'<div class="cc-step"><div class="cc-step-num amber">4</div><div class="cc-step-body"><div class="cc-step-label">Remaining — spend freely (goes on CC)</div><div class="cc-step-val" style="color:var(--amber)">'+fmt(Math.max(0,afterCCAndSaves-chqAutoPerPeriod))+'</div></div></div>'
     +'</div>';
 
   // Buffer progress
   const bufferHtml=bufferTarget>0?'<div class="cc-buffer">'
-    +'<div class="cc-buffer-label">CC buffer: '+fmt(bufferSaved)+' of '+fmt(bufferTarget)+' goal ('+bufferPct+'%) — when full, cashflow problems disappear</div>'
+    +'<div class="cc-buffer-label">CC buffer: '+fmt(bufferSaved)+' of '+fmt(bufferTarget)+' goal ('+bufferPct+'%) — once full, cashflow is solved permanently</div>'
     +'<div class="cc-buffer-bar"><div class="cc-buffer-fill" style="width:'+bufferPct+'%"></div></div>'
     +'</div>':'';
 
   el.innerHTML='<div class="'+cardClass+'">'
     +'<div class="cc-header"><span class="cc-title">💳 Credit Card Cashflow</span><span class="cc-badge">'+ccStatus+'</span></div>'
     +cycleHtml
-    +'<div style="font-size:11px;color:var(--text3);margin-bottom:8px">Payday sequence — do this in order on '+shortDate(nextPayday)+':</div>'
+    +summaryHtml
     +stepsHtml
     +bufferHtml
     +'</div>';
@@ -1270,6 +1384,7 @@ const dowSel=document.getElementById('payday-dow');
 if(dowSel)dowSel.addEventListener('change',()=>{recalc();renderTodayCard();});
 document.getElementById('dist-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 loadData();
+loadPTToggles();
 setDefaultLastPayday();
 recalc();
 renderTodayCard();
