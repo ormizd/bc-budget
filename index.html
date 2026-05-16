@@ -1273,10 +1273,6 @@ function renderCCCard(){
   const bw=s.bw;
   const halfSaves=Math.round(s.saves/2);
 
-  // Real available after CC is settled
-  const afterCC=bw-ccSpendPerPeriod;
-  const afterCCAndSaves=afterCC-halfSaves;
-
   // Card urgency
   let cardClass='cc-card clear';
   let ccStatus='';
