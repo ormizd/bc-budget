@@ -1460,9 +1460,9 @@ function renderTodayCard(){
 // Set default last payday to most recent Friday before today
 function setDefaultLastPayday(){
   const el=document.getElementById('last-payday');
-  if(!el||el.value)return;
-  // Known anchor: May 1 2026 is a confirmed Friday payday
-  // From this we can calculate all future bi-weekly paydays correctly
+  if(!el)return;
+  // Always recalculate the most recent payday from the anchor
+  // Anchor: May 1 2026 is a confirmed Friday payday
   const anchor=new Date('2026-05-01T00:00:00');
   const today=new Date();
   today.setHours(0,0,0,0);
@@ -1477,7 +1477,11 @@ function setDefaultLastPayday(){
   const y=last.getFullYear();
   const m=String(last.getMonth()+1).padStart(2,'0');
   const d=String(last.getDate()).padStart(2,'0');
-  el.value=y+'-'+m+'-'+d;
+  const calculated=y+'-'+m+'-'+d;
+  // Only update if the calculated date is newer than what's currently stored
+  if(!el.value||el.value<calculated){
+    el.value=calculated;
+  }
 }
 
 document.getElementById('hdate').textContent=new Date().toLocaleString('en-CA',{month:'long',year:'numeric'});
