@@ -311,6 +311,15 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
       </div>
       <div class="sec-hd"><span class="sec-t">Credit card</span></div>
       <div class="igrp">
+        <div class="sub-l">Next payment</div>
+        <div class="irow">
+          <label>Amount due on next statement</label>
+          <input type="number" id="cc-actual-due" value="0" step="10" inputmode="decimal">
+        </div>
+        <div class="irow" style="background:var(--bg3)">
+          <label style="color:var(--text3);font-size:12px">Update this each time your statement arrives</label>
+          <span style="font-size:11px;color:var(--text3)">monthly</span>
+        </div>
         <div class="sub-l">Statement cycle</div>
         <div class="irow">
           <label>Statement closes (day of month)</label>
@@ -1145,7 +1154,7 @@ function renderDebtOrder(){
 }
 
 // ── PERSISTENCE ───────────────────────────────────────────────────────────────
-const IDS=['biweekly','extra','housing','homeins','icbc','carloan','transit','utils','groceries','health','lifeins','mindebt','dining','entertain','subs','shopping','hobbies','travel','education','emerg','tfsa','rrsp','resp','xdebt','nonreg','cc-close-day','cc-due-day','cc-buffer-saved'];
+const IDS=['biweekly','extra','housing','homeins','icbc','carloan','transit','utils','groceries','health','lifeins','mindebt','dining','entertain','subs','shopping','hobbies','travel','education','emerg','tfsa','rrsp','resp','xdebt','nonreg','cc-close-day','cc-due-day','cc-buffer-saved','cc-actual-due'];
 const PAYDAY_IDS=['last-payday'];
 
 function saveData(){
@@ -1244,10 +1253,13 @@ function renderCCCard(){
   const pt=getPayTotals();
   const shortDate=d=>d.toLocaleDateString('en-CA',{month:'short',day:'numeric'});
 
-  // Use real tagged amounts
+  // Use actual CC bill if entered, otherwise estimate from tagged spend
+  const ccActual=gv('cc-actual-due');
   const ccSpendMonthly=pt.ccTotal;
-  const chqAutoMonthly=pt.chqTotal;
   const ccSpendPerPeriod=Math.round(ccSpendMonthly/2);
+  const ccPayment=ccActual>0?ccActual:ccSpendPerPeriod;
+  const ccIsActual=ccActual>0;
+  const chqAutoMonthly=pt.chqTotal;
   const chqAutoPerPeriod=Math.round(chqAutoMonthly/2);
   const bufferTarget=ccSpendMonthly;
   const bufferSaved=gv('cc-buffer-saved');
@@ -1283,22 +1295,24 @@ function renderCCCard(){
     +'<div class="cc-cycle-seg '+(cc.daysToDue<=3?'pay-seg':'')+'"><span class="cc-cycle-label">Due</span><span class="cc-cycle-sub">'+shortDate(cc.dueDate)+'</span></div>'
     +'</div>';
 
-  // Summary line
   const summaryHtml='<div style="display:flex;gap:8px;margin-bottom:10px">'
     +'<div style="flex:1;background:rgba(79,142,247,0.1);border-radius:8px;padding:8px 10px;text-align:center">'
-    +'<div style="font-size:10px;color:var(--text3);margin-bottom:2px">On CC per period</div>'
-    +'<div style="font-size:14px;font-weight:600;color:var(--accent)">'+fmt(ccSpendPerPeriod)+'</div>'
+    +'<div style="font-size:10px;color:var(--text3);margin-bottom:2px">'+(ccIsActual?'CC bill (actual)':'CC est. per period')+'</div>'
+    +'<div style="font-size:14px;font-weight:600;color:var(--accent)">'+fmt(ccPayment)+'</div>'
     +'</div>'
     +'<div style="flex:1;background:var(--green-bg);border-radius:8px;padding:8px 10px;text-align:center">'
     +'<div style="font-size:10px;color:var(--text3);margin-bottom:2px">Auto-CHQ per period</div>'
     +'<div style="font-size:14px;font-weight:600;color:var(--green)">'+fmt(chqAutoPerPeriod)+'</div>'
     +'</div>'
-    +'</div>';
+    +'</div>'
+    +(ccIsActual?'':'<div class="tip tip-b" style="margin-bottom:10px;font-size:11px">Enter your actual CC statement amount above in Budget → Credit card for a more accurate number.</div>');
 
-  // Payday sequence using real numbers
+  const afterCC=bw-ccPayment;
+  const afterCCAndSaves=afterCC-halfSaves;
+
   const stepsHtml='<div style="font-size:11px;color:var(--text3);margin-bottom:7px">Do this in order on '+shortDate(nextPayday)+':</div>'
     +'<div class="cc-steps">'
-    +'<div class="cc-step"><div class="cc-step-num red">1</div><div class="cc-step-body"><div class="cc-step-label">Pay CC bill (last period charges)</div><div class="cc-step-val" style="color:var(--red)">'+fmt(ccSpendPerPeriod)+'</div></div></div>'
+    +'<div class="cc-step"><div class="cc-step-num red">1</div><div class="cc-step-body"><div class="cc-step-label">Pay CC bill'+(ccIsActual?' (from your statement)':' (estimated)')+'</div><div class="cc-step-val" style="color:var(--red)">'+fmt(ccPayment)+'</div></div></div>'
     +'<div class="cc-step"><div class="cc-step-num green">2</div><div class="cc-step-body"><div class="cc-step-label">Transfer to savings & TFSA</div><div class="cc-step-val" style="color:var(--green)">'+fmt(halfSaves)+'</div></div></div>'
     +'<div class="cc-step"><div class="cc-step-num blue">3</div><div class="cc-step-body"><div class="cc-step-label">Leave in CHQ for auto-withdrawals</div><div class="cc-step-val" style="color:var(--accent)">'+fmt(chqAutoPerPeriod)+'</div></div></div>'
     +'<div class="cc-step"><div class="cc-step-num amber">4</div><div class="cc-step-body"><div class="cc-step-label">Remaining — spend freely (goes on CC)</div><div class="cc-step-val" style="color:var(--amber)">'+fmt(Math.max(0,afterCCAndSaves-chqAutoPerPeriod))+'</div></div></div>'
