@@ -11,7 +11,7 @@
 <style>
 :root{--bg:#0f1117;--bg2:#181b24;--bg3:#1f2330;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--text:#f0f2f7;--text2:#8b91a8;--text3:#555c72;--accent:#4f8ef7;--green:#34d17a;--green-bg:rgba(52,209,122,0.1);--amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);--red:#f06070;--red-bg:rgba(240,96,112,0.1);--purple:#a78bfa;--purple-bg:rgba(167,139,250,0.1);--safe-top:env(safe-area-inset-top,52px);--safe-bottom:env(safe-area-inset-bottom,20px)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;position:fixed;width:100%}
+html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;width:100%;margin:0}
 #app{display:flex;flex-direction:column;height:100%;height:100dvh;overflow:hidden}
 #header{background:var(--bg);border-bottom:1px solid var(--border);padding:calc(var(--safe-top) + 14px) 18px 12px;flex-shrink:0}
 .hrow{display:flex;align-items:center;justify-content:space-between}
@@ -202,7 +202,55 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 .opt-item-val{font-weight:600;color:var(--green)}
 .apply-btn{width:100%;background:var(--accent);border:none;border-radius:12px;padding:14px;color:#fff;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;margin-top:4px}
 .apply-btn:disabled{opacity:0.4;cursor:default}
-</style>
+
+/* ── FINANCIAL ADVISOR STYLES ─────────────────────────────────────── */
+/* Health score */
+.health-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:16px 18px;margin-bottom:10px}
+.health-top{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.health-ring{position:relative;width:64px;height:64px;flex-shrink:0}
+.health-ring svg{transform:rotate(-90deg)}
+.health-ring-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.health-score-val{font-size:20px;font-weight:700;letter-spacing:-0.5px;line-height:1}
+.health-score-lbl{font-size:9px;color:var(--text3);margin-top:1px;text-transform:uppercase;letter-spacing:0.05em}
+.health-right{flex:1}
+.health-grade{font-size:14px;font-weight:700;letter-spacing:-0.2px;margin-bottom:3px}
+.health-summary{font-size:12px;color:var(--text2);line-height:1.4}
+.health-bars{display:flex;flex-direction:column;gap:7px}
+.hbar-row{display:flex;align-items:center;gap:8px}
+.hbar-label{font-size:11px;color:var(--text2);width:110px;flex-shrink:0}
+.hbar-wrap{flex:1;background:var(--bg3);border-radius:3px;height:5px;overflow:hidden}
+.hbar-fill{height:100%;border-radius:3px;transition:width 0.5s}
+.hbar-score{font-size:11px;color:var(--text3);width:24px;text-align:right;flex-shrink:0}
+
+/* Your move card */
+.move-card{border-radius:18px;padding:16px 18px;margin-bottom:10px;border:1px solid}
+.move-card.urgent{background:linear-gradient(135deg,rgba(240,96,112,0.12),rgba(245,158,11,0.08));border-color:rgba(240,96,112,0.3)}
+.move-card.important{background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(79,142,247,0.08));border-color:rgba(245,158,11,0.3)}
+.move-card.good{background:linear-gradient(135deg,rgba(52,209,122,0.1),rgba(79,142,247,0.08));border-color:rgba(52,209,122,0.25)}
+.move-card.neutral{background:var(--bg2);border-color:var(--border)}
+.move-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.move-icon{font-size:22px;line-height:1;flex-shrink:0}
+.move-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3)}
+.move-heading{font-size:15px;font-weight:700;letter-spacing:-0.3px;color:var(--text);margin-bottom:6px}
+.move-body{font-size:13px;color:var(--text2);line-height:1.55}
+.move-action{display:inline-block;margin-top:10px;font-size:12px;font-weight:600;color:var(--accent);background:rgba(79,142,247,0.12);border-radius:8px;padding:5px 10px}
+
+/* Situation flags */
+.flags-wrap{display:flex;flex-direction:column;gap:7px;margin-bottom:10px}
+.flag{display:flex;align-items:flex-start;gap:10px;border-radius:12px;padding:10px 12px;border:1px solid}
+.flag.red{background:var(--red-bg);border-color:rgba(240,96,112,0.25)}
+.flag.amber{background:var(--amber-bg);border-color:rgba(245,158,11,0.25)}
+.flag.green{background:var(--green-bg);border-color:rgba(52,209,122,0.25)}
+.flag.blue{background:rgba(79,142,247,0.08);border-color:rgba(79,142,247,0.2)}
+.flag-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.flag.red .flag-dot{background:var(--red)}
+.flag.amber .flag-dot{background:var(--amber)}
+.flag.green .flag-dot{background:var(--green)}
+.flag.blue .flag-dot{background:var(--accent)}
+.flag-body{flex:1}
+.flag-title{font-size:13px;font-weight:600;color:var(--text);line-height:1.2;margin-bottom:2px}
+.flag-desc{font-size:12px;color:var(--text2);line-height:1.4}
+
 </head>
 <body>
 <div id="app">
@@ -223,6 +271,9 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-
 
     <!-- OVERVIEW -->
     <div class="page on" id="page-overview">
+      <div id="advisor-move"></div>
+      <div id="advisor-health"></div>
+      <div id="advisor-flags"></div>
       <div id="today-card"></div>
       <div id="cc-card"></div>
       <div class="mgrid" id="ov-metrics"></div>
@@ -894,6 +945,7 @@ function recalc(){
   if(dt)dt.textContent='Extra payment of '+fmt(gv('xdebt'))+'/mo goes to debt #1 first, then rolls down once paid off.';
   renderDebtOrder();
   renderCCCard();
+  renderAdvisor();
   saveData();
 }
 
@@ -1329,6 +1381,215 @@ function renderCCCard(){
     +'</div>';
 }
 
+// ── FINANCIAL ADVISOR ENGINE ──────────────────────────────────────────────────
+
+function calcHealthScore(s,cc,pt){
+  // Five components, each scored 0–20, total out of 100
+  const scores={};
+
+  // 1. Savings rate (target 20%+)
+  const savingsRate=s.saves/s.inc;
+  scores.savings=Math.min(20,Math.round(savingsRate/0.20*20));
+
+  // 2. Needs ratio (target ≤60% for BC)
+  const needsRate=s.needs/s.inc;
+  scores.needs=needsRate<=0.60?20:needsRate<=0.70?14:needsRate<=0.80?8:3;
+
+  // 3. Emergency fund (target 3 months expenses)
+  const emergMonths=s.inc>0?(s.emerg*12)/(s.monthlyExp||1):0;
+  scores.emerg=emergMonths>=3?20:Math.round(emergMonths/3*20);
+
+  // 4. Debt health (no high-interest debt = best)
+  const maxRate=s.maxDebtRate;
+  scores.debt=maxRate===0?20:maxRate<=5?16:maxRate<=10?11:maxRate<=19?6:2;
+
+  // 5. CC cashflow (actual bill entered, buffer progress)
+  const ccActual=gv('cc-actual-due');
+  const bufferSaved=gv('cc-buffer-saved');
+  const bufferTarget=pt.ccTotal;
+  const bufferPct=bufferTarget>0?bufferSaved/bufferTarget:0;
+  const hasBill=ccActual>0;
+  scores.cc=hasBill?(bufferPct>=1?20:bufferPct>=0.5?14:bufferPct>=0.25?9:6):10;
+
+  const total=Object.values(scores).reduce((a,b)=>a+b,0);
+  return{total,scores};
+}
+
+function getGrade(score){
+  if(score>=85)return{grade:'Excellent',color:'var(--green)',ringColor:'#34d17a'};
+  if(score>=70)return{grade:'Good',color:'#4f8ef7',ringColor:'#4f8ef7'};
+  if(score>=55)return{grade:'Fair',color:'var(--amber)',ringColor:'#f59e0b'};
+  return{grade:'Needs work',color:'var(--red)',ringColor:'#f06070'};
+}
+
+function renderHealthScore(s,cc,pt){
+  const el=document.getElementById('advisor-health');
+  if(!el)return;
+  const{total,scores}=calcHealthScore(s,cc,pt);
+  const{grade,color,ringColor}=getGrade(total);
+
+  // SVG ring
+  const r=26,cx=32,cy=32,circ=2*Math.PI*r;
+  const dash=circ*(total/100);
+  const ringHtml='<svg width="64" height="64" viewBox="0 0 64 64">'
+    +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="5"/>'
+    +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+ringColor+'" stroke-width="5" stroke-dasharray="'+dash+' '+circ+'" stroke-linecap="round"/>'
+    +'</svg>';
+
+  // Summary sentence
+  const lowest=Object.entries(scores).sort((a,b)=>a[1]-b[1])[0][0];
+  const lowestLabel={savings:'savings rate',needs:'spending on needs',emerg:'emergency fund',debt:'debt load',cc:'CC cashflow'}[lowest];
+  const summaries={
+    Excellent:'Your finances are in great shape. Keep it up.',
+    Good:'Solid foundation — a few areas to strengthen.',
+    Fair:'Making progress, but some things need attention.',
+    'Needs work':'Important gaps to address — focus on the top priority below.'
+  };
+
+  // Component bars
+  const barDefs=[
+    {key:'savings',label:'Savings rate',color:'#34d17a'},
+    {key:'needs',label:'Spending (needs)',color:'#4f8ef7'},
+    {key:'emerg',label:'Emergency fund',color:'#f59e0b'},
+    {key:'debt',label:'Debt health',color:'#a78bfa'},
+    {key:'cc',label:'CC cashflow',color:'#2dd4bf'},
+  ];
+  const barsHtml=barDefs.map(b=>'<div class="hbar-row">'
+    +'<span class="hbar-label">'+b.label+'</span>'
+    +'<div class="hbar-wrap"><div class="hbar-fill" style="width:'+scores[b.key]*5+'%;background:'+b.color+'"></div></div>'
+    +'<span class="hbar-score">'+scores[b.key]*5+'</span>'
+    +'</div>').join('');
+
+  el.innerHTML='<div class="health-card">'
+    +'<div class="health-top">'
+    +'<div class="health-ring">'+ringHtml+'<div class="health-ring-num"><span class="health-score-val" style="color:'+color+'">'+total+'</span><span class="health-score-lbl">/ 100</span></div></div>'
+    +'<div class="health-right"><div class="health-grade" style="color:'+color+'">'+grade+'</div><div class="health-summary">'+summaries[grade]+(total<85?' Your weakest area: <strong>'+lowestLabel+'</strong>.':'')+'</div></div>'
+    +'</div>'
+    +'<div class="health-bars">'+barsHtml+'</div>'
+    +'</div>';
+}
+
+function renderYourMove(s,cc,pt){
+  const el=document.getElementById('advisor-move');
+  if(!el)return;
+  const ccActual=gv('cc-actual-due');
+  const bufferSaved=gv('cc-buffer-saved');
+  const bufferTarget=pt.ccTotal;
+  const emergMonths=(s.emerg*12)/(s.monthlyExp||1);
+
+  let icon,level,label,heading,body,action;
+
+  // Priority order: CC due → deficit → emergency fund → high debt → low savings → on track
+  if(cc.daysToDue<=3&&ccActual>0){
+    icon='🚨';level='urgent';label='Action required now';
+    heading='CC payment due in '+cc.daysToDue+' day'+(cc.daysToDue===1?'':'s');
+    body='Your credit card bill of '+fmt(ccActual)+' is due '+cc.dueDate.toLocaleDateString('en-CA',{weekday:'long',month:'short',day:'numeric'})+'. Make sure this amount is sitting in your chequing account right now — before spending anything else.';
+    action='Check your chequing balance';
+  } else if(s.surplus<0){
+    icon='⚠️';level='urgent';label='Over budget';
+    heading='You\'re spending '+fmt(Math.abs(s.surplus))+' more than you earn';
+    body='Your monthly expenses exceed your income. This is the most urgent thing to fix. Go to the Budget tab and find categories to reduce — start with Wants, then look at Needs.';
+    action='Review your Budget tab';
+  } else if(cc.daysToDue<=7&&ccActual>0){
+    icon='💳';level='important';label='Coming up soon';
+    heading='CC bill due in '+cc.daysToDue+' days';
+    body='Your '+fmt(ccActual)+' CC payment is due '+cc.dueDate.toLocaleDateString('en-CA',{weekday:'long',month:'short',day:'numeric'})+'. Confirm this amount is reserved in your chequing account so it doesn\'t disrupt your savings transfers on payday.';
+    action='Confirm CHQ balance is ready';
+  } else if(emergMonths<1){
+    icon='🛡️';level='urgent';label='Vulnerable — act now';
+    heading='No emergency fund yet';
+    body='You have less than 1 month of expenses saved for emergencies. One unexpected bill — car repair, dental, job loss — could derail everything. Before investing anywhere else, start building this cushion. Even '+fmt(200)+'/mo makes a big difference.';
+    action='Increase emergency fund in Budget';
+  } else if(s.maxDebtRate>15&&s.highIntDebt.length>0){
+    icon='🔥';level='urgent';label='High-interest debt';
+    heading='Debt at '+s.maxDebtRate.toFixed(1)+'% APR is costing you';
+    body='At '+s.maxDebtRate.toFixed(1)+'% interest, your debt grows faster than almost any investment earns. Every extra dollar you put toward it is a guaranteed return. Once it\'s gone, redirect that payment to your TFSA.';
+    action='Use the Debt tab to plan payoff';
+  } else if(emergMonths<3){
+    icon='🛡️';level='important';label='Build your safety net';
+    heading='Emergency fund is '+emergMonths.toFixed(1)+' months — target is 3';
+    body='You\'re '+(3-emergMonths).toFixed(1)+' months short of a proper safety net. Keep your current savings rate going. Once you hit 3 months, shift this money toward TFSA investing instead.';
+    action='On track — keep going';
+  } else if(bufferTarget>0&&bufferSaved<bufferTarget*0.5){
+    icon='💳';level='important';label='Cashflow opportunity';
+    heading='Building your CC buffer will free your cashflow';
+    body='Once your CC buffer reaches '+fmt(bufferTarget)+', your paycheque and CC bill will never compete again. Your savings transfers will happen automatically without worrying about the CC due date. Use your next 3rd-cheque month to jump-start it.';
+    action='Update CC buffer in Budget tab';
+  } else if(s.saves/s.inc<0.15){
+    icon='📈';level='important';label='Savings opportunity';
+    heading='Savings rate is '+Math.round(s.saves/s.inc*100)+'% — aim for 20%';
+    body='You\'re saving, which is great. Pushing to 20% would meaningfully accelerate your financial goals. Even '+fmt(Math.round((s.inc*0.20-s.saves)/2))+' more per paycheque into your TFSA compounds significantly over time.';
+    action='Adjust savings in Budget tab';
+  } else if(s.surplus>0&&gv('tfsa')<583){
+    icon='✨';level='good';label='Opportunity';
+    heading='You have room in your TFSA this month';
+    body='Your TFSA limit is '+fmt(583)+'/mo ('+fmt(7000)+'/yr) and you\'re contributing '+fmt(gv('tfsa'))+'. You have a '+fmt(s.surplus)+' surplus — consider putting it toward your TFSA for tax-free growth. Use the surplus distributor.';
+    action='Tap Distribute surplus below';
+  } else {
+    icon='✅';level='good';label='You\'re on track';
+    heading='Nothing urgent — great work';
+    body='Your budget is balanced, your savings are flowing, and no red flags are showing. Check back on payday to run through the CC cashflow sequence. Keep this up consistently and your financial health score will keep climbing.';
+    action='Review again on payday';
+  }
+
+  el.innerHTML='<div class="move-card '+level+'">'
+    +'<div class="move-top"><span class="move-icon">'+icon+'</span><span class="move-label">'+label+'</span></div>'
+    +'<div class="move-heading">'+heading+'</div>'
+    +'<div class="move-body">'+body+'</div>'
+    +'<span class="move-action">→ '+action+'</span>'
+    +'</div>';
+}
+
+function renderFlags(s,cc,pt){
+  const el=document.getElementById('advisor-flags');
+  if(!el)return;
+  const flags=[];
+  const ccActual=gv('cc-actual-due');
+  const emergMonths=(s.emerg*12)/(s.monthlyExp||1);
+  const savingsRate=s.saves/s.inc;
+  const needsRate=s.needs/s.inc;
+  const bufferSaved=gv('cc-buffer-saved');
+  const bufferTarget=pt.ccTotal;
+
+  // Red flags
+  if(s.surplus<0) flags.push({c:'red',t:'Over budget by '+fmt(Math.abs(s.surplus))+'/mo',d:'Your expenses exceed income. Reduce spending before anything else.'});
+  if(cc.daysToDue<=3&&ccActual>0) flags.push({c:'red',t:'CC due in '+cc.daysToDue+'d — '+fmt(ccActual),d:'Ensure this is in your chequing account now.'});
+  if(s.maxDebtRate>19) flags.push({c:'red',t:'Credit card debt at '+s.maxDebtRate.toFixed(1)+'% APR',d:'This interest rate is extremely high. Prioritise paying it off above all investing.'});
+  if(emergMonths<1&&s.inc>0) flags.push({c:'red',t:'No emergency fund',d:'You\'re one unexpected expense away from financial stress.'});
+
+  // Amber flags
+  if(cc.daysToDue>3&&cc.daysToDue<=7&&ccActual>0) flags.push({c:'amber',t:'CC due in '+cc.daysToDue+' days — '+fmt(ccActual),d:'Start reserving this in your chequing account.'});
+  if(emergMonths>=1&&emergMonths<3) flags.push({c:'amber',t:'Emergency fund: '+emergMonths.toFixed(1)+' of 3 months',d:'Keep building — you\'re not fully protected yet.'});
+  if(needsRate>0.65) flags.push({c:'amber',t:'Needs are '+Math.round(needsRate*100)+'% of income',d:'High fixed costs leave little room for saving. Look for ways to reduce.'});
+  if(savingsRate<0.10&&s.inc>0) flags.push({c:'amber',t:'Savings rate is only '+Math.round(savingsRate*100)+'%',d:'Aim for at least 15–20%. Even small increases compound significantly.'});
+  if(bufferTarget>0&&bufferSaved<bufferTarget) flags.push({c:'amber',t:'CC buffer '+Math.round(bufferSaved/bufferTarget*100)+'% funded',d:'At 100% your cashflow problem is permanently solved.'});
+
+  // Green flags
+  if(savingsRate>=0.20) flags.push({c:'green',t:'Savings rate: '+Math.round(savingsRate*100)+'% — above target',d:'You\'re saving more than the recommended 20%. Excellent discipline.'});
+  if(emergMonths>=3) flags.push({c:'green',t:'Emergency fund: '+emergMonths.toFixed(1)+' months funded',d:'Fully protected. You can now focus on investing.'});
+  if(s.surplus>0) flags.push({c:'green',t:'Monthly surplus: '+fmt(s.surplus),d:'Every dollar of surplus is an opportunity. Use the distributor to put it to work.'});
+  if(s.maxDebtRate===0&&debts.length===0) flags.push({c:'green',t:'Debt-free',d:'No debts means every dollar you earn works for you, not for a lender.'});
+  if(bufferTarget>0&&bufferSaved>=bufferTarget) flags.push({c:'green',t:'CC buffer fully funded',d:'Your cashflow is protected. CC payments will never disrupt your savings again.'});
+
+  if(!flags.length){el.innerHTML='';return;}
+
+  el.innerHTML='<div class="flags-wrap">'
+    +flags.map(f=>'<div class="flag '+f.c+'">'
+      +'<div class="flag-dot"></div>'
+      +'<div class="flag-body"><div class="flag-title">'+f.t+'</div><div class="flag-desc">'+f.d+'</div></div>'
+      +'</div>').join('')
+    +'</div>';
+}
+
+function renderAdvisor(){
+  const s=getBudgetState();
+  const cc=getCCDates();
+  const pt=getPayTotals();
+  renderYourMove(s,cc,pt);
+  renderHealthScore(s,cc,pt);
+  renderFlags(s,cc,pt);
+}
+
 // ── TODAY CARD ────────────────────────────────────────────────────────────────
 function getNextPayday(){
   const dowEl=document.getElementById('payday-dow');
@@ -1497,6 +1758,7 @@ setDefaultLastPayday();
 recalc();
 renderTodayCard();
 renderCCCard();
+renderAdvisor();
 </script>
 </body>
 </html>
