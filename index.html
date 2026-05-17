@@ -1,16 +1,1771 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BC Budget">
+<meta name="theme-color" content="#0f1117">
+<title>BC Budget</title>
+<style>
+:root{--bg:#0f1117;--bg2:#181b24;--bg3:#1f2330;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--text:#f0f2f7;--text2:#8b91a8;--text3:#555c72;--accent:#4f8ef7;--green:#34d17a;--green-bg:rgba(52,209,122,0.1);--amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);--red:#f06070;--red-bg:rgba(240,96,112,0.1);--purple:#a78bfa;--purple-bg:rgba(167,139,250,0.1);--safe-top:env(safe-area-inset-top,52px);--safe-bottom:env(safe-area-inset-bottom,20px)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;width:100%;margin:0}
+#app{display:flex;flex-direction:column;height:100%;height:100dvh;overflow:hidden}
+#header{background:var(--bg);border-bottom:1px solid var(--border);padding:calc(var(--safe-top) + 14px) 18px 12px;flex-shrink:0}
+.hrow{display:flex;align-items:center;justify-content:space-between}
+.app-title{font-size:20px;font-weight:700;letter-spacing:-0.5px}
+.app-title span{color:var(--accent)}
+.header-sub{font-size:11px;color:var(--text3);margin-top:1px}
+.header-inc{text-align:right}
+.header-inc-lbl{font-size:10px;color:var(--text3)}
+.header-inc-val{font-size:17px;font-weight:600;letter-spacing:-0.3px}
+#content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--safe-bottom) + 90px);min-height:0}
+#content::-webkit-scrollbar{width:0}
+#nav{position:fixed;bottom:0;left:0;right:0;background:rgba(15,17,23,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;padding-bottom:calc(var(--safe-bottom) + 2px);z-index:100}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0;background:none;border:none;color:var(--text3);font-size:10px;cursor:pointer;font-family:inherit}
+.nav-btn.on{color:var(--accent)}
+.nav-icon{font-size:20px;line-height:1}
+.page{display:none;padding:14px 16px 24px}
+.page.on{display:block}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:14px 16px;margin-bottom:10px}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.met{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:12px 14px}
+.met-l{font-size:11px;color:var(--text3);margin-bottom:3px}
+.met-v{font-size:19px;font-weight:600;letter-spacing:-0.5px}
+.met-v.ok{color:var(--green)}.met-v.warn{color:var(--amber)}.met-v.bad{color:var(--red)}
+.met-s{font-size:11px;color:var(--text3);margin-top:1px}
+.sec-hd{display:flex;justify-content:space-between;align-items:center;margin:14px 0 8px}
+.sec-t{font-size:15px;font-weight:600;letter-spacing:-0.2px}
+.sec-a{font-size:13px;color:var(--text2)}
+.bwrap{background:var(--border);border-radius:4px;height:5px;overflow:hidden;margin-top:6px}
+.bf{height:100%;border-radius:4px;transition:width 0.35s}
+.bf-b{background:var(--accent)}.bf-a{background:var(--amber)}.bf-g{background:var(--green)}
+.surplus{border-radius:16px;padding:14px;margin-bottom:10px;border:1px solid}
+.surplus.ok{background:var(--green-bg);border-color:rgba(52,209,122,0.25)}
+.surplus.bad{background:var(--red-bg);border-color:rgba(240,96,112,0.25)}
+.surplus.zero{background:var(--bg2);border-color:var(--border)}
+.srow{display:flex;justify-content:space-between;align-items:center}
+.slbl{font-size:13px;color:var(--text2)}
+.sval{font-size:24px;font-weight:700;letter-spacing:-1px}
+.snote{font-size:12px;color:var(--text2);margin-top:3px}
+.tip{border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.5;margin-bottom:10px}
+.tip-b{background:rgba(79,142,247,0.1);color:#7aabff}
+.tip-a{background:var(--amber-bg);color:var(--amber)}
+.tip-g{background:var(--green-bg);color:var(--green)}
+.mtabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.mt{font-size:12px;padding:5px 12px;border-radius:99px;border:1px solid var(--border2);background:none;color:var(--text2);cursor:pointer;font-family:inherit;white-space:nowrap}
+.mt.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:500}
+.igrp{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:6px}
+.sub-l{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3);padding:8px 14px 3px;background:var(--bg3)}
+.irow{display:flex;align-items:center;padding:10px 14px;border-top:1px solid var(--border);gap:10px}
+.irow:first-child{border-top:none}
+.irow label{flex:1;font-size:13px;color:var(--text2);line-height:1.2}
+.irow input[type=number]{width:96px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:16px;padding:4px 8px;text-align:right;outline:none;-webkit-appearance:none;transform:scale(0.875);transform-origin:right center;margin-right:-6px}
+.irow input[type=number]:focus{border-color:var(--accent)}
+.irow input[type=text]{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:16px;padding:4px 9px;outline:none;font-family:inherit;min-width:0}
+.irow input[type=text]:focus{border-color:var(--accent)}
+.irow input[type=text]::placeholder{color:var(--text3)}
+.irow .irow-hint{font-size:11px;color:var(--text3);text-align:right;min-width:60px}
+/* CC / CHQ toggle */
+.pay-toggle{display:flex;border-radius:6px;overflow:hidden;border:1px solid var(--border2);flex-shrink:0;height:26px}
+.pay-toggle button{padding:0 7px;font-size:10px;font-weight:600;border:none;cursor:pointer;font-family:inherit;background:var(--bg3);color:var(--text3);transition:all 0.15s;letter-spacing:0.02em}
+.pay-toggle button.pt-on-cc{background:#1a3a6e;color:#7aabff}
+.pay-toggle button.pt-on-chq{background:#1a3d28;color:var(--green)}
+.del-btn{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;padding:0 2px;line-height:1;flex-shrink:0}
+.del-btn:active{color:var(--red)}
+.cat-add-btn{width:100%;background:none;border:none;border-top:1px solid var(--border);padding:11px 14px;color:var(--accent);font-family:inherit;font-size:13px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:6px}
+.cat-add-btn:active{background:var(--bg3)}
+.de{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:13px;margin-bottom:8px}
+.de-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.de-t{font-size:13px;font-weight:600}
+.de-del{background:none;border:none;color:var(--red);font-size:18px;cursor:pointer;padding:2px}
+.dfs{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.df label{font-size:11px;color:var(--text3);display:block;margin-bottom:3px}
+.df input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:16px;padding:7px 9px;outline:none;font-family:inherit}
+.df input:focus{border-color:var(--accent)}
+.df.full{grid-column:1/-1}
+.doi{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--border)}
+.doi:first-child{border-top:none;padding-top:0}
+.dbadge{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.db1{background:#EEEDFE;color:#3C3489}.db2{background:#E1F5EE;color:#085041}.db3{background:#FAEEDA;color:#633806}.db4{background:#FAECE7;color:#712B13}.db5{background:#F1EFE8;color:#444441}
+.di{flex:1}.dn{font-size:13px;font-weight:500}.dd{font-size:11px;color:var(--text3);margin-top:1px}
+.dp{text-align:right}.dp-a{font-size:13px;font-weight:600}.dp-n{font-size:11px;color:var(--text3)}
+.add-btn{width:100%;background:var(--bg2);border:1px dashed var(--border2);border-radius:12px;padding:12px;color:var(--accent);font-family:inherit;font-size:13px;cursor:pointer;margin-bottom:10px}
+.prow{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--border);align-items:flex-start}
+.prow:first-child{border-top:none;padding-top:0}
+.pnum{width:24px;height:24px;border-radius:50%;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.pb{flex:1}.pt{font-size:13px;font-weight:500;line-height:1.3}.ps{font-size:12px;color:var(--text2);margin-top:2px;line-height:1.4}
+.pill{display:inline-block;font-size:10px;padding:1px 6px;border-radius:99px;font-weight:500;margin-left:4px;vertical-align:middle}
+.pill-g{background:var(--green-bg);color:var(--green)}.pill-b{background:rgba(79,142,247,0.15);color:var(--accent)}.pill-a{background:var(--amber-bg);color:var(--amber)}
+.saved-note{font-size:11px;color:var(--text3);text-align:center;padding:6px 0 2px}
+
+/* Today card */
+.today-card{border-radius:18px;padding:16px 18px;margin-bottom:12px;border:1px solid}
+.today-card.payday{background:linear-gradient(135deg,rgba(52,209,122,0.18),rgba(79,142,247,0.12));border-color:rgba(52,209,122,0.35)}
+.today-card.day-before{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(79,142,247,0.1));border-color:rgba(245,158,11,0.3)}
+.today-card.mid-period{background:var(--bg2);border-color:var(--border)}
+.today-card.week-of{background:linear-gradient(135deg,rgba(79,142,247,0.12),rgba(167,139,250,0.1));border-color:rgba(79,142,247,0.3)}
+.today-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.today-badge{font-size:22px;line-height:1}
+.today-days{font-size:11px;font-weight:500;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,0.07);color:var(--text2)}
+.today-heading{font-size:16px;font-weight:700;letter-spacing:-0.3px;margin-bottom:4px}
+.today-sub{font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:12px}
+.today-actions{display:flex;flex-direction:column;gap:7px}
+.today-action{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.05);border-radius:10px;padding:9px 12px}
+.today-action-label{font-size:13px;color:var(--text2)}
+.today-action-val{font-size:14px;font-weight:600}
+.today-action-val.green{color:var(--green)}
+.today-action-val.blue{color:var(--accent)}
+.today-action-val.amber{color:var(--amber)}
+.today-action-val.purple{color:var(--purple)}
+.today-payday-setting{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.today-payday-lbl{font-size:12px;color:var(--text3)}
+.today-payday-val{font-size:12px;color:var(--accent);cursor:pointer;text-decoration:underline}
+.rst-btn{width:100%;background:var(--red-bg);border:1px solid rgba(240,96,112,0.2);border-radius:12px;padding:13px;color:var(--red);font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;margin-top:6px}
+
+/* CC cashflow card */
+.cc-card{border-radius:18px;padding:16px 18px;margin-bottom:12px;border:1px solid;background:var(--bg2);border-color:var(--border)}
+.cc-card.warning{background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(240,96,112,0.08));border-color:rgba(245,158,11,0.3)}
+.cc-card.due-soon{background:linear-gradient(135deg,rgba(240,96,112,0.15),rgba(245,158,11,0.08));border-color:rgba(240,96,112,0.35)}
+.cc-card.clear{background:var(--bg2);border-color:var(--border)}
+.cc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.cc-title{font-size:14px;font-weight:700;letter-spacing:-0.2px}
+.cc-badge{font-size:11px;font-weight:500;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,0.07);color:var(--text2)}
+.cc-cycle{display:flex;align-items:stretch;gap:0;margin-bottom:12px;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.cc-cycle-seg{flex:1;padding:8px 6px;text-align:center;font-size:10px;color:var(--text3);background:var(--bg3);position:relative}
+.cc-cycle-seg.active{background:rgba(245,158,11,0.15);color:var(--amber)}
+.cc-cycle-seg.pay-seg{background:rgba(240,96,112,0.15);color:var(--red)}
+.cc-cycle-seg.today-seg{background:rgba(79,142,247,0.2);color:var(--accent)}
+.cc-cycle-label{font-weight:600;font-size:11px;display:block;margin-bottom:1px}
+.cc-cycle-sub{font-size:9px;opacity:0.8}
+.cc-steps{display:flex;flex-direction:column;gap:6px}
+.cc-step{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border-radius:10px;padding:10px 12px}
+.cc-step-num{width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cc-step-num.red{background:var(--red-bg);color:var(--red)}
+.cc-step-num.green{background:var(--green-bg);color:var(--green)}
+.cc-step-num.blue{background:rgba(79,142,247,0.15);color:var(--accent)}
+.cc-step-num.amber{background:var(--amber-bg);color:var(--amber)}
+.cc-step-body{flex:1}
+.cc-step-label{font-size:13px;color:var(--text2);line-height:1.2}
+.cc-step-val{font-size:14px;font-weight:600;margin-top:1px}
+.cc-buffer{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.cc-buffer-label{font-size:11px;color:var(--text3);margin-bottom:5px}
+.cc-buffer-bar{background:var(--bg3);border-radius:4px;height:6px;overflow:hidden}
+.cc-buffer-fill{height:100%;border-radius:4px;background:var(--green);transition:width 0.4s}
+
+/* Paycheque plan */
+.pc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.pc-met{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:12px 14px}
+.pc-met-l{font-size:11px;color:var(--text3);margin-bottom:3px}
+.pc-met-v{font-size:17px;font-weight:600;letter-spacing:-0.3px}
+.pc-met-v.ok{color:var(--green)}.pc-met-v.warn{color:var(--amber)}.pc-met-v.bad{color:var(--red)}
+.pc-met-s{font-size:11px;color:var(--text3);margin-top:1px}
+.pc-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid var(--border)}
+.pc-item:first-child{border-top:none;padding-top:0}
+.pc-item-l{font-size:13px;color:var(--text2)}
+.pc-item-v{font-size:13px;font-weight:500;color:var(--text)}
+.pc-cheque-tab{display:flex;gap:6px;margin-bottom:12px}
+.pc-tab{flex:1;padding:8px;border-radius:10px;border:1px solid var(--border2);background:none;color:var(--text2);font-family:inherit;font-size:12px;cursor:pointer;text-align:center}
+.pc-tab.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:500}
+
+/* 3rd cheque banner */
+.bonus-banner{background:linear-gradient(135deg,rgba(52,209,122,0.15),rgba(79,142,247,0.15));border:1px solid rgba(52,209,122,0.3);border-radius:16px;padding:14px;margin-bottom:10px}
+.bonus-title{font-size:14px;font-weight:600;color:var(--green);margin-bottom:4px}
+.bonus-sub{font-size:12px;color:var(--text2);line-height:1.5}
+
+/* Surplus dist */
+.dist-btn{width:100%;background:linear-gradient(135deg,rgba(79,142,247,0.15),rgba(167,139,250,0.15));border:1px solid rgba(79,142,247,0.3);border-radius:14px;padding:14px 16px;color:var(--accent);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:-0.2px}
+.dist-btn:active{opacity:0.8}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:flex;flex-direction:column;justify-content:flex-end;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.modal-overlay.hidden{display:none}
+.modal-sheet{background:var(--bg2);border-radius:20px 20px 0 0;padding:20px 16px calc(var(--safe-bottom)+20px);max-height:88vh;overflow-y:auto}
+.modal-sheet::-webkit-scrollbar{width:0}
+.modal-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 16px}
+.modal-title{font-size:17px;font-weight:700;letter-spacing:-0.3px;margin-bottom:4px}
+.modal-sub{font-size:13px;color:var(--text2);margin-bottom:16px}
+.modal-cancel{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:13px;color:var(--text2);font-family:inherit;font-size:14px;cursor:pointer;margin-top:8px}
+.opt-card{background:var(--bg3);border:1.5px solid var(--border2);border-radius:16px;padding:14px;margin-bottom:10px;cursor:pointer}
+.opt-card.selected{border-color:var(--accent);background:rgba(79,142,247,0.08)}
+.opt-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.opt-badge{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.opt-a .opt-badge{background:var(--red-bg);color:var(--red)}
+.opt-b .opt-badge{background:var(--green-bg);color:var(--green)}
+.opt-c .opt-badge{background:var(--purple-bg);color:var(--purple)}
+.opt-name{font-size:14px;font-weight:600}
+.opt-tag{font-size:10px;color:var(--text3);margin-top:1px}
+.opt-reason{font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:10px;padding:8px 10px;background:rgba(255,255,255,0.04);border-radius:8px}
+.opt-items{display:flex;flex-direction:column;gap:5px}
+.opt-item{display:flex;justify-content:space-between;align-items:center;font-size:13px}
+.opt-item-label{color:var(--text2)}
+.opt-item-val{font-weight:600;color:var(--green)}
+.apply-btn{width:100%;background:var(--accent);border:none;border-radius:12px;padding:14px;color:#fff;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;margin-top:4px}
+.apply-btn:disabled{opacity:0.4;cursor:default}
+
+/* ── FINANCIAL ADVISOR STYLES ─────────────────────────────────────── */
+/* Health score */
+.health-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:16px 18px;margin-bottom:10px}
+.health-top{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.health-ring{position:relative;width:64px;height:64px;flex-shrink:0}
+.health-ring svg{transform:rotate(-90deg)}
+.health-ring-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.health-score-val{font-size:20px;font-weight:700;letter-spacing:-0.5px;line-height:1}
+.health-score-lbl{font-size:9px;color:var(--text3);margin-top:1px;text-transform:uppercase;letter-spacing:0.05em}
+.health-right{flex:1}
+.health-grade{font-size:14px;font-weight:700;letter-spacing:-0.2px;margin-bottom:3px}
+.health-summary{font-size:12px;color:var(--text2);line-height:1.4}
+.health-bars{display:flex;flex-direction:column;gap:7px}
+.hbar-row{display:flex;align-items:center;gap:8px}
+.hbar-label{font-size:11px;color:var(--text2);width:110px;flex-shrink:0}
+.hbar-wrap{flex:1;background:var(--bg3);border-radius:3px;height:5px;overflow:hidden}
+.hbar-fill{height:100%;border-radius:3px;transition:width 0.5s}
+.hbar-score{font-size:11px;color:var(--text3);width:24px;text-align:right;flex-shrink:0}
+
+/* Your move card */
+.move-card{border-radius:18px;padding:16px 18px;margin-bottom:10px;border:1px solid}
+.move-card.urgent{background:linear-gradient(135deg,rgba(240,96,112,0.12),rgba(245,158,11,0.08));border-color:rgba(240,96,112,0.3)}
+.move-card.important{background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(79,142,247,0.08));border-color:rgba(245,158,11,0.3)}
+.move-card.good{background:linear-gradient(135deg,rgba(52,209,122,0.1),rgba(79,142,247,0.08));border-color:rgba(52,209,122,0.25)}
+.move-card.neutral{background:var(--bg2);border-color:var(--border)}
+.move-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.move-icon{font-size:22px;line-height:1;flex-shrink:0}
+.move-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3)}
+.move-heading{font-size:15px;font-weight:700;letter-spacing:-0.3px;color:var(--text);margin-bottom:6px}
+.move-body{font-size:13px;color:var(--text2);line-height:1.55}
+.move-action{display:inline-block;margin-top:10px;font-size:12px;font-weight:600;color:var(--accent);background:rgba(79,142,247,0.12);border-radius:8px;padding:5px 10px}
+
+/* Situation flags */
+.flags-wrap{display:flex;flex-direction:column;gap:7px;margin-bottom:10px}
+.flag{display:flex;align-items:flex-start;gap:10px;border-radius:12px;padding:10px 12px;border:1px solid}
+.flag.red{background:var(--red-bg);border-color:rgba(240,96,112,0.25)}
+.flag.amber{background:var(--amber-bg);border-color:rgba(245,158,11,0.25)}
+.flag.green{background:var(--green-bg);border-color:rgba(52,209,122,0.25)}
+.flag.blue{background:rgba(79,142,247,0.08);border-color:rgba(79,142,247,0.2)}
+.flag-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.flag.red .flag-dot{background:var(--red)}
+.flag.amber .flag-dot{background:var(--amber)}
+.flag.green .flag-dot{background:var(--green)}
+.flag.blue .flag-dot{background:var(--accent)}
+.flag-body{flex:1}
+.flag-title{font-size:13px;font-weight:600;color:var(--text);line-height:1.2;margin-bottom:2px}
+.flag-desc{font-size:12px;color:var(--text2);line-height:1.4}
+
 </head>
-<body style="background:white;color:black;padding:30px;font-family:sans-serif">
-<h1>Hello!</h1>
-<p>If you can see this, the file is loading correctly.</p>
-<p id="time"></p>
+<body>
+<div id="app">
+  <div id="header">
+    <div class="hrow">
+      <div>
+        <div class="app-title">BC <span>Budget</span></div>
+        <div class="header-sub" id="hdate"></div>
+      </div>
+      <div class="header-inc">
+        <div class="header-inc-lbl">bi-weekly paycheque</div>
+        <div class="header-inc-val" id="hinc">$0</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="content">
+
+    <!-- OVERVIEW -->
+    <div class="page on" id="page-overview">
+      <div id="advisor-move"></div>
+      <div id="advisor-health"></div>
+      <div id="advisor-flags"></div>
+      <div id="today-card"></div>
+      <div id="cc-card"></div>
+      <div class="mgrid" id="ov-metrics"></div>
+      <div id="ov-surplus"></div>
+      <div id="ov-dist-btn"></div>
+      <div id="ov-bonus"></div>
+      <div id="ov-hwarn"></div>
+      <div class="sec-hd"><span class="sec-t">Needs</span><span class="sec-a" id="ov-n"></span></div>
+      <div class="card" style="padding:12px 14px">
+        <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--text2)">of monthly income</span><span style="font-size:12px;color:var(--text2)" id="ov-npct"></span></div>
+        <div class="bwrap"><div class="bf bf-b" id="ov-bn" style="width:0"></div></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Wants</span><span class="sec-a" id="ov-w"></span></div>
+      <div class="card" style="padding:12px 14px">
+        <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--text2)">of monthly income</span><span style="font-size:12px;color:var(--text2)" id="ov-wpct"></span></div>
+        <div class="bwrap"><div class="bf bf-a" id="ov-bw" style="width:0"></div></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Savings & investing</span><span class="sec-a" id="ov-s"></span></div>
+      <div class="card" style="padding:12px 14px">
+        <div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--text2)">of monthly income</span><span style="font-size:12px;color:var(--text2)" id="ov-spct"></span></div>
+        <div class="bwrap"><div class="bf bf-g" id="ov-bs" style="width:0"></div></div>
+      </div>
+      <div class="saved-note" id="saved-note"></div>
+    </div>
+
+    <!-- PAYCHEQUE PLAN -->
+    <div class="page" id="page-paycheque">
+      <div class="tip tip-b" style="margin-bottom:12px">Your monthly budget split across each bi-weekly paycheque. Bills are assigned to the cheque they fall closest to.</div>
+      <div id="bonus-month-tip"></div>
+      <div class="pc-cheque-tab">
+        <button class="pc-tab on" onclick="setPCTab(1,this)">Cheque 1</button>
+        <button class="pc-tab" onclick="setPCTab(2,this)">Cheque 2</button>
+        <button class="pc-tab" onclick="setPCTab(3,this)" id="cheque3-tab" style="display:none">Cheque 3</button>
+      </div>
+      <div class="pc-grid" id="pc-metrics"></div>
+      <div class="sec-hd"><span class="sec-t">Needs</span></div>
+      <div class="card" style="padding:12px 14px" id="pc-needs"></div>
+      <div class="sec-hd"><span class="sec-t">Wants</span></div>
+      <div class="card" style="padding:12px 14px" id="pc-wants"></div>
+      <div class="sec-hd"><span class="sec-t">Save & invest</span></div>
+      <div class="card" style="padding:12px 14px" id="pc-saves"></div>
+    </div>
+
+    <!-- BUDGET -->
+    <div class="page" id="page-budget">
+      <div class="tip tip-b" id="mtip" style="margin-bottom:10px"></div>
+      <div class="mtabs" id="mtabs">
+        <button class="mt on" onclick="setMethod('60-20-20',this)">60/20/20 — BC</button>
+        <button class="mt" onclick="setMethod('50-30-20',this)">50/30/20</button>
+        <button class="mt" onclick="setMethod('zero',this)">Zero-based</button>
+      </div>
+      <div class="sec-hd" style="margin-top:2px"><span class="sec-t">Income</span></div>
+      <div class="igrp">
+        <div class="irow">
+          <label>Bi-weekly take-home pay</label>
+          <input type="number" id="biweekly" value="2500" step="50" inputmode="decimal">
+        </div>
+        <div class="irow">
+          <label>Other income (monthly)</label>
+          <input type="number" id="extra" value="0" step="50" inputmode="decimal">
+        </div>
+        <div class="irow">
+          <label>Payday (day of week)</label>
+          <select id="payday-dow" style="background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:16px;padding:6px 8px;outline:none;font-family:inherit">
+            <option value="0">Sunday</option>
+            <option value="1">Monday</option>
+            <option value="2">Tuesday</option>
+            <option value="3">Wednesday</option>
+            <option value="4">Thursday</option>
+            <option value="5" selected>Friday</option>
+            <option value="6">Saturday</option>
+          </select>
+        </div>
+        <div class="irow">
+          <label>Last payday date</label>
+          <input type="date" id="last-payday" style="background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:16px;padding:6px 8px;outline:none;font-family:inherit">
+        </div>
+        <div class="irow" style="background:var(--bg3)">
+          <label style="color:var(--text3);font-size:12px">Monthly equivalent (x 26/12)</label>
+          <span class="irow-hint" id="monthly-equiv" style="font-size:13px;color:var(--text2);font-weight:500"></span>
+        </div>
+        <div class="irow" style="background:var(--bg3)">
+          <label style="color:var(--text3);font-size:12px">Annual income</label>
+          <span class="irow-hint" id="annual-equiv" style="font-size:13px;color:var(--text2);font-weight:500"></span>
+        </div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Credit card</span></div>
+      <div class="igrp">
+        <div class="sub-l">Next payment</div>
+        <div class="irow">
+          <label>Amount due on next statement</label>
+          <input type="number" id="cc-actual-due" value="0" step="10" inputmode="decimal">
+        </div>
+        <div class="irow" style="background:var(--bg3)">
+          <label style="color:var(--text3);font-size:12px">Update this each time your statement arrives</label>
+          <span style="font-size:11px;color:var(--text3)">monthly</span>
+        </div>
+        <div class="sub-l">Statement cycle</div>
+        <div class="irow">
+          <label>Statement closes (day of month)</label>
+          <input type="number" id="cc-close-day" value="19" min="1" max="31" step="1" inputmode="numeric">
+        </div>
+        <div class="irow">
+          <label>Payment due (day of month)</label>
+          <input type="number" id="cc-due-day" value="15" min="1" max="31" step="1" inputmode="numeric">
+        </div>
+        <div class="sub-l">Buffer goal</div>
+        <div class="irow">
+          <label>CC buffer saved so far</label>
+          <input type="number" id="cc-buffer-saved" value="0" step="50" inputmode="decimal">
+        </div>
+        <div class="irow" style="background:var(--bg3)">
+          <label style="color:var(--text3);font-size:12px">Buffer target (1 month CC spend)</label>
+          <span class="irow-hint" id="cc-buffer-target" style="font-size:13px;color:var(--text2);font-weight:500"></span>
+        </div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Needs</span><span class="sec-a" id="b-n"></span></div>
+      <div class="igrp">
+        <div class="sub-l">Housing</div>
+        <div class="irow" id="irow-housing"><label>Rent / mortgage</label><input type="number" id="housing" value="2000" step="50" inputmode="decimal"><div class="pay-toggle" id="pt-housing"><button onclick="setPT('housing','chq',this)" class="pt-on-chq">CHQ</button><button onclick="setPT('housing','cc',this)">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('housing')" title="Remove">×</button></div>
+        <div class="irow" id="irow-homeins"><label>Home insurance</label><input type="number" id="homeins" value="120" step="10" inputmode="decimal"><div class="pay-toggle" id="pt-homeins"><button onclick="setPT('homeins','chq',this)" class="pt-on-chq">CHQ</button><button onclick="setPT('homeins','cc',this)">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('homeins')" title="Remove">×</button></div>
+        <div class="sub-l">Transportation</div>
+        <div class="irow" id="irow-icbc"><label>ICBC insurance</label><input type="number" id="icbc" value="180" step="10" inputmode="decimal"><div class="pay-toggle" id="pt-icbc"><button onclick="setPT('icbc','chq',this)" class="pt-on-chq">CHQ</button><button onclick="setPT('icbc','cc',this)">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('icbc')" title="Remove">×</button></div>
+        <div class="irow" id="irow-carloan"><label>Car loan payment</label><input type="number" id="carloan" value="400" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-carloan"><button onclick="setPT('carloan','chq',this)" class="pt-on-chq">CHQ</button><button onclick="setPT('carloan','cc',this)">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('carloan')" title="Remove">×</button></div>
+        <div class="irow" id="irow-transit"><label>Gas / TransLink</label><input type="number" id="transit" value="130" step="10" inputmode="decimal"><div class="pay-toggle" id="pt-transit"><button onclick="setPT('transit','chq',this)">CHQ</button><button onclick="setPT('transit','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('transit')" title="Remove">×</button></div>
+        <div class="sub-l">Living essentials</div>
+        <div class="irow" id="irow-utils"><label>Utilities & internet</label><input type="number" id="utils" value="180" step="10" inputmode="decimal"><div class="pay-toggle" id="pt-utils"><button onclick="setPT('utils','chq',this)">CHQ</button><button onclick="setPT('utils','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('utils')" title="Remove">×</button></div>
+        <div class="irow" id="irow-groceries"><label>Groceries</label><input type="number" id="groceries" value="450" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-groceries"><button onclick="setPT('groceries','chq',this)">CHQ</button><button onclick="setPT('groceries','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('groceries')" title="Remove">×</button></div>
+        <div class="irow" id="irow-health"><label>Extended health / dental</label><input type="number" id="health" value="80" step="10" inputmode="decimal"><div class="pay-toggle" id="pt-health"><button onclick="setPT('health','chq',this)">CHQ</button><button onclick="setPT('health','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('health')" title="Remove">×</button></div>
+        <div class="irow" id="irow-lifeins"><label>Life insurance</label><input type="number" id="lifeins" value="50" step="5" inputmode="decimal"><div class="pay-toggle" id="pt-lifeins"><button onclick="setPT('lifeins','chq',this)" class="pt-on-chq">CHQ</button><button onclick="setPT('lifeins','cc',this)">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('lifeins')" title="Remove">×</button></div>
+        <div class="sub-l">Debt minimums</div>
+        <div class="irow" id="irow-mindebt"><label>Min. debt payments</label><input type="number" id="mindebt" value="150" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-mindebt"><button onclick="setPT('mindebt','chq',this)" class="pt-on-chq">CHQ</button><button onclick="setPT('mindebt','cc',this)">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('mindebt')" title="Remove">×</button></div>
+        <div class="sub-l">Custom items</div>
+        <div id="custom-needs"></div>
+        <button class="cat-add-btn" onclick="addCustomItem('needs')">+ Add item</button>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Wants</span><span class="sec-a" id="b-w"></span></div>
+      <div class="igrp">
+        <div class="sub-l">Food & social</div>
+        <div class="irow" id="irow-dining"><label>Dining & restaurants</label><input type="number" id="dining" value="250" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-dining"><button onclick="setPT('dining','chq',this)">CHQ</button><button onclick="setPT('dining','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('dining')" title="Remove">×</button></div>
+        <div class="irow" id="irow-entertain"><label>Entertainment & events</label><input type="number" id="entertain" value="100" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-entertain"><button onclick="setPT('entertain','chq',this)">CHQ</button><button onclick="setPT('entertain','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('entertain')" title="Remove">×</button></div>
+        <div class="sub-l">Lifestyle</div>
+        <div class="irow" id="irow-subs"><label>Streaming & subscriptions</label><input type="number" id="subs" value="60" step="5" inputmode="decimal"><div class="pay-toggle" id="pt-subs"><button onclick="setPT('subs','chq',this)">CHQ</button><button onclick="setPT('subs','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('subs')" title="Remove">×</button></div>
+        <div class="irow" id="irow-shopping"><label>Shopping & clothing</label><input type="number" id="shopping" value="120" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-shopping"><button onclick="setPT('shopping','chq',this)">CHQ</button><button onclick="setPT('shopping','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('shopping')" title="Remove">×</button></div>
+        <div class="irow" id="irow-hobbies"><label>Hobbies & recreation</label><input type="number" id="hobbies" value="100" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-hobbies"><button onclick="setPT('hobbies','chq',this)">CHQ</button><button onclick="setPT('hobbies','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('hobbies')" title="Remove">×</button></div>
+        <div class="irow" id="irow-travel"><label>Travel & getaways</label><input type="number" id="travel" value="150" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-travel"><button onclick="setPT('travel','chq',this)">CHQ</button><button onclick="setPT('travel','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('travel')" title="Remove">×</button></div>
+        <div class="sub-l">Personal growth</div>
+        <div class="irow" id="irow-education"><label>Education & courses</label><input type="number" id="education" value="100" step="25" inputmode="decimal"><div class="pay-toggle" id="pt-education"><button onclick="setPT('education','chq',this)">CHQ</button><button onclick="setPT('education','cc',this)" class="pt-on-cc">CC</button></div><button class="del-btn" onclick="hideBuiltinRow('education')" title="Remove">×</button></div>
+        <div class="sub-l">Custom items</div>
+        <div id="custom-wants"></div>
+        <button class="cat-add-btn" onclick="addCustomItem('wants')">+ Add item</button>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Save & invest</span><span class="sec-a" id="b-s"></span></div>
+      <div class="igrp">
+        <div class="sub-l">Canadian accounts</div>
+        <div class="irow" id="irow-emerg"><label>Emergency fund (TFSA)</label><input type="number" id="emerg" value="200" step="25" inputmode="decimal"><button class="del-btn" onclick="hideBuiltinRow('emerg')" title="Remove">×</button></div>
+        <div class="irow" id="irow-tfsa"><label>TFSA — investments</label><input type="number" id="tfsa" value="250" step="25" inputmode="decimal"><button class="del-btn" onclick="hideBuiltinRow('tfsa')" title="Remove">×</button></div>
+        <div class="irow" id="irow-rrsp"><label>RRSP</label><input type="number" id="rrsp" value="200" step="25" inputmode="decimal"><button class="del-btn" onclick="hideBuiltinRow('rrsp')" title="Remove">×</button></div>
+        <div class="irow" id="irow-resp"><label>RESP (if applicable)</label><input type="number" id="resp" value="0" step="25" inputmode="decimal"><button class="del-btn" onclick="hideBuiltinRow('resp')" title="Remove">×</button></div>
+        <div class="sub-l">Debt acceleration</div>
+        <div class="irow" id="irow-xdebt"><label>Extra debt payoff</label><input type="number" id="xdebt" value="150" step="25" inputmode="decimal"><button class="del-btn" onclick="hideBuiltinRow('xdebt')" title="Remove">×</button></div>
+        <div class="sub-l">Other</div>
+        <div class="irow" id="irow-nonreg"><label>Non-registered savings</label><input type="number" id="nonreg" value="0" step="25" inputmode="decimal"><button class="del-btn" onclick="hideBuiltinRow('nonreg')" title="Remove">×</button></div>
+        <div class="sub-l">Custom items</div>
+        <div id="custom-saves"></div>
+        <button class="cat-add-btn" onclick="addCustomItem('saves')">+ Add item</button>
+      </div>
+    </div>
+
+    <!-- DEBT -->
+    <div class="page" id="page-debt">
+      <div class="tip tip-b" id="debt-tip" style="margin-top:2px"></div>
+      <div id="debt-inputs"></div>
+      <button class="add-btn" onclick="addDebt()">+ Add a debt</button>
+      <div class="mtabs">
+        <button class="mt on" onclick="setDM('avalanche',this)">Avalanche — saves most $</button>
+        <button class="mt" onclick="setDM('snowball',this)">Snowball — quick wins</button>
+      </div>
+      <div class="card" id="debt-order" style="padding:12px 14px"></div>
+    </div>
+
+    <!-- GUIDE -->
+    <div class="page" id="page-guide">
+      <div class="sec-hd" style="margin-top:2px"><span class="sec-t">Canadian account priority</span></div>
+      <div class="card" style="padding:12px 14px">
+        <div class="prow"><div class="pnum db1">1</div><div class="pb"><div class="pt">Employer match<span class="pill pill-g">free money</span></div><div class="ps">Always contribute enough to get the full employer match first.</div></div></div>
+        <div class="prow"><div class="pnum db2">2</div><div class="pb"><div class="pt">Emergency fund in TFSA<span class="pill pill-b">3-6 mo</span></div><div class="ps">Use a TFSA HISA (EQ Bank, Oaken). Tax-free interest, withdraw anytime.</div></div></div>
+        <div class="prow"><div class="pnum db3">3</div><div class="pb"><div class="pt">High-interest debt<span class="pill pill-a">>7% APR</span></div><div class="ps">Canadian credit cards: 19.99-22.99%. Paying these beats most investments.</div></div></div>
+        <div class="prow"><div class="pnum db4">4</div><div class="pb"><div class="pt">TFSA investing</div><div class="ps">Max $7,000/yr (2025). Lifetime up to $95,000. XEQT or VEQT ETFs are a great low-cost choice.</div></div></div>
+        <div class="prow"><div class="pnum db5">5</div><div class="pb"><div class="pt">RRSP</div><div class="ps">Best when your tax rate now is higher than in retirement. BC combined rate hits 20.06% at ~$57K.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:#EEEDFE;color:#3C3489">6</div><div class="pb"><div class="pt">RESP<span class="pill pill-g">20% CESG</span></div><div class="ps">$208/mo per child captures the full $500/yr federal grant.</div></div></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Bi-weekly pay explained</span></div>
+      <div class="card" style="padding:12px 14px">
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">!</div><div class="pb"><div class="pt">26 cheques, not 24</div><div class="ps">There are 26 bi-weekly pay periods per year. That means 2 months each year you receive 3 cheques instead of 2. This app detects those months automatically.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">!</div><div class="pb"><div class="pt">Monthly equivalent formula</div><div class="ps">Your bi-weekly cheque x 26 / 12 = true monthly income. This is slightly higher than 2 cheques because of those extra 2 annual cheques.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:var(--green-bg);color:var(--green)">$</div><div class="pb"><div class="pt">3rd cheque strategy</div><div class="ps">When a 3rd cheque month arrives, treat it as a windfall. The surplus distributor will suggest the best use — typically extra debt payoff or TFSA top-up.</div></div></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Key rules</span></div>
+      <div class="card" style="padding:12px 14px">
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Pay yourself first</div><div class="ps">On payday, auto-transfer savings before spending anything else.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Housing over 40%? Use 60/20/20</div><div class="ps">Metro Van housing often exceeds 40% of income.</div></div></div>
+        <div class="prow"><div class="pnum" style="background:rgba(79,142,247,0.15);color:var(--accent)">v</div><div class="pb"><div class="pt">Review every paycheque</div><div class="ps">Check the Paycheque tab each time you get paid. Adjust if life changes.</div></div></div>
+      </div>
+      <div class="sec-hd"><span class="sec-t">Settings</span></div>
+      <div class="card" style="padding:12px 14px">
+        <div style="display:flex;justify-content:space-between;padding:6px 0"><span style="font-size:13px;color:var(--text2)">Version</span><span style="font-size:13px;color:var(--text3)">2.0 - BC Budget</span></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)"><span style="font-size:13px;color:var(--text2)">Storage</span><span style="font-size:13px;color:var(--text3)">On this device</span></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--border)"><span style="font-size:13px;color:var(--text2)">Last saved</span><span style="font-size:13px;color:var(--text3)" id="last-saved">--</span></div>
+      </div>
+      <button class="rst-btn" onclick="resetData()">Reset all data</button>
+      <div style="height:16px"></div>
+    </div>
+
+  </div><!-- end content -->
+
+<!-- ADD CUSTOM ITEM MODAL -->
+<div class="modal-overlay hidden" id="ci-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="ci-modal-title">Add Custom Item</div>
+    <div class="modal-sub" id="ci-modal-sub"></div>
+    <div class="igrp" style="margin-bottom:12px">
+      <div class="irow" style="border-top:none">
+        <label>Item name</label>
+        <input type="text" id="ci-modal-name" placeholder="e.g. Pet food" style="width:160px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:16px;padding:6px 9px;outline:none;font-family:inherit;text-align:right">
+      </div>
+      <div class="irow">
+        <label>Monthly amount ($)</label>
+        <input type="number" id="ci-modal-amt" value="0" step="10" inputmode="decimal" style="width:110px">
+      </div>
+      <div class="irow">
+        <label>Payment method</label>
+        <div class="pay-toggle" id="ci-modal-pt" style="height:30px">
+          <button onclick="setCIModalPT('chq',this)" id="ci-pt-chq" style="padding:0 10px;font-size:11px">CHQ</button>
+          <button onclick="setCIModalPT('cc',this)" id="ci-pt-cc" class="pt-on-cc" style="padding:0 10px;font-size:11px">CC</button>
+        </div>
+      </div>
+    </div>
+    <button class="apply-btn" id="ci-confirm-btn" onclick="confirmCustomItem()">Add to budget</button>
+    <button class="modal-cancel" onclick="closeCIModal()">Cancel</button>
+  </div>
+</div>
+
+  <nav id="nav">
+    <button class="nav-btn on" onclick="showPage('overview',this)"><span class="nav-icon">o</span><span>Overview</span></button>
+    <button class="nav-btn" onclick="showPage('paycheque',this)"><span class="nav-icon">$</span><span>Paycheque</span></button>
+    <button class="nav-btn" onclick="showPage('budget',this)"><span class="nav-icon">=</span><span>Budget</span></button>
+    <button class="nav-btn" onclick="showPage('debt',this)"><span class="nav-icon">v</span><span>Debt</span></button>
+    <button class="nav-btn" onclick="showPage('guide',this)"><span class="nav-icon">*</span><span>Guide</span></button>
+  </nav>
+</div>
+
+<!-- SURPLUS MODAL -->
+<div class="modal-overlay hidden" id="dist-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="dist-modal-title">Distribute Surplus</div>
+    <div class="modal-sub" id="dist-modal-sub"></div>
+    <div id="dist-options"></div>
+    <button class="apply-btn" id="dist-apply" onclick="applyOption()" disabled>Select an option to apply</button>
+    <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
 <script>
-document.getElementById('time').textContent = 'Loaded at: ' + new Date().toLocaleTimeString();
+const SK='bc_budget_v6';
+let method='60-20-20',dm='avalanche',dc=0,debts=[];
+let customItems={needs:[],wants:[],saves:[]};
+let cic=0,pcTab=1,selectedOption=null,generatedOptions=[];
+
+// Payment type state: 'cc' or 'chq' per field ID
+// Defaults: CHQ for auto-debits, CC for discretionary
+const PT_DEFAULTS={
+  housing:'chq',homeins:'chq',icbc:'chq',carloan:'chq',transit:'cc',
+  utils:'cc',groceries:'cc',health:'cc',lifeins:'chq',mindebt:'chq',
+  dining:'cc',entertain:'cc',subs:'cc',shopping:'cc',hobbies:'cc',travel:'cc',education:'cc'
+};
+let payTypes={...PT_DEFAULTS};
+let hiddenRows=new Set(); // IDs of built-in rows that have been deleted
+
+function hideBuiltinRow(id){
+  hiddenRows.add(id);
+  const row=document.getElementById('irow-'+id);
+  if(row)row.style.display='none';
+  const inp=document.getElementById(id);
+  if(inp){inp.dataset.savedVal=inp.value;inp.value=0;}
+  recalc();
+  saveData();
+  // Show undo toast
+  showUndo(id);
+}
+
+function restoreBuiltinRow(id){
+  hiddenRows.delete(id);
+  const row=document.getElementById('irow-'+id);
+  if(row)row.style.display='';
+  const inp=document.getElementById(id);
+  if(inp&&inp.dataset.savedVal)inp.value=inp.dataset.savedVal;
+  recalc();
+  saveData();
+}
+
+let undoTimer=null;
+function showUndo(id){
+  let toast=document.getElementById('undo-toast');
+  if(!toast){
+    toast=document.createElement('div');
+    toast.id='undo-toast';
+    toast.style.cssText='position:fixed;bottom:calc(var(--safe-bottom)+80px);left:50%;transform:translateX(-50%);background:#252a38;border:1px solid rgba(255,255,255,0.13);border-radius:10px;padding:10px 16px;font-size:13px;color:#f0f2f7;display:flex;align-items:center;gap:12px;z-index:300;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.4)';
+    document.body.appendChild(toast);
+  }
+  toast.innerHTML='Item removed <button onclick="restoreBuiltinRow(\''+id+'\')" style="background:none;border:none;color:#4f8ef7;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;padding:0">Undo</button>';
+  toast.style.display='flex';
+  if(undoTimer)clearTimeout(undoTimer);
+  undoTimer=setTimeout(()=>{toast.style.display='none';},4000);
+}
+
+function setPT(fieldId,type,btn){
+  payTypes[fieldId]=type;
+  const toggle=document.getElementById('pt-'+fieldId);
+  if(toggle){
+    toggle.querySelectorAll('button').forEach(b=>b.classList.remove('pt-on-cc','pt-on-chq'));
+    btn.classList.add(type==='cc'?'pt-on-cc':'pt-on-chq');
+  }
+  renderCCCard();
+  saveData();
+}
+
+function loadPTToggles(){
+  Object.keys(payTypes).forEach(fieldId=>{
+    const toggle=document.getElementById('pt-'+fieldId);
+    if(!toggle)return;
+    const type=payTypes[fieldId];
+    toggle.querySelectorAll('button').forEach(b=>b.classList.remove('pt-on-cc','pt-on-chq'));
+    const btn=toggle.querySelector('button['+(type==='cc'?'onclick*=",\'cc\'"':'onclick*=",\'chq\'"')+']');
+    if(btn)btn.classList.add(type==='cc'?'pt-on-cc':'pt-on-chq');
+  });
+}
+
+// Get total CC spend and CHQ spend from tagged fields
+function getPayTotals(){
+  const fields=['housing','homeins','icbc','carloan','transit','utils','groceries','health','lifeins','mindebt','dining','entertain','subs','shopping','hobbies','travel','education'];
+  let ccTotal=0,chqTotal=0;
+  fields.forEach(id=>{
+    const v=gv(id);
+    if(payTypes[id]==='cc') ccTotal+=v;
+    else chqTotal+=v;
+  });
+  // Custom items — default to CC
+  ['needs','wants'].forEach(cat=>{
+    customItems[cat].forEach(item=>{
+      const amtEl=document.getElementById('ci-amt-'+item.id);
+      const amt=amtEl?parseFloat(amtEl.value)||0:item.amount;
+      const pt=payTypes['ci-'+item.id]||'cc';
+      if(pt==='cc') ccTotal+=amt;
+      else chqTotal+=amt;
+    });
+  });
+  return{ccTotal,chqTotal};
+}
+
+const mtips={
+  '60-20-20':'Recommended for Metro Vancouver. All amounts below are monthly — your paycheque tab shows the bi-weekly split.',
+  '50-30-20':'Classic framework. Works well if housing is below ~40% of income.',
+  'zero':'Every dollar gets a job. Monthly income minus all categories = $0.'
+};
+const splits={'60-20-20':[0.60,0.20,0.20],'50-30-20':[0.50,0.30,0.20],'zero':[null,null,null]};
+
+// ── CORE CALCULATIONS ────────────────────────────────────────────────────────
+// 26 bi-weekly periods / 12 months = 2.1667
+// Monthly income = biweekly * 26 / 12
+function biweeklyToMonthly(bw){ return bw * 26 / 12; }
+function monthlyToBiweekly(mo){ return mo * 12 / 26; }
+
+// Detect if current month is a 3-cheque month
+// A month has 3 bi-weekly paydays if it spans enough days
+function isThreeChequeMonth(){
+  const now=new Date();
+  const yr=now.getFullYear(),mo=now.getMonth();
+  const days=new Date(yr,mo+1,0).getDate();
+  return days>=29&&(mo===0||mo===2||mo===4||mo===6||mo===7||mo===9||mo===11);
+  // Approximate: months with 31 days that align commonly produce 3 cheques
+}
+
+// Better 3-cheque detection: count how many bi-weekly Fridays fall in this month
+function countPaydays(){
+  const now=new Date();
+  const yr=now.getFullYear(),mo=now.getMonth();
+  const first=new Date(yr,mo,1);
+  const last=new Date(yr,mo+1,0);
+  // Find first Friday
+  let day=new Date(first);
+  while(day.getDay()!==5)day.setDate(day.getDate()+1);
+  let count=0;
+  while(day<=last){count++;day.setDate(day.getDate()+14);}
+  return count;
+}
+
+function gv(id){const e=document.getElementById(id);return e?parseFloat(e.value)||0:0;}
+function sv(id,val){const e=document.getElementById(id);if(e)e.value=Math.round(val);}
+function fmt(n){return '$'+Math.round(Math.abs(n)).toLocaleString();}
+function fmtS(n){return(n<0?'-':'')+fmt(n);}
+function pp(n,t){return t?Math.round(n/t*100)+'%':'0%';}
+function sb(id,v,t){const e=document.getElementById(id);if(e)e.style.width=Math.min(100,t?v/t*100:0)+'%';}
+
+function getMonthlyIncome(){
+  const bw=gv('biweekly');
+  return biweeklyToMonthly(bw)+gv('extra');
+}
+
+function getCustomTotal(cat){
+  return customItems[cat].reduce((sum,item)=>{
+    const e=document.getElementById('ci-amt-'+item.id);
+    return sum+(e?parseFloat(e.value)||0:item.amount);
+  },0);
+}
+
+function getBudgetState(){
+  const inc=getMonthlyIncome();
+  const bw=gv('biweekly');
+  const needsFixed=gv('housing')+gv('homeins')+gv('icbc')+gv('carloan')+gv('transit')+gv('utils')+gv('groceries')+gv('health')+gv('lifeins')+gv('mindebt');
+  const wantsFixed=gv('dining')+gv('entertain')+gv('subs')+gv('shopping')+gv('hobbies')+gv('travel')+gv('education');
+  const savesFixed=gv('emerg')+gv('tfsa')+gv('rrsp')+gv('resp')+gv('xdebt')+gv('nonreg');
+  const needs=needsFixed+getCustomTotal('needs');
+  const wants=wantsFixed+getCustomTotal('wants');
+  const saves=savesFixed+getCustomTotal('saves');
+  const surplus=inc-needs-wants-saves;
+  const paydays=countPaydays();
+  const isBonus=paydays>=3;
+  return{inc,bw,needs,wants,saves,surplus,paydays,isBonus,
+    emerg:gv('emerg'),tfsa:gv('tfsa'),rrsp:gv('rrsp'),xdebt:gv('xdebt'),
+    monthlyExp:needs+wants,
+    highIntDebt:debts.filter(d=>d.rate>7),
+    maxDebtRate:debts.length?Math.max(...debts.map(d=>d.rate)):0
+  };
+}
+
+// ── PAYCHEQUE PLAN ───────────────────────────────────────────────────────────
+// Splits monthly budget into per-cheque amounts
+// Cheque 1: rent/mortgage + half of everything else
+// Cheque 2: remaining bills + savings
+// Cheque 3 (bonus): pure surplus -> distributor
+
+function setPCTab(n,btn){
+  pcTab=n;
+  document.querySelectorAll('.pc-tab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderPaycheque();
+}
+
+function renderPaycheque(){
+  const s=getBudgetState();
+  const bw=s.bw;
+  const isBonus=s.isBonus;
+
+  // Show/hide cheque 3 tab
+  const tab3=document.getElementById('cheque3-tab');
+  if(tab3)tab3.style.display=isBonus?'':'none';
+
+  // Bonus month tip
+  const bmt=document.getElementById('bonus-month-tip');
+  if(bmt){
+    bmt.innerHTML=isBonus
+      ?'<div class="bonus-banner"><div class="bonus-title">3-cheque month this month!</div><div class="bonus-sub">This month has 3 paydays. Cheques 1 & 2 cover your regular budget. Cheque 3 is a windfall — use the surplus distributor to put it to work.</div></div>'
+      :'';
+  }
+
+  // Define what goes on each cheque
+  // Large fixed bills on cheque 1, variable/savings on cheque 2
+  const ch1Items=[];
+  const ch2Items=[];
+  const ch3Items=[];
+
+  // NEEDS split: rent on ch1, everything else half-half
+  if(gv('housing'))ch1Items.push({l:'Rent / mortgage',v:gv('housing')});
+  if(gv('homeins'))ch1Items.push({l:'Home insurance',v:gv('homeins')});
+  if(gv('icbc'))ch1Items.push({l:'ICBC insurance',v:gv('icbc')});
+  if(gv('carloan'))ch2Items.push({l:'Car loan',v:gv('carloan')});
+  if(gv('transit'))ch2Items.push({l:'Gas / TransLink',v:Math.round(gv('transit')/2)});
+  if(gv('utils'))ch2Items.push({l:'Utilities & internet',v:gv('utils')});
+  if(gv('groceries')){
+    ch1Items.push({l:'Groceries (wk 1-2)',v:Math.round(gv('groceries')/2)});
+    ch2Items.push({l:'Groceries (wk 3-4)',v:Math.round(gv('groceries')/2)});
+  }
+  if(gv('health'))ch2Items.push({l:'Health / dental',v:gv('health')});
+  if(gv('lifeins'))ch1Items.push({l:'Life insurance',v:gv('lifeins')});
+  if(gv('mindebt'))ch2Items.push({l:'Min. debt payments',v:gv('mindebt')});
+
+  // Custom needs split
+  customItems.needs.forEach(item=>{
+    const amtEl=document.getElementById('ci-amt-'+item.id);
+    const amt=amtEl?parseFloat(amtEl.value)||0:item.amount;
+    const nameEl=document.getElementById('ci-name-'+item.id);
+    const name=nameEl?nameEl.value:item.name;
+    if(amt)ch2Items.push({l:name||'Custom need',v:amt});
+  });
+
+  // WANTS: split across both cheques
+  const wantFields=[
+    {id:'dining',l:'Dining'},
+    {id:'entertain',l:'Entertainment'},
+    {id:'subs',l:'Subscriptions'},
+    {id:'shopping',l:'Shopping'},
+    {id:'hobbies',l:'Hobbies'},
+    {id:'travel',l:'Travel'},
+    {id:'education',l:'Education'}
+  ];
+  wantFields.forEach((f,i)=>{
+    const v=gv(f.id);
+    if(!v)return;
+    if(i%2===0)ch1Items.push({l:f.l,v:Math.round(v/2),cat:'want'});
+    else ch2Items.push({l:f.l,v:Math.round(v/2),cat:'want'});
+  });
+  customItems.wants.forEach(item=>{
+    const amtEl=document.getElementById('ci-amt-'+item.id);
+    const amt=amtEl?parseFloat(amtEl.value)||0:item.amount;
+    const nameEl=document.getElementById('ci-name-'+item.id);
+    const name=nameEl?nameEl.value:item.name;
+    if(amt)ch1Items.push({l:name||'Custom want',v:Math.round(amt/2),cat:'want'});
+  });
+
+  // SAVES: all on cheque 2 (or cheque 1 for TFSA)
+  const saveFields=[
+    {id:'emerg',l:'Emergency fund (TFSA)',ch:1},
+    {id:'tfsa',l:'TFSA investments',ch:1},
+    {id:'rrsp',l:'RRSP',ch:2},
+    {id:'resp',l:'RESP',ch:2},
+    {id:'xdebt',l:'Extra debt payoff',ch:2},
+    {id:'nonreg',l:'Non-reg savings',ch:2}
+  ];
+  saveFields.forEach(f=>{
+    const v=gv(f.id);
+    if(!v)return;
+    const half=Math.round(v/2);
+    if(f.ch===1)ch1Items.push({l:f.l+' (half)',v:half,cat:'save'});
+    else ch2Items.push({l:f.l+' (half)',v:half,cat:'save'});
+    // Add the other half to the other cheque too
+    if(f.ch===1)ch2Items.push({l:f.l+' (half)',v:half,cat:'save'});
+    else ch1Items.push({l:f.l+' (half)',v:half,cat:'save'});
+  });
+  customItems.saves.forEach(item=>{
+    const amtEl=document.getElementById('ci-amt-'+item.id);
+    const amt=amtEl?parseFloat(amtEl.value)||0:item.amount;
+    const nameEl=document.getElementById('ci-name-'+item.id);
+    const name=nameEl?nameEl.value:item.name;
+    if(amt)ch2Items.push({l:name||'Custom saving',v:Math.round(amt/2),cat:'save'});
+  });
+
+  // Cheque 3 is just the full paycheque as windfall
+  if(isBonus){
+    ch3Items.push({l:'Full extra paycheque',v:bw,cat:'bonus'});
+  }
+
+  const items=pcTab===1?ch1Items:pcTab===2?ch2Items:ch3Items;
+  const total=items.reduce((s,i)=>s+i.v,0);
+  const remaining=bw-total;
+
+  // Metrics
+  const metricsEl=document.getElementById('pc-metrics');
+  if(metricsEl){
+    metricsEl.innerHTML=
+      '<div class="pc-met"><div class="pc-met-l">Paycheque '+(isBonus&&pcTab===3?'3 (bonus)':pcTab)+'</div><div class="pc-met-v">'+fmt(bw)+'</div><div class="pc-met-s">bi-weekly net</div></div>'
+      +'<div class="pc-met"><div class="pc-met-l">Allocated</div><div class="pc-met-v '+(remaining>=0?'ok':'bad')+'">'+fmt(total)+'</div><div class="pc-met-s">'+(remaining>=0?fmt(remaining)+' left':'over by '+fmt(-remaining))+'</div></div>';
+  }
+
+  // Items split by category
+  const needItems=items.filter(i=>!i.cat||i.cat==='need');
+  const wantItems=items.filter(i=>i.cat==='want');
+  const saveItems=items.filter(i=>i.cat==='save'||i.cat==='bonus');
+
+  function renderItems(els,containerId){
+    const c=document.getElementById(containerId);
+    if(!c)return;
+    if(!els.length){c.innerHTML='<p style="font-size:13px;color:var(--text3);padding:4px 0">Nothing assigned to this cheque.</p>';return;}
+    c.innerHTML=els.map(i=>'<div class="pc-item"><span class="pc-item-l">'+i.l+'</span><span class="pc-item-v">'+fmt(i.v)+'</span></div>').join('');
+  }
+
+  if(pcTab===3&&isBonus){
+    document.getElementById('pc-needs').innerHTML='<div class="pc-item"><span class="pc-item-l" style="color:var(--green);font-weight:500">Full bonus paycheque</span><span class="pc-item-v" style="color:var(--green)">'+fmt(bw)+'</span></div>';
+    document.getElementById('pc-wants').innerHTML='<p style="font-size:13px;color:var(--text3);padding:4px 0">Use the surplus distributor to put this to work.</p>';
+    document.getElementById('pc-saves').innerHTML='<button class="dist-btn" style="margin-top:4px" onclick="openDistributor(true)">Distribute '+fmt(bw)+' bonus cheque</button>';
+  } else {
+    renderItems(needItems,'pc-needs');
+    renderItems(wantItems,'pc-wants');
+    renderItems(saveItems,'pc-saves');
+  }
+}
+
+// ── OVERVIEW ─────────────────────────────────────────────────────────────────
+function showPage(name,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('page-'+name).classList.add('on');
+  btn.classList.add('on');
+  document.getElementById('content').scrollTop=0;
+  if(name==='paycheque')renderPaycheque();
+}
+
+function setMethod(m,btn){
+  method=m;
+  btn.closest('.mtabs').querySelectorAll('.mt').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const el=document.getElementById('mtip');if(el)el.textContent=mtips[m];
+  recalc();
+}
+function setDM(m,btn){
+  dm=m;
+  btn.closest('.mtabs').querySelectorAll('.mt').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderDebtOrder();
+}
+
+function recalc(){
+  const s=getBudgetState();
+  const inc=s.inc;
+  const bw=s.bw;
+
+  // Update income display
+  document.getElementById('hinc').textContent=fmt(bw);
+  const me=document.getElementById('monthly-equiv');if(me)me.textContent=fmt(inc)+'/mo';
+  const ae=document.getElementById('annual-equiv');if(ae)ae.textContent=fmt(bw*26)+'/yr';
+
+  const {needs,wants,saves,surplus}=s;
+  const [nt,wt,st]=splits[method];
+  const ns=nt?(needs/inc<=nt+0.03?'ok':'bad'):'ok';
+  const ss=st?(saves/inc>=st-0.03?'ok':'warn'):'ok';
+
+  document.getElementById('ov-metrics').innerHTML=
+    '<div class="met"><div class="met-l">Monthly income</div><div class="met-v">'+fmt(inc)+'</div><div class="met-s">'+fmt(bw)+' bi-wkly</div></div>'
+    +'<div class="met"><div class="met-l">Surplus</div><div class="met-v '+(surplus>=0?'ok':'bad')+'">'+fmtS(surplus)+'</div><div class="met-s">'+(surplus>=0?'on track':'over budget')+'</div></div>'
+    +'<div class="met"><div class="met-l">Needs</div><div class="met-v '+ns+'">'+pp(needs,inc)+'</div><div class="met-s">'+fmt(needs)+'/mo</div></div>'
+    +'<div class="met"><div class="met-l">Saved</div><div class="met-v '+ss+'">'+pp(saves,inc)+'</div><div class="met-s">'+fmt(saves)+'/mo</div></div>';
+
+  const sc=surplus>0?'ok':surplus<0?'bad':'zero';
+  const sv2=surplus>=0?'var(--green)':'var(--red)';
+  const sn=surplus>0?'Tap below to distribute this across savings & debt.':surplus<0?'Spending exceeds income -- review Wants or Needs.':'Every dollar accounted for.';
+  document.getElementById('ov-surplus').innerHTML='<div class="surplus '+sc+'"><div class="srow"><span class="slbl">Surplus / deficit</span><span class="sval" style="color:'+sv2+'">'+fmtS(surplus)+'</span></div><div class="snote">'+sn+'</div></div>';
+
+  const distBtn=document.getElementById('ov-dist-btn');
+  if(surplus>0){
+    distBtn.innerHTML='<button class="dist-btn" onclick="openDistributor(false)">Distribute '+fmt(surplus)+'/mo surplus</button>';
+  } else {distBtn.innerHTML='';}
+
+  // 3-cheque bonus banner on overview
+  const bonusEl=document.getElementById('ov-bonus');
+  if(bonusEl){
+    bonusEl.innerHTML=s.isBonus
+      ?'<div class="bonus-banner"><div class="bonus-title">3-cheque month! Bonus paycheque this month</div><div class="bonus-sub">This month has '+s.paydays+' paydays. Your extra cheque ('+fmt(bw)+') is a windfall. See the Paycheque tab for how to use it.</div></div>'
+      :'';
+  }
+
+  const hw=document.getElementById('ov-hwarn');
+  hw.innerHTML=(gv('housing')+gv('homeins'))/inc>0.40?'<div class="tip tip-a">Housing exceeds 40% of income -- common in Metro Van. Try the 60/20/20 method.</div>':'';
+
+  document.getElementById('ov-n').textContent=fmt(needs)+'/mo';
+  document.getElementById('ov-npct').textContent=pp(needs,inc);
+  document.getElementById('ov-w').textContent=fmt(wants)+'/mo';
+  document.getElementById('ov-wpct').textContent=pp(wants,inc);
+  document.getElementById('ov-s').textContent=fmt(saves)+'/mo';
+  document.getElementById('ov-spct').textContent=pp(saves,inc);
+  sb('ov-bn',needs,inc);sb('ov-bw',wants,inc);sb('ov-bs',saves,inc);
+
+  const bn=document.getElementById('b-n');if(bn)bn.textContent=fmt(needs)+'/mo';
+  const bw2=document.getElementById('b-w');if(bw2)bw2.textContent=fmt(wants)+'/mo';
+  const bs=document.getElementById('b-s');if(bs)bs.textContent=fmt(saves)+'/mo';
+
+  const dt=document.getElementById('debt-tip');
+  if(dt)dt.textContent='Extra payment of '+fmt(gv('xdebt'))+'/mo goes to debt #1 first, then rolls down once paid off.';
+  renderDebtOrder();
+  renderCCCard();
+  renderAdvisor();
+  saveData();
+}
+
+// ── SURPLUS DISTRIBUTOR ───────────────────────────────────────────────────────
+function generateOptions(surplus,isBonus){
+  if(surplus<=0)return[];
+  const s=getBudgetState();
+  const r=n=>Math.round(n);
+  const opts=[];
+
+  // Option A: Aggressive debt / emergency
+  const optA={id:'A',name:'Aggressive',tag:'Crush debt fast',changes:[],reason:''};
+  let remA=surplus;const rA=[];
+  if(s.highIntDebt.length>0){
+    const dc=r(remA*0.70);
+    optA.changes.push({label:'Extra debt payoff',field:'xdebt',current:s.xdebt,add:dc});remA-=dc;
+    rA.push('High-interest debt ('+s.maxDebtRate.toFixed(1)+'% APR) is costing you more than investments earn -- 70% goes here first.');
+  }
+  const emergTarget=s.monthlyExp*3;
+  if(s.emerg*12<emergTarget&&remA>0){
+    const ec=r(Math.min(remA,emergTarget/12-s.emerg));
+    if(ec>0){optA.changes.push({label:'Emergency fund (TFSA)',field:'emerg',current:s.emerg,add:ec});remA-=ec;rA.push('Emergency fund is below 3 months of expenses.');}
+  }
+  if(remA>0){optA.changes.push({label:'TFSA investments',field:'tfsa',current:s.tfsa,add:r(remA)});rA.push('Remaining goes to TFSA for tax-free growth.');}
+  optA.reason=rA.join(' ');
+  if(optA.changes.length)opts.push(optA);
+
+  // Option B: Balanced
+  const optB={id:'B',name:'Balanced',tag:'Spread across priorities',changes:[],reason:''};
+  let remB=surplus;const rB=[];
+  if(s.highIntDebt.length>0){
+    const dc=r(remB*0.40);
+    optB.changes.push({label:'Extra debt payoff',field:'xdebt',current:s.xdebt,add:dc});remB-=dc;
+    rB.push('40% to high-interest debt ('+s.maxDebtRate.toFixed(1)+'% APR).');
+  }
+  const tfsaRoom=Math.max(0,583-s.tfsa);
+  if(tfsaRoom>0&&remB>0){
+    const tc=r(Math.min(remB*0.50,tfsaRoom));
+    optB.changes.push({label:'TFSA investments',field:'tfsa',current:s.tfsa,add:tc});remB-=tc;
+    rB.push('50% to TFSA for tax-free growth.');
+  }
+  if(remB>0){
+    optB.changes.push({label:'RRSP',field:'rrsp',current:s.rrsp,add:r(remB)});
+    rB.push('Rest goes to RRSP for tax-deferred retirement savings.');
+  }
+  optB.reason=rB.join(' ');
+  if(optB.changes.length)opts.push(optB);
+
+  // Option C: Max savings / wealth building
+  const optC={id:'C',name:'Max Savings',tag:'Build wealth faster',changes:[],reason:''};
+  let remC=surplus;const rC=[];
+  const tfsaRoomC=Math.max(0,583-s.tfsa);
+  if(tfsaRoomC>0){
+    const tc=r(Math.min(remC,tfsaRoomC));
+    optC.changes.push({label:'TFSA investments',field:'tfsa',current:s.tfsa,add:tc});remC-=tc;
+    rC.push('Max out TFSA first -- $7,000/yr limit, tax-free compounding.');
+  }
+  if(remC>0){
+    const rc=r(remC*0.70);
+    optC.changes.push({label:'RRSP',field:'rrsp',current:s.rrsp,add:rc});remC-=rc;
+    rC.push('RRSP reduces taxable income and grows tax-deferred.');
+  }
+  if(remC>0){
+    optC.changes.push({label:'Non-registered savings',field:'nonreg',current:gv('nonreg'),add:r(remC)});
+    rC.push('Any remainder goes to non-registered investing.');
+  }
+  optC.reason=rC.join(' ');
+  if(optC.changes.length)opts.push(optC);
+
+  return opts;
+}
+
+function openDistributor(isBonus){
+  const s=getBudgetState();
+  const amount=isBonus?s.bw:s.surplus;
+  if(amount<=0){alert('No surplus to distribute.');return;}
+  selectedOption=null;
+  generatedOptions=generateOptions(amount,isBonus);
+  document.getElementById('dist-modal-title').textContent=isBonus?'Invest Your Bonus Cheque':'Distribute Monthly Surplus';
+  document.getElementById('dist-modal-sub').textContent=(isBonus?'Bonus paycheque of ':'You have ')+fmt(amount)+(isBonus?' — put this windfall to work:':(amount>0?'/mo unallocated. Choose how to use it:':''));
+  const apply=document.getElementById('dist-apply');
+  apply.disabled=true;apply.textContent='Select an option to apply';
+  const optColors={A:'opt-a',B:'opt-b',C:'opt-c'};
+  let html='';
+  generatedOptions.forEach(opt=>{
+    html+='<div class="opt-card '+optColors[opt.id]+'" id="opt-card-'+opt.id+'" onclick="selectOption(\''+opt.id+'\')">'
+      +'<div class="opt-header"><div class="opt-badge">'+opt.id+'</div><div><div class="opt-name">'+opt.name+'</div><div class="opt-tag">'+opt.tag+'</div></div></div>'
+      +'<div class="opt-reason">'+opt.reason+'</div>'
+      +'<div class="opt-items">';
+    opt.changes.forEach(c=>{
+      html+='<div class="opt-item"><span class="opt-item-label">'+c.label+'</span><span class="opt-item-val">+'+fmt(c.add)+' -> '+fmt(c.current+c.add)+'/mo</span></div>';
+    });
+    html+='</div></div>';
+  });
+  document.getElementById('dist-options').innerHTML=html;
+  document.getElementById('dist-modal').classList.remove('hidden');
+}
+
+function selectOption(id){
+  selectedOption=id;
+  document.querySelectorAll('.opt-card').forEach(c=>c.classList.remove('selected'));
+  const card=document.getElementById('opt-card-'+id);if(card)card.classList.add('selected');
+  const apply=document.getElementById('dist-apply');
+  apply.disabled=false;apply.textContent='Apply Option '+id;
+}
+
+function applyOption(){
+  if(!selectedOption)return;
+  const opt=generatedOptions.find(o=>o.id===selectedOption);
+  if(!opt)return;
+  opt.changes.forEach(c=>sv(c.field,c.current+c.add));
+  closeModal();recalc();
+}
+function closeModal(){
+  document.getElementById('dist-modal').classList.add('hidden');
+  selectedOption=null;
+}
+
+// ── CUSTOM ITEMS ─────────────────────────────────────────────────────────────
+let ciModalCat=null;
+let ciModalPT='cc';
+
+function addCustomItem(cat,data){
+  if(data){
+    // Loading from saved data — render directly without modal
+    _renderCustomRow(cat,data);
+    return;
+  }
+  // Open modal
+  ciModalCat=cat;
+  ciModalPT='cc';
+  const titles={needs:'Add to Needs',wants:'Add to Wants',saves:'Add to Savings'};
+  const subs={needs:'e.g. Pet food, parking, phone plan','wants':'e.g. Concert tickets, gym membership',saves:'e.g. Vacation fund, new car savings'};
+  document.getElementById('ci-modal-title').textContent=titles[cat]||'Add Custom Item';
+  document.getElementById('ci-modal-sub').textContent=subs[cat]||'';
+  document.getElementById('ci-modal-name').value='';
+  document.getElementById('ci-modal-amt').value='0';
+  // Reset PT toggle to CC default
+  setCIModalPT('cc',document.getElementById('ci-pt-cc'));
+  document.getElementById('ci-modal').classList.remove('hidden');
+  setTimeout(()=>document.getElementById('ci-modal-name').focus(),200);
+}
+
+function setCIModalPT(type,btn){
+  ciModalPT=type;
+  document.getElementById('ci-modal-pt').querySelectorAll('button').forEach(b=>b.classList.remove('pt-on-cc','pt-on-chq'));
+  btn.classList.add(type==='cc'?'pt-on-cc':'pt-on-chq');
+}
+
+function confirmCustomItem(){
+  const name=document.getElementById('ci-modal-name').value.trim();
+  const amount=parseFloat(document.getElementById('ci-modal-amt').value)||0;
+  if(!name){document.getElementById('ci-modal-name').focus();return;}
+  cic++;
+  const id=cic;
+  const item={id,name,amount,pt:ciModalPT};
+  customItems[ciModalCat].push(item);
+  _renderCustomRow(ciModalCat,item);
+  closeCIModal();
+  recalc();
+}
+
+function closeCIModal(){
+  document.getElementById('ci-modal').classList.add('hidden');
+  ciModalCat=null;
+}
+
+function _renderCustomRow(cat,item){
+  const container=document.getElementById('custom-'+cat);
+  if(!container)return;
+  const pt=item.pt||'cc';
+  const row=document.createElement('div');
+  row.className='irow';row.id='ci-row-'+item.id;
+  row.innerHTML='<label style="font-size:13px;color:var(--text2);flex:1" id="ci-lbl-'+item.id+'">'+escHtml(item.name)+'</label>'
+    +'<input type="number" id="ci-amt-'+item.id+'" value="'+item.amount+'" step="10" inputmode="decimal" style="width:96px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:16px;padding:4px 8px;text-align:right;outline:none;-webkit-appearance:none;transform:scale(0.875);transform-origin:right center;margin-right:-6px">'
+    +'<div class="pay-toggle" id="ci-pt-'+item.id+'">'
+    +'<button onclick="setCIPT('+item.id+',\'chq\',this,'+(JSON.stringify(cat))+','+(JSON.stringify(item.id))+')\"'+(pt==='chq'?' class="pt-on-chq"':'')+'>CHQ</button>'
+    +'<button onclick="setCIPT('+item.id+',\'cc\',this,'+(JSON.stringify(cat))+','+(JSON.stringify(item.id))+')\"'+(pt==='cc'?' class="pt-on-cc"':'')+'>CC</button>'
+    +'</div>'
+    +'<button class="del-btn" onclick="removeCustomItem('+item.id+',\''+cat+'\')" aria-label="Remove">×</button>';
+  container.appendChild(row);
+  row.querySelector('input[type=number]').addEventListener('input',recalc);
+  // Store pt in payTypes so CC calc picks it up
+  payTypes['ci-'+item.id]=pt;
+}
+
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function setCIPT(id,type,btn,cat,itemId){
+  payTypes['ci-'+id]=type;
+  const toggle=document.getElementById('ci-pt-'+id);
+  if(toggle){toggle.querySelectorAll('button').forEach(b=>b.classList.remove('pt-on-cc','pt-on-chq'));btn.classList.add(type==='cc'?'pt-on-cc':'pt-on-chq');}
+  // Update in customItems array
+  ['needs','wants','saves'].forEach(c=>{
+    const item=customItems[c].find(i=>i.id===id);
+    if(item)item.pt=type;
+  });
+  renderCCCard();saveData();
+}
+
+function removeCustomItem(id,cat){
+  const row=document.getElementById('ci-row-'+id);if(row)row.remove();
+  customItems[cat]=customItems[cat].filter(i=>i.id!==id);
+  delete payTypes['ci-'+id];
+  recalc();
+}
+
+function updateCustomName(id,cat){
+  const item=customItems[cat].find(i=>i.id===id);
+  if(item){const e=document.getElementById('ci-name-'+id);item.name=e?e.value:'';}
+  saveData();
+}
+
+// ── DEBT ─────────────────────────────────────────────────────────────────────
+function addDebt(data){
+  dc++;const id=dc;
+  const c=document.getElementById('debt-inputs');
+  const d=document.createElement('div');d.className='de';d.id='de-'+id;
+  d.innerHTML='<div class="de-hd"><span class="de-t">Debt #'+id+'</span><button class="de-del" onclick="removeDebt('+id+')">x</button></div>'
+    +'<div class="dfs">'
+    +'<div class="df full"><label>Name</label><input type="text" id="dn-'+id+'" placeholder="e.g. credit card" value="'+(data?data.name:'')+'" oninput="gatherDebts()"></div>'
+    +'<div class="df"><label>Balance ($)</label><input type="number" id="db-'+id+'" value="'+(data?data.bal:3000)+'" step="100" inputmode="decimal" oninput="gatherDebts()"></div>'
+    +'<div class="df"><label>Interest (%)</label><input type="number" id="dr-'+id+'" value="'+(data?data.rate:19.99)+'" step="0.01" inputmode="decimal" oninput="gatherDebts()"></div>'
+    +'<div class="df full"><label>Min. payment ($/mo)</label><input type="number" id="dm-'+id+'" value="'+(data?data.min:60)+'" step="5" inputmode="decimal" oninput="gatherDebts()"></div>'
+    +'</div>';
+  c.appendChild(d);gatherDebts();
+}
+
+function removeDebt(id){
+  const e=document.getElementById('de-'+id);if(e)e.remove();
+  debts=debts.filter(d=>d.id!==id);renderDebtOrder();saveData();
+}
+
+function gatherDebts(){
+  debts=[];
+  document.querySelectorAll('[id^="db-"]').forEach(el=>{
+    const id=el.id.split('-')[1];
+    if(document.getElementById('de-'+id)){
+      debts.push({id:parseInt(id),name:(document.getElementById('dn-'+id)||{}).value||'Debt #'+id,bal:parseFloat(el.value)||0,rate:parseFloat((document.getElementById('dr-'+id)||{}).value)||0,min:parseFloat((document.getElementById('dm-'+id)||{}).value)||0});
+    }
+  });
+  renderDebtOrder();saveData();
+}
+
+function renderDebtOrder(){
+  const el=document.getElementById('debt-order');if(!el)return;
+  if(!debts.length){el.innerHTML='<p style="font-size:13px;color:var(--text3)">Add debts above to see your payoff order.</p>';return;}
+  const sorted=[...debts].sort((a,b)=>dm==='avalanche'?b.rate-a.rate:a.bal-b.bal);
+  const xp=gv('xdebt');
+  const dbc=['db1','db2','db3','db4','db5'];
+  let h='<p style="font-size:11px;color:var(--text3);margin-bottom:8px">'+(dm==='avalanche'?'Highest interest rate first -- saves the most money overall.':'Smallest balance first -- quick wins to build momentum.')+'</p>';
+  sorted.forEach((d,i)=>{
+    const first=i===0,pay=first?d.min+xp:d.min,mo=pay>0?Math.ceil(d.bal/pay):999;
+    h+='<div class="doi"><div class="dbadge '+dbc[Math.min(i,4)]+'">'+(i+1)+'</div><div class="di"><div class="dn">'+d.name+'</div><div class="dd">'+fmt(d.bal)+' - '+d.rate+'% - ~'+mo+' mo</div></div><div class="dp"><div class="dp-a">'+fmt(pay)+'/mo</div><div class="dp-n">'+(first?'+ extra':'min')+'</div></div></div>';
+  });
+  if(xp>0)h+='<div class="tip tip-b" style="margin-top:8px;font-size:12px">Once debt #1 is paid, roll its full payment into debt #2.</div>';
+  el.innerHTML=h;
+}
+
+// ── PERSISTENCE ───────────────────────────────────────────────────────────────
+const IDS=['biweekly','extra','housing','homeins','icbc','carloan','transit','utils','groceries','health','lifeins','mindebt','dining','entertain','subs','shopping','hobbies','travel','education','emerg','tfsa','rrsp','resp','xdebt','nonreg','cc-close-day','cc-due-day','cc-buffer-saved','cc-actual-due'];
+const PAYDAY_IDS=['last-payday'];
+
+function saveData(){
+  const vals={};
+  IDS.forEach(id=>{const e=document.getElementById(id);if(e)vals[id]=e.value;});
+  PAYDAY_IDS.forEach(id=>{const e=document.getElementById(id);if(e)vals[id]=e.value;});
+  const dowEl=document.getElementById('payday-dow');
+  if(dowEl)vals['payday-dow']=dowEl.value;
+  const savedCustom={};
+  ['needs','wants','saves'].forEach(cat=>{
+    savedCustom[cat]=customItems[cat].map(item=>{
+      const amtEl=document.getElementById('ci-amt-'+item.id);
+      return{id:item.id,name:item.name,amount:amtEl?parseFloat(amtEl.value)||0:item.amount,pt:item.pt||payTypes['ci-'+item.id]||'cc'};
+    });
+  });
+  const ts=new Date().toLocaleString('en-CA',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  try{localStorage.setItem(SK,JSON.stringify({vals,method,dm,debts,dc,customItems:savedCustom,cic,ts,payTypes,hiddenRows:[...hiddenRows]}));}catch(e){}
+  const sn=document.getElementById('saved-note');if(sn)sn.textContent='Saved '+ts;
+  const ls=document.getElementById('last-saved');if(ls)ls.textContent=ts;
+}
+
+function loadData(){
+  try{
+    const raw=localStorage.getItem(SK);if(!raw)return;
+    const data=JSON.parse(raw);
+    if(data.vals)Object.entries(data.vals).forEach(([id,val])=>{const e=document.getElementById(id);if(e)e.value=val;});
+    const dowEl=document.getElementById('payday-dow');
+    if(dowEl&&data.vals&&data.vals['payday-dow'])dowEl.value=data.vals['payday-dow'];
+    if(data.method)method=data.method;
+    if(data.dm)dm=data.dm;
+    if(data.dc)dc=data.dc;
+    if(data.cic)cic=data.cic;
+    if(data.customItems){
+      ['needs','wants','saves'].forEach(cat=>{
+        if(data.customItems[cat])data.customItems[cat].forEach(item=>addCustomItem(cat,item));
+      });
+    }
+    if(data.payTypes){payTypes={...PT_DEFAULTS,...data.payTypes};}
+    if(data.hiddenRows){
+      hiddenRows=new Set(data.hiddenRows);
+      hiddenRows.forEach(id=>{
+        const row=document.getElementById('irow-'+id);
+        if(row)row.style.display='none';
+        const inp=document.getElementById(id);
+        if(inp&&inp.dataset.savedVal===undefined)inp.dataset.savedVal=inp.value;
+      });
+    }
+    if(data.ts){const ls=document.getElementById('last-saved');if(ls)ls.textContent=data.ts;}
+  }catch(e){}
+}
+
+function resetData(){
+  if(!confirm('Reset all budget data? This cannot be undone.'))return;
+  try{localStorage.removeItem(SK);}catch(e){}
+  location.reload();
+}
+
+// ── CC CASHFLOW CARD ──────────────────────────────────────────────────────────
+function getCCDates(){
+  const today=new Date();
+  today.setHours(0,0,0,0);
+  const yr=today.getFullYear();
+  const mo=today.getMonth();
+  const closeDay=parseInt(gv('cc-close-day'))||19;
+  const dueDay=parseInt(gv('cc-due-day'))||15;
+
+  // Statement close date — this month or last month depending on where today falls
+  let closeDate=new Date(yr,mo,closeDay);
+  if(today>closeDate){
+    // Statement already closed this month — next close is next month
+    closeDate=new Date(yr,mo+1,closeDay);
+  }
+  // Previous close = one month back
+  const prevClose=new Date(closeDate);
+  prevClose.setMonth(prevClose.getMonth()-1);
+
+  // Due date — after close date, typically next month
+  let dueDate=new Date(closeDate.getFullYear(),closeDate.getMonth()+1,dueDay);
+  // If due day is before close day in same month sequence, it's next month
+  // Standard: due is ~21-25 days after close
+  const daysAfterClose=Math.round((dueDate-closeDate)/(1000*60*60*24));
+  if(daysAfterClose<10) dueDate.setMonth(dueDate.getMonth()+1);
+
+  const daysToClose=Math.round((closeDate-today)/(1000*60*60*24));
+  const daysToDue=Math.round((dueDate-today)/(1000*60*60*24));
+
+  return{today,closeDate,prevClose,dueDate,daysToClose,daysToDue};
+}
+
+function renderCCCard(){
+  const el=document.getElementById('cc-card');
+  if(!el)return;
+
+  const s=getBudgetState();
+  const cc=getCCDates();
+  const pt=getPayTotals();
+  const shortDate=d=>d.toLocaleDateString('en-CA',{month:'short',day:'numeric'});
+
+  // Use actual CC bill if entered, otherwise estimate from tagged spend
+  const ccActual=gv('cc-actual-due');
+  const ccSpendMonthly=pt.ccTotal;
+  const ccSpendPerPeriod=Math.round(ccSpendMonthly/2);
+  const ccPayment=ccActual>0?ccActual:ccSpendPerPeriod;
+  const ccIsActual=ccActual>0;
+  const chqAutoMonthly=pt.chqTotal;
+  const chqAutoPerPeriod=Math.round(chqAutoMonthly/2);
+  const bufferTarget=ccSpendMonthly;
+  const bufferSaved=gv('cc-buffer-saved');
+  const bufferPct=bufferTarget>0?Math.min(100,Math.round(bufferSaved/bufferTarget*100)):0;
+
+  // Update buffer target display in budget tab
+  const bt=document.getElementById('cc-buffer-target');
+  if(bt)bt.textContent=fmt(bufferTarget)+'/mo CC spend';
+
+  const nextPayday=getNextPayday();
+  const bw=s.bw;
+  const halfSaves=Math.round(s.saves/2);
+
+  // Card urgency
+  let cardClass='cc-card clear';
+  let ccStatus='';
+  if(cc.daysToDue<=3){cardClass='cc-card due-soon';ccStatus='Due in '+cc.daysToDue+'d!';}
+  else if(cc.daysToDue<=7){cardClass='cc-card warning';ccStatus='Due in '+cc.daysToDue+'d';}
+  else if(cc.daysToClose<=3){cardClass='cc-card warning';ccStatus='Closes in '+cc.daysToClose+'d';}
+  else{ccStatus=cc.daysToClose+'d to close';}
+
+  // Cycle timeline
+  const inGrace=cc.today>=cc.closeDate;
+  const seg1Class=!inGrace?'cc-cycle-seg active':'cc-cycle-seg';
+  const seg2Class=inGrace?'cc-cycle-seg pay-seg':'cc-cycle-seg';
+  const cycleHtml='<div class="cc-cycle">'
+    +'<div class="'+seg1Class+'"><span class="cc-cycle-label">Spending</span><span class="cc-cycle-sub">'+shortDate(cc.prevClose)+' – '+shortDate(cc.closeDate)+'</span></div>'
+    +'<div class="'+seg2Class+'"><span class="cc-cycle-label">'+(inGrace?'Grace period':'Closes')+'</span><span class="cc-cycle-sub">'+(inGrace?shortDate(cc.closeDate)+' – '+shortDate(cc.dueDate):shortDate(cc.closeDate))+'</span></div>'
+    +'<div class="cc-cycle-seg '+(cc.daysToDue<=3?'pay-seg':'')+'"><span class="cc-cycle-label">Due</span><span class="cc-cycle-sub">'+shortDate(cc.dueDate)+'</span></div>'
+    +'</div>';
+
+  const summaryHtml='<div style="display:flex;gap:8px;margin-bottom:10px">'
+    +'<div style="flex:1;background:rgba(79,142,247,0.1);border-radius:8px;padding:8px 10px;text-align:center">'
+    +'<div style="font-size:10px;color:var(--text3);margin-bottom:2px">'+(ccIsActual?'CC bill (actual)':'CC est. per period')+'</div>'
+    +'<div style="font-size:14px;font-weight:600;color:var(--accent)">'+fmt(ccPayment)+'</div>'
+    +'</div>'
+    +'<div style="flex:1;background:var(--green-bg);border-radius:8px;padding:8px 10px;text-align:center">'
+    +'<div style="font-size:10px;color:var(--text3);margin-bottom:2px">Auto-CHQ per period</div>'
+    +'<div style="font-size:14px;font-weight:600;color:var(--green)">'+fmt(chqAutoPerPeriod)+'</div>'
+    +'</div>'
+    +'</div>'
+    +(ccIsActual?'':'<div class="tip tip-b" style="margin-bottom:10px;font-size:11px">Enter your actual CC statement amount above in Budget → Credit card for a more accurate number.</div>');
+
+  const afterCC=bw-ccPayment;
+  const afterCCAndSaves=afterCC-halfSaves;
+
+  const stepsHtml='<div style="font-size:11px;color:var(--text3);margin-bottom:7px">Do this in order on '+shortDate(nextPayday)+':</div>'
+    +'<div class="cc-steps">'
+    +'<div class="cc-step"><div class="cc-step-num red">1</div><div class="cc-step-body"><div class="cc-step-label">Pay CC bill'+(ccIsActual?' (from your statement)':' (estimated)')+'</div><div class="cc-step-val" style="color:var(--red)">'+fmt(ccPayment)+'</div></div></div>'
+    +'<div class="cc-step"><div class="cc-step-num green">2</div><div class="cc-step-body"><div class="cc-step-label">Transfer to savings & TFSA</div><div class="cc-step-val" style="color:var(--green)">'+fmt(halfSaves)+'</div></div></div>'
+    +'<div class="cc-step"><div class="cc-step-num blue">3</div><div class="cc-step-body"><div class="cc-step-label">Leave in CHQ for auto-withdrawals</div><div class="cc-step-val" style="color:var(--accent)">'+fmt(chqAutoPerPeriod)+'</div></div></div>'
+    +'<div class="cc-step"><div class="cc-step-num amber">4</div><div class="cc-step-body"><div class="cc-step-label">Remaining — spend freely (goes on CC)</div><div class="cc-step-val" style="color:var(--amber)">'+fmt(Math.max(0,afterCCAndSaves-chqAutoPerPeriod))+'</div></div></div>'
+    +'</div>';
+
+  // Buffer progress
+  const bufferHtml=bufferTarget>0?'<div class="cc-buffer">'
+    +'<div class="cc-buffer-label">CC buffer: '+fmt(bufferSaved)+' of '+fmt(bufferTarget)+' goal ('+bufferPct+'%) — once full, cashflow is solved permanently</div>'
+    +'<div class="cc-buffer-bar"><div class="cc-buffer-fill" style="width:'+bufferPct+'%"></div></div>'
+    +'</div>':'';
+
+  el.innerHTML='<div class="'+cardClass+'">'
+    +'<div class="cc-header"><span class="cc-title">💳 Credit Card Cashflow</span><span class="cc-badge">'+ccStatus+'</span></div>'
+    +cycleHtml
+    +summaryHtml
+    +stepsHtml
+    +bufferHtml
+    +'</div>';
+}
+
+// ── FINANCIAL ADVISOR ENGINE ──────────────────────────────────────────────────
+
+function calcHealthScore(s,cc,pt){
+  // Five components, each scored 0–20, total out of 100
+  const scores={};
+
+  // 1. Savings rate (target 20%+)
+  const savingsRate=s.saves/s.inc;
+  scores.savings=Math.min(20,Math.round(savingsRate/0.20*20));
+
+  // 2. Needs ratio (target ≤60% for BC)
+  const needsRate=s.needs/s.inc;
+  scores.needs=needsRate<=0.60?20:needsRate<=0.70?14:needsRate<=0.80?8:3;
+
+  // 3. Emergency fund (target 3 months expenses)
+  const emergMonths=s.inc>0?(s.emerg*12)/(s.monthlyExp||1):0;
+  scores.emerg=emergMonths>=3?20:Math.round(emergMonths/3*20);
+
+  // 4. Debt health (no high-interest debt = best)
+  const maxRate=s.maxDebtRate;
+  scores.debt=maxRate===0?20:maxRate<=5?16:maxRate<=10?11:maxRate<=19?6:2;
+
+  // 5. CC cashflow (actual bill entered, buffer progress)
+  const ccActual=gv('cc-actual-due');
+  const bufferSaved=gv('cc-buffer-saved');
+  const bufferTarget=pt.ccTotal;
+  const bufferPct=bufferTarget>0?bufferSaved/bufferTarget:0;
+  const hasBill=ccActual>0;
+  scores.cc=hasBill?(bufferPct>=1?20:bufferPct>=0.5?14:bufferPct>=0.25?9:6):10;
+
+  const total=Object.values(scores).reduce((a,b)=>a+b,0);
+  return{total,scores};
+}
+
+function getGrade(score){
+  if(score>=85)return{grade:'Excellent',color:'var(--green)',ringColor:'#34d17a'};
+  if(score>=70)return{grade:'Good',color:'#4f8ef7',ringColor:'#4f8ef7'};
+  if(score>=55)return{grade:'Fair',color:'var(--amber)',ringColor:'#f59e0b'};
+  return{grade:'Needs work',color:'var(--red)',ringColor:'#f06070'};
+}
+
+function renderHealthScore(s,cc,pt){
+  const el=document.getElementById('advisor-health');
+  if(!el)return;
+  const{total,scores}=calcHealthScore(s,cc,pt);
+  const{grade,color,ringColor}=getGrade(total);
+
+  // SVG ring
+  const r=26,cx=32,cy=32,circ=2*Math.PI*r;
+  const dash=circ*(total/100);
+  const ringHtml='<svg width="64" height="64" viewBox="0 0 64 64">'
+    +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="5"/>'
+    +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+ringColor+'" stroke-width="5" stroke-dasharray="'+dash+' '+circ+'" stroke-linecap="round"/>'
+    +'</svg>';
+
+  // Summary sentence
+  const lowest=Object.entries(scores).sort((a,b)=>a[1]-b[1])[0][0];
+  const lowestLabel={savings:'savings rate',needs:'spending on needs',emerg:'emergency fund',debt:'debt load',cc:'CC cashflow'}[lowest];
+  const summaries={
+    Excellent:'Your finances are in great shape. Keep it up.',
+    Good:'Solid foundation — a few areas to strengthen.',
+    Fair:'Making progress, but some things need attention.',
+    'Needs work':'Important gaps to address — focus on the top priority below.'
+  };
+
+  // Component bars
+  const barDefs=[
+    {key:'savings',label:'Savings rate',color:'#34d17a'},
+    {key:'needs',label:'Spending (needs)',color:'#4f8ef7'},
+    {key:'emerg',label:'Emergency fund',color:'#f59e0b'},
+    {key:'debt',label:'Debt health',color:'#a78bfa'},
+    {key:'cc',label:'CC cashflow',color:'#2dd4bf'},
+  ];
+  const barsHtml=barDefs.map(b=>'<div class="hbar-row">'
+    +'<span class="hbar-label">'+b.label+'</span>'
+    +'<div class="hbar-wrap"><div class="hbar-fill" style="width:'+scores[b.key]*5+'%;background:'+b.color+'"></div></div>'
+    +'<span class="hbar-score">'+scores[b.key]*5+'</span>'
+    +'</div>').join('');
+
+  el.innerHTML='<div class="health-card">'
+    +'<div class="health-top">'
+    +'<div class="health-ring">'+ringHtml+'<div class="health-ring-num"><span class="health-score-val" style="color:'+color+'">'+total+'</span><span class="health-score-lbl">/ 100</span></div></div>'
+    +'<div class="health-right"><div class="health-grade" style="color:'+color+'">'+grade+'</div><div class="health-summary">'+summaries[grade]+(total<85?' Your weakest area: <strong>'+lowestLabel+'</strong>.':'')+'</div></div>'
+    +'</div>'
+    +'<div class="health-bars">'+barsHtml+'</div>'
+    +'</div>';
+}
+
+function renderYourMove(s,cc,pt){
+  const el=document.getElementById('advisor-move');
+  if(!el)return;
+  const ccActual=gv('cc-actual-due');
+  const bufferSaved=gv('cc-buffer-saved');
+  const bufferTarget=pt.ccTotal;
+  const emergMonths=(s.emerg*12)/(s.monthlyExp||1);
+
+  let icon,level,label,heading,body,action;
+
+  // Priority order: CC due → deficit → emergency fund → high debt → low savings → on track
+  if(cc.daysToDue<=3&&ccActual>0){
+    icon='🚨';level='urgent';label='Action required now';
+    heading='CC payment due in '+cc.daysToDue+' day'+(cc.daysToDue===1?'':'s');
+    body='Your credit card bill of '+fmt(ccActual)+' is due '+cc.dueDate.toLocaleDateString('en-CA',{weekday:'long',month:'short',day:'numeric'})+'. Make sure this amount is sitting in your chequing account right now — before spending anything else.';
+    action='Check your chequing balance';
+  } else if(s.surplus<0){
+    icon='⚠️';level='urgent';label='Over budget';
+    heading='You\'re spending '+fmt(Math.abs(s.surplus))+' more than you earn';
+    body='Your monthly expenses exceed your income. This is the most urgent thing to fix. Go to the Budget tab and find categories to reduce — start with Wants, then look at Needs.';
+    action='Review your Budget tab';
+  } else if(cc.daysToDue<=7&&ccActual>0){
+    icon='💳';level='important';label='Coming up soon';
+    heading='CC bill due in '+cc.daysToDue+' days';
+    body='Your '+fmt(ccActual)+' CC payment is due '+cc.dueDate.toLocaleDateString('en-CA',{weekday:'long',month:'short',day:'numeric'})+'. Confirm this amount is reserved in your chequing account so it doesn\'t disrupt your savings transfers on payday.';
+    action='Confirm CHQ balance is ready';
+  } else if(emergMonths<1){
+    icon='🛡️';level='urgent';label='Vulnerable — act now';
+    heading='No emergency fund yet';
+    body='You have less than 1 month of expenses saved for emergencies. One unexpected bill — car repair, dental, job loss — could derail everything. Before investing anywhere else, start building this cushion. Even '+fmt(200)+'/mo makes a big difference.';
+    action='Increase emergency fund in Budget';
+  } else if(s.maxDebtRate>15&&s.highIntDebt.length>0){
+    icon='🔥';level='urgent';label='High-interest debt';
+    heading='Debt at '+s.maxDebtRate.toFixed(1)+'% APR is costing you';
+    body='At '+s.maxDebtRate.toFixed(1)+'% interest, your debt grows faster than almost any investment earns. Every extra dollar you put toward it is a guaranteed return. Once it\'s gone, redirect that payment to your TFSA.';
+    action='Use the Debt tab to plan payoff';
+  } else if(emergMonths<3){
+    icon='🛡️';level='important';label='Build your safety net';
+    heading='Emergency fund is '+emergMonths.toFixed(1)+' months — target is 3';
+    body='You\'re '+(3-emergMonths).toFixed(1)+' months short of a proper safety net. Keep your current savings rate going. Once you hit 3 months, shift this money toward TFSA investing instead.';
+    action='On track — keep going';
+  } else if(bufferTarget>0&&bufferSaved<bufferTarget*0.5){
+    icon='💳';level='important';label='Cashflow opportunity';
+    heading='Building your CC buffer will free your cashflow';
+    body='Once your CC buffer reaches '+fmt(bufferTarget)+', your paycheque and CC bill will never compete again. Your savings transfers will happen automatically without worrying about the CC due date. Use your next 3rd-cheque month to jump-start it.';
+    action='Update CC buffer in Budget tab';
+  } else if(s.saves/s.inc<0.15){
+    icon='📈';level='important';label='Savings opportunity';
+    heading='Savings rate is '+Math.round(s.saves/s.inc*100)+'% — aim for 20%';
+    body='You\'re saving, which is great. Pushing to 20% would meaningfully accelerate your financial goals. Even '+fmt(Math.round((s.inc*0.20-s.saves)/2))+' more per paycheque into your TFSA compounds significantly over time.';
+    action='Adjust savings in Budget tab';
+  } else if(s.surplus>0&&gv('tfsa')<583){
+    icon='✨';level='good';label='Opportunity';
+    heading='You have room in your TFSA this month';
+    body='Your TFSA limit is '+fmt(583)+'/mo ('+fmt(7000)+'/yr) and you\'re contributing '+fmt(gv('tfsa'))+'. You have a '+fmt(s.surplus)+' surplus — consider putting it toward your TFSA for tax-free growth. Use the surplus distributor.';
+    action='Tap Distribute surplus below';
+  } else {
+    icon='✅';level='good';label='You\'re on track';
+    heading='Nothing urgent — great work';
+    body='Your budget is balanced, your savings are flowing, and no red flags are showing. Check back on payday to run through the CC cashflow sequence. Keep this up consistently and your financial health score will keep climbing.';
+    action='Review again on payday';
+  }
+
+  el.innerHTML='<div class="move-card '+level+'">'
+    +'<div class="move-top"><span class="move-icon">'+icon+'</span><span class="move-label">'+label+'</span></div>'
+    +'<div class="move-heading">'+heading+'</div>'
+    +'<div class="move-body">'+body+'</div>'
+    +'<span class="move-action">→ '+action+'</span>'
+    +'</div>';
+}
+
+function renderFlags(s,cc,pt){
+  const el=document.getElementById('advisor-flags');
+  if(!el)return;
+  const flags=[];
+  const ccActual=gv('cc-actual-due');
+  const emergMonths=(s.emerg*12)/(s.monthlyExp||1);
+  const savingsRate=s.saves/s.inc;
+  const needsRate=s.needs/s.inc;
+  const bufferSaved=gv('cc-buffer-saved');
+  const bufferTarget=pt.ccTotal;
+
+  // Red flags
+  if(s.surplus<0) flags.push({c:'red',t:'Over budget by '+fmt(Math.abs(s.surplus))+'/mo',d:'Your expenses exceed income. Reduce spending before anything else.'});
+  if(cc.daysToDue<=3&&ccActual>0) flags.push({c:'red',t:'CC due in '+cc.daysToDue+'d — '+fmt(ccActual),d:'Ensure this is in your chequing account now.'});
+  if(s.maxDebtRate>19) flags.push({c:'red',t:'Credit card debt at '+s.maxDebtRate.toFixed(1)+'% APR',d:'This interest rate is extremely high. Prioritise paying it off above all investing.'});
+  if(emergMonths<1&&s.inc>0) flags.push({c:'red',t:'No emergency fund',d:'You\'re one unexpected expense away from financial stress.'});
+
+  // Amber flags
+  if(cc.daysToDue>3&&cc.daysToDue<=7&&ccActual>0) flags.push({c:'amber',t:'CC due in '+cc.daysToDue+' days — '+fmt(ccActual),d:'Start reserving this in your chequing account.'});
+  if(emergMonths>=1&&emergMonths<3) flags.push({c:'amber',t:'Emergency fund: '+emergMonths.toFixed(1)+' of 3 months',d:'Keep building — you\'re not fully protected yet.'});
+  if(needsRate>0.65) flags.push({c:'amber',t:'Needs are '+Math.round(needsRate*100)+'% of income',d:'High fixed costs leave little room for saving. Look for ways to reduce.'});
+  if(savingsRate<0.10&&s.inc>0) flags.push({c:'amber',t:'Savings rate is only '+Math.round(savingsRate*100)+'%',d:'Aim for at least 15–20%. Even small increases compound significantly.'});
+  if(bufferTarget>0&&bufferSaved<bufferTarget) flags.push({c:'amber',t:'CC buffer '+Math.round(bufferSaved/bufferTarget*100)+'% funded',d:'At 100% your cashflow problem is permanently solved.'});
+
+  // Green flags
+  if(savingsRate>=0.20) flags.push({c:'green',t:'Savings rate: '+Math.round(savingsRate*100)+'% — above target',d:'You\'re saving more than the recommended 20%. Excellent discipline.'});
+  if(emergMonths>=3) flags.push({c:'green',t:'Emergency fund: '+emergMonths.toFixed(1)+' months funded',d:'Fully protected. You can now focus on investing.'});
+  if(s.surplus>0) flags.push({c:'green',t:'Monthly surplus: '+fmt(s.surplus),d:'Every dollar of surplus is an opportunity. Use the distributor to put it to work.'});
+  if(s.maxDebtRate===0&&debts.length===0) flags.push({c:'green',t:'Debt-free',d:'No debts means every dollar you earn works for you, not for a lender.'});
+  if(bufferTarget>0&&bufferSaved>=bufferTarget) flags.push({c:'green',t:'CC buffer fully funded',d:'Your cashflow is protected. CC payments will never disrupt your savings again.'});
+
+  if(!flags.length){el.innerHTML='';return;}
+
+  el.innerHTML='<div class="flags-wrap">'
+    +flags.map(f=>'<div class="flag '+f.c+'">'
+      +'<div class="flag-dot"></div>'
+      +'<div class="flag-body"><div class="flag-title">'+f.t+'</div><div class="flag-desc">'+f.d+'</div></div>'
+      +'</div>').join('')
+    +'</div>';
+}
+
+function renderAdvisor(){
+  const s=getBudgetState();
+  const cc=getCCDates();
+  const pt=getPayTotals();
+  renderYourMove(s,cc,pt);
+  renderHealthScore(s,cc,pt);
+  renderFlags(s,cc,pt);
+}
+
+// ── TODAY CARD ────────────────────────────────────────────────────────────────
+function getNextPayday(){
+  const dowEl=document.getElementById('payday-dow');
+  const lastEl=document.getElementById('last-payday');
+  const dow=dowEl?parseInt(dowEl.value):5; // default Friday
+  const lastStr=lastEl?lastEl.value:'';
+
+  const today=new Date();
+  today.setHours(0,0,0,0);
+
+  if(lastStr){
+    // Calculate from last payday + 14 day intervals
+    const last=new Date(lastStr+'T00:00:00');
+    last.setHours(0,0,0,0);
+    let next=new Date(last);
+    next.setDate(next.getDate()+14);
+    while(next<today) next.setDate(next.getDate()+14);
+    return next;
+  } else {
+    // Fall back: find next occurrence of payday DOW
+    let d=new Date(today);
+    let tries=0;
+    while(d.getDay()!==dow&&tries<14){d.setDate(d.getDate()+1);tries++;}
+    // If more than 7 days away, go back 7 and find bi-weekly from there
+    return d;
+  }
+}
+
+function renderTodayCard(){
+  const el=document.getElementById('today-card');
+  if(!el)return;
+
+  const today=new Date();
+  today.setHours(0,0,0,0);
+  const nextPayday=getNextPayday();
+  const diffMs=nextPayday-today;
+  const daysUntil=Math.round(diffMs/(1000*60*60*24));
+
+  const s=getBudgetState();
+  const bw=s.bw;
+  const needs=s.needs;
+  const wants=s.wants;
+  const saves=s.saves;
+
+  // Per-cheque splits (half of monthly)
+  const halfNeeds=Math.round(needs/2);
+  const halfWants=Math.round(wants/2);
+  const halfSaves=Math.round(saves/2);
+
+  // Current pay period: last payday to day before next payday
+  const lastPayday=new Date(nextPayday);
+  lastPayday.setDate(lastPayday.getDate()-14);
+  const periodEnd=new Date(nextPayday);
+  periodEnd.setDate(periodEnd.getDate()-1);
+
+  // Format helpers
+  const shortDate=d=>d.toLocaleDateString('en-CA',{month:'short',day:'numeric'});
+  const longDate=d=>d.toLocaleDateString('en-CA',{weekday:'long',month:'short',day:'numeric'});
+  const periodRange=shortDate(lastPayday)+' – '+shortDate(periodEnd);
+  const nextDateStr=longDate(nextPayday);
+
+  // Determine card state
+  let cardClass,badge,heading,sub,actions;
+
+  if(daysUntil===0){
+    // PAYDAY
+    cardClass='payday';
+    badge='💰';
+    heading='Payday! Here\'s what to do now';
+    sub='Your '+fmt(bw)+' cheque just landed. Move money before you spend it. New period: '+shortDate(today)+' – '+shortDate(periodEnd)+'.';
+    actions=[
+      {label:'Move to savings & TFSA now',val:fmt(halfSaves),color:'green'},
+      {label:'Set aside for rent & bills',val:fmt(halfNeeds),color:'blue'},
+      {label:'Your spending money until '+shortDate(periodEnd),val:fmt(halfWants),color:'amber'},
+    ];
+  } else if(daysUntil===1){
+    // DAY BEFORE PAYDAY
+    cardClass='day-before';
+    badge='⏰';
+    heading='Payday tomorrow — get ready';
+    sub='Set up your transfers tonight so savings move automatically the moment your cheque arrives on '+nextDateStr+'.';
+    actions=[
+      {label:'Cheque arriving tomorrow',val:fmt(bw),color:'green'},
+      {label:'Move to savings first thing',val:fmt(halfSaves),color:'blue'},
+      {label:'Spending money '+shortDate(nextPayday)+' – '+shortDate(new Date(nextPayday.getTime()+13*24*60*60*1000)),val:fmt(halfWants),color:'amber'},
+    ];
+  } else if(daysUntil<=5){
+    // WITHIN THE SAME WEEK AS PAYDAY
+    cardClass='week-of';
+    badge='📅';
+    heading='Payday in '+daysUntil+' days — almost there';
+    sub='Pay period '+periodRange+'. Your next cheque lands on '+nextDateStr+'. Hold your spending until then.';
+    actions=[
+      {label:'Days until '+shortDate(nextPayday),val:daysUntil+'d',color:'blue'},
+      {label:'Spending budget '+periodRange,val:fmt(halfWants),color:'amber'},
+      {label:'Savings going out '+shortDate(nextPayday),val:fmt(halfSaves),color:'green'},
+    ];
+  } else {
+    // MID PERIOD (6-13 days out)
+    cardClass='mid-period';
+    badge='📊';
+    heading='On track — next payday '+shortDate(nextPayday);
+    sub='Pay period '+periodRange+'. You have '+daysUntil+' days left until your cheque arrives. Stay within your spending budget below.';
+    actions=[
+      {label:'Days until '+shortDate(nextPayday),val:daysUntil+'d',color:'blue'},
+      {label:'Spending budget '+periodRange,val:fmt(halfWants),color:'amber'},
+      {label:'Savings going out '+shortDate(nextPayday),val:fmt(halfSaves),color:'green'},
+    ];
+  }
+
+  const actionsHtml=actions.map(a=>
+    '<div class="today-action">'
+    +'<span class="today-action-label">'+a.label+'</span>'
+    +'<span class="today-action-val '+a.color+'">'+a.val+'</span>'
+    +'</div>'
+  ).join('');
+
+  el.innerHTML='<div class="today-card '+cardClass+'">'
+    +'<div class="today-top"><span class="today-badge">'+badge+'</span><span class="today-days">'+
+    (daysUntil===0?'Today':'Next payday: '+nextPayday.toLocaleDateString('en-CA',{month:'short',day:'numeric'}))
+    +'</span></div>'
+    +'<div class="today-heading">'+heading+'</div>'
+    +'<div class="today-sub">'+sub+'</div>'
+    +'<div class="today-actions">'+actionsHtml+'</div>'
+    +'</div>';
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+// Set default last payday to most recent Friday before today
+function setDefaultLastPayday(){
+  const el=document.getElementById('last-payday');
+  if(!el)return;
+  // Always recalculate the most recent payday from the anchor
+  // Anchor: May 1 2026 is a confirmed Friday payday
+  const anchor=new Date('2026-05-01T00:00:00');
+  const today=new Date();
+  today.setHours(0,0,0,0);
+  // Walk forward from anchor in 14-day steps to find last payday <= today
+  let last=new Date(anchor);
+  while(true){
+    const next=new Date(last);
+    next.setDate(next.getDate()+14);
+    if(next>today)break;
+    last=next;
+  }
+  const y=last.getFullYear();
+  const m=String(last.getMonth()+1).padStart(2,'0');
+  const d=String(last.getDate()).padStart(2,'0');
+  const calculated=y+'-'+m+'-'+d;
+  // Only update if the calculated date is newer than what's currently stored
+  if(!el.value||el.value<calculated){
+    el.value=calculated;
+  }
+}
+
+document.getElementById('hdate').textContent=new Date().toLocaleString('en-CA',{month:'long',year:'numeric'});
+document.getElementById('mtip').textContent=mtips[method];
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',()=>{if(el.type!=='text'&&el.type!=='date')recalc();else if(el.type==='date'){recalc();renderTodayCard();}else gatherDebts();}));
+const dowSel=document.getElementById('payday-dow');
+if(dowSel)dowSel.addEventListener('change',()=>{recalc();renderTodayCard();});
+document.getElementById('dist-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.getElementById('ci-modal').addEventListener('click',function(e){if(e.target===this)closeCIModal();});
+
+// Wrap init in try/catch so any error shows on screen instead of blank page
+try{
+  loadData();
+  loadPTToggles();
+  setDefaultLastPayday();
+  recalc();
+  renderTodayCard();
+  renderCCCard();
+  renderAdvisor();
+} catch(err){
+  document.body.style.cssText='background:#fff;color:#000;padding:20px;font-family:sans-serif;font-size:14px';
+  document.body.innerHTML='<h2 style="color:red">App error</h2><p>Please screenshot this and share it:</p><pre style="white-space:pre-wrap;font-size:12px;background:#f0f0f0;padding:10px;border-radius:6px">'+err.message+'\n\n'+err.stack+'</pre>';
+}
 </script>
 </body>
 </html>
